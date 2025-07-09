@@ -304,7 +304,7 @@ body {
                 <div class="p-4 border rounded shadow-sm h-100">
                     <i class="bi bi-search display-4 text-primary mb-3"></i>
                     <h5 class="fw-bold">1. Discover Events</h5>
-                    <p>Browse a variety of events including concerts, workshops, sports, and more happening near you.</p>
+                    <p>Browse wehhhh a variety of events including concerts, workshops, sports, and more happening near you.</p>
                 </div>
             </div>
 
