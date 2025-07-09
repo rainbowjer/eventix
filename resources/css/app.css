@@ -1,0 +1,283 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark mode styles */
+body.dark-mode {
+    background: #181818 !important;
+    color: #f1f1f1 !important;
+}
+body.dark-mode .modern-card {
+    background: #23272f !important;
+    color: #f1f1f1 !important;
+}
+body.dark-mode .modern-table thead th {
+    background: #23272f !important;
+    color: #fff !important;
+}
+body.dark-mode .modern-table tbody tr:nth-child(even) {
+    background: #23272f !important;
+}
+body.dark-mode .modern-table tbody tr:hover {
+    background: #2c2f36 !important;
+}
+body.dark-mode .btn,
+body.dark-mode .btn-primary,
+body.dark-mode .btn-secondary {
+    background: #333 !important;
+    color: #fff !important;
+    border-color: #444 !important;
+}
+body.dark-mode .alert {
+    background: #222 !important;
+    color: #fff !important;
+    border-color: #444 !important;
+}
+/* Smooth transition */
+body, .modern-card, .modern-table, .btn, .alert {
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Improved dark mode text and element visibility */
+body.dark-mode,
+body.dark-mode .text-dark,
+body.dark-mode .fw-semibold,
+body.dark-mode .fw-bold,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode label,
+body.dark-mode .form-label,
+body.dark-mode .form-control,
+body.dark-mode .table,
+body.dark-mode .modern-table td,
+body.dark-mode .modern-table th {
+    color: #f1f1f1 !important;
+}
+body.dark-mode .text-muted {
+    color: #b0b0b0 !important;
+}
+body.dark-mode .form-control {
+    background: #23272f !important;
+    color: #f1f1f1 !important;
+    border-color: #444 !important;
+}
+body.dark-mode .form-control:focus {
+    background: #23272f !important;
+    color: #fff !important;
+    border-color: #888 !important;
+}
+body.dark-mode .dropdown-menu {
+    background: #23272f !important;
+    color: #f1f1f1 !important;
+}
+body.dark-mode a,
+body.dark-mode .btn-link {
+    color: #7ecbff !important;
+}
+body.dark-mode .btn-primary {
+    background: #4a90e2 !important;
+    color: #fff !important;
+    border-color: #357ab8 !important;
+}
+body.dark-mode .modern-table th,
+body.dark-mode .modern-table td {
+    border-color: #444 !important;
+}
+
+/* Welcome page dark mode fixes */
+body.dark-mode .hero-content,
+body.dark-mode .hero-title,
+body.dark-mode .hero-desc {
+    color: #fff !important;
+    text-shadow: 0 2px 24px #000a !important;
+}
+body.dark-mode .top-slider .carousel-caption {
+    background: rgba(34, 34, 54, 0.75) !important;
+    color: #fff !important;
+}
+body.dark-mode .top-slider .carousel-caption h5 {
+    color: #fff !important;
+    text-shadow: 0 2px 24px #000a !important;
+}
+body.dark-mode .top-slider .carousel-caption p {
+    color: #e0e0e0 !important;
+}
+body.dark-mode .top-slider .carousel-caption .slider-btn {
+    background: linear-gradient(90deg, #7e57c2 0%, #ff6a88 100%) !important;
+    color: #fff !important;
+}
+body.dark-mode .top-slider .carousel-caption .slider-btn:hover {
+    background: linear-gradient(90deg, #ff6a88 0%, #7e57c2 100%) !important;
+    color: #fff !important;
+}
+body.dark-mode .hero-bg::after {
+    background: linear-gradient(120deg, rgba(34,34,54,0.85) 0%, rgba(34,34,54,0.65) 100%) !important;
+}
+
+/* Welcome page About section and How It Works dark mode fixes */
+body.dark-mode .about-section,
+body.dark-mode .about-section *,
+body.dark-mode .how-it-works,
+body.dark-mode .how-it-works *,
+body.dark-mode .card,
+body.dark-mode .card * {
+    color: #fff !important;
+}
+body.dark-mode .card {
+    background: #23272f !important;
+    border-color: #444 !important;
+}
+body.dark-mode .about-section {
+    background: transparent !important;
+}
+
+/* Testimonial cards dark mode fix */
+body.dark-mode .testimonial-card,
+body.dark-mode .testimonial-card *,
+body.dark-mode .what-users-say,
+body.dark-mode .what-users-say * {
+    color: #fff !important;
+}
+body.dark-mode .testimonial-card {
+    background: #23272f !important;
+    border-color: #444 !important;
+}
+
+/* Ultimate dark mode fix for testimonials section */
+body.dark-mode .card,
+body.dark-mode .card *,
+body.dark-mode .testimonials,
+body.dark-mode .testimonials *,
+body.dark-mode .what-users-say,
+body.dark-mode .what-users-say *,
+body.dark-mode .testimonials-section,
+body.dark-mode .testimonials-section *,
+body.dark-mode .testimonial,
+body.dark-mode .testimonial *,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode .section-title {
+    color: #fff !important;
+    background: #23272f !important;
+    border-color: #444 !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+}
+
+/* Modern colored dashboard cards for organizer-stat-card */
+.organizer-stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+.organizer-stat-card {
+    color: #fff !important;
+    background: linear-gradient(135deg, #4f8cff 0%, #6ec6ff 100%);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.13), 0 1.5px 0 #a259f733;
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    min-width: 240px;
+    max-width: 340px;
+    text-align: center;
+    position: relative;
+    margin: 0 0.5rem 1.5rem 0.5rem;
+    border: none;
+    transition: box-shadow 0.25s, transform 0.18s, background 0.2s;
+    overflow: hidden;
+    z-index: 1;
+}
+.organizer-stat-card:nth-child(2) {
+    background: linear-gradient(135deg, #1de9b6 0%, #1dc8e9 100%);
+}
+.organizer-stat-card:nth-child(3) {
+    background: linear-gradient(135deg, #ffb74d 0%, #ffd54f 100%);
+}
+.organizer-stat-card:nth-child(4) {
+    background: linear-gradient(135deg, #ff6a88 0%, #ffb6b9 100%);
+}
+.organizer-stat-card .stat-icon {
+    font-size: 2.8rem;
+    margin-bottom: 1.2rem;
+    color: #fff;
+    transition: transform 0.25s, color 0.25s;
+}
+.organizer-stat-card .stat-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.7rem;
+    letter-spacing: 0.5px;
+}
+.organizer-stat-card .stat-value {
+    font-size: 2.7rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 0.7rem;
+    transition: color 0.25s;
+}
+.organizer-stat-card .stat-desc {
+    font-size: 1.08rem;
+    color: #fff;
+}
+.organizer-stat-card.best {
+    border-left: 8px solid #22d3ee;
+    background: linear-gradient(135deg, #e0f7fa 60%, #a7ffeb 100%);
+}
+.organizer-stat-card.least {
+    border-left: 8px solid #f87171;
+    background: linear-gradient(135deg, #fee2e2 60%, #fca5a5 100%);
+}
+body.dark-mode .organizer-stat-card {
+    filter: brightness(0.85) contrast(1.1);
+}
+
+/* Interactive enhancements for organizer dashboard cards */
+.organizer-stat-card {
+    cursor: pointer;
+    transition: box-shadow 0.25s, transform 0.18s, border 0.25s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+.organizer-stat-card:hover {
+    box-shadow: 0 16px 48px 0 #a259f744, 0 4px 0 #ff6a8844;
+    transform: translateY(-6px) scale(1.045);
+    border-color: #a259f7;
+    background: linear-gradient(135deg, #e0e7ff 60%, #f8fafc 100%);
+    z-index: 2;
+}
+.organizer-stat-card .stat-icon {
+    transition: transform 0.25s, color 0.25s;
+}
+.organizer-stat-card:hover .stat-icon {
+    transform: scale(1.22) rotate(-8deg);
+    color: #ff6a88;
+}
+.organizer-stat-card.best, .organizer-stat-card.least {
+    position: relative;
+}
+.organizer-stat-card.best::before,
+.organizer-stat-card.least::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 6px;
+    border-radius: 1.5rem 0 0 1.5rem;
+    background: linear-gradient(180deg, #22d3ee, #a259f7);
+    transition: background 0.3s;
+    z-index: 1;
+}
+.organizer-stat-card.least::before {
+    background: linear-gradient(180deg, #f87171, #fbbf24);
+}
+.organizer-stat-card .stat-value {
+    transition: color 0.25s;
+}
+.organizer-stat-card:hover .stat-value {
+    color: #a259f7;
+}
