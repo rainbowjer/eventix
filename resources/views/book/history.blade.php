@@ -61,6 +61,7 @@
                         <th>Date Booked</th>
                         <th>Status</th>
                         <th>QR Code</th>
+                        <th>Debug Date/Time</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -74,17 +75,35 @@
                         <td>{{ $txn->created_at->format('d M Y, h:i A') }}</td>
                         <td>Active</td>
                         <td>
-                            <a href="{{ route('download.qr', $txn->id) }}" class="btn btn-outline-success btn-sm d-flex align-items-center gap-1">
-                                <i class="bi bi-download"></i> Download
-                            </a>
-                        </td>
-                        <td>
                             @php
                                 $eventDate = optional(optional($txn->seat)->event)->event_date;
-                                $isExpired = $eventDate ? \Carbon\Carbon::parse($eventDate)->isPast() : false;
+                                $eventTime = optional(optional($txn->seat)->event)->event_time;
+                                if ($eventDate && $eventTime) {
+                                    $eventDateTime = \Carbon\Carbon::parse($eventDate . ' ' . $eventTime);
+                                } elseif ($eventDate) {
+                                    $eventDateTime = \Carbon\Carbon::parse($eventDate . ' 23:59:59');
+                                } else {
+                                    $eventDateTime = null;
+                                }
+                                $isExpired = $eventDateTime ? $eventDateTime->isPast() : false;
                                 $ticket = $txn->ticket;
                                 $isResellApproved = $ticket && $ticket->is_resell && $ticket->resell_status === 'approved';
                             @endphp
+                            @if($isExpired)
+                                <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" disabled>
+                                    <i class="bi bi-download"></i> Unavailable
+                                </button>
+                            @else
+                                <a href="{{ route('download.qr', $txn->id) }}" class="btn btn-outline-success btn-sm d-flex align-items-center gap-1">
+                                    <i class="bi bi-download"></i> Download
+                                </a>
+                            @endif
+                        </td>
+                        <td>
+                            {{-- Debug info: show event_date and event_time --}}
+                            {{ $eventDate }} {{ $eventTime }}
+                        </td>
+                        <td>
                             @if($isExpired || $isResellApproved)
                                 <button class="btn btn-secondary btn-sm" disabled>Unavailable</button>
                             @else
