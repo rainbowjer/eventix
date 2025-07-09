@@ -9,14 +9,14 @@ return new class extends Migration {
     {
         Schema::table('transactions', function (Blueprint $table) {
             $table->unsignedBigInteger('seat_id')->nullable()->after('user_id');
-            $table->foreign('seat_id')->references('id')->on('seats')->onDelete('cascade');
+           $table->foreign('seat_id')->references('id')->on('seats')->onDelete('cascade');
         });
     }
 
     public function down(): void
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->dropForeign(['seat_id']);
+           $table->dropForeign(['seat_id']);
             $table->dropColumn('seat_id');
         });
     }
