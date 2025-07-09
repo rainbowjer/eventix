@@ -61,7 +61,6 @@
                         <th>Date Booked</th>
                         <th>Status</th>
                         <th>QR Code</th>
-                        <th>Debug Date/Time</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -73,7 +72,25 @@
                         <td>{{ optional($txn->seat)->label }}</td>
                         <td>RM{{ number_format($txn->amount, 2) }}</td>
                         <td>{{ $txn->created_at->format('d M Y, h:i A') }}</td>
-                        <td>Active</td>
+                        @php
+                            $eventDate = optional(optional($txn->seat)->event)->event_date;
+                            $eventTime = optional(optional($txn->seat)->event)->event_time;
+                            if ($eventDate && $eventTime) {
+                                $eventDateTime = \Carbon\Carbon::parse($eventDate . ' ' . $eventTime, 'Asia/Kuala_Lumpur');
+                            } elseif ($eventDate) {
+                                $eventDateTime = \Carbon\Carbon::parse($eventDate . ' 23:59:59', 'Asia/Kuala_Lumpur');
+                            } else {
+                                $eventDateTime = null;
+                            }
+                            $isExpired = $eventDateTime ? $eventDateTime->isPast() : false;
+                        @endphp
+                        <td>
+                            @if($isExpired)
+                                Not Active
+                            @else
+                                Active
+                            @endif
+                        </td>
                         <td>
                             @php
                                 $eventDate = optional(optional($txn->seat)->event)->event_date;
@@ -98,10 +115,6 @@
                                     <i class="bi bi-download"></i> Download
                                 </a>
                             @endif
-                        </td>
-                        <td>
-                            {{-- Debug info: show event_date and event_time --}}
-                            {{ $eventDate }} {{ $eventTime }}
                         </td>
                         <td>
                             @if($isExpired || $isResellApproved)
