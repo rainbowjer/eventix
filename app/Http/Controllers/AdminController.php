@@ -664,7 +664,7 @@ public function exportPDF(Request $request)
 
     public function saveResellNote(Request $request, $id)
     {
-        $ticket = \App\Models\Ticket::findOrFail($id);
+        $ticket = Ticket::findOrFail($id);
         $ticket->resell_admin_note = $request->resell_admin_note;
         $ticket->save();
         return back()->with('success', 'Admin note saved.');
@@ -672,7 +672,7 @@ public function exportPDF(Request $request)
 
     public function viewResellTicket($id)
     {
-        $ticket = \App\Models\Ticket::with(['event', 'seat', 'user'])->findOrFail($id);
+        $ticket = Ticket::with(['event', 'seat', 'user'])->findOrFail($id);
         return view('admin.resell_view', compact('ticket'));
     }
 
