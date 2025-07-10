@@ -159,6 +159,8 @@ Route::middleware(['auth', 'adminmiddleware'])->group(function () {
 });
 
 Route::get('/admin/organizer/{id}/events', [App\Http\Controllers\AdminController::class, 'viewOrganizerEvents'])->name('admin.organizer.events');
+Route::post('/admin/resell/{id}/note', [App\Http\Controllers\AdminController::class, 'saveResellNote'])->name('admin.resell.note');
+Route::get('/admin/resell/{id}', [App\Http\Controllers\AdminController::class, 'viewResellTicket'])->name('admin.resell.view');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');

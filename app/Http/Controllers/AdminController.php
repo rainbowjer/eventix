@@ -662,6 +662,20 @@ public function exportPDF(Request $request)
         return view('admin.resell', compact('resellTickets'));
     }
 
+    public function saveResellNote(Request $request, $id)
+    {
+        $ticket = \App\Models\Ticket::findOrFail($id);
+        $ticket->resell_admin_note = $request->resell_admin_note;
+        $ticket->save();
+        return back()->with('success', 'Admin note saved.');
+    }
+
+    public function viewResellTicket($id)
+    {
+        $ticket = \App\Models\Ticket::with(['event', 'seat', 'user'])->findOrFail($id);
+        return view('admin.resell_view', compact('ticket'));
+    }
+
     public function viewOrganizerEvents($id)
     {
         $organizer = User::where('id', $id)->where('role', 'organizer')->firstOrFail();

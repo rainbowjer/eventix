@@ -16,6 +16,7 @@ class Ticket extends Model
         'resell_price',
         'status',
         'resell_status',
+        'resell_admin_note',
     ];
 
     protected $casts = [

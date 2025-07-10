@@ -52,7 +52,7 @@
                         </td>
                         <td>{{ $ticket->updated_at->format('Y-m-d H:i') }}</td>
                         <td>
-                            <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                            <a href="{{ route('admin.resell.view', $ticket->id) }}" class="btn btn-sm btn-outline-primary">View</a>
                         </td>
                     </tr>
                     @empty
