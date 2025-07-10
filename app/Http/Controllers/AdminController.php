@@ -273,6 +273,14 @@ public function organizers()
 
     return view('admin.organizer', compact('organizers'));
 }
+public function organizer()
+{
+    $organizers = User::where('role', 'organizer')
+        ->withCount('events')
+        ->orderBy('name')
+        ->get();
+    return view('admin.organizer', compact('organizers'));
+}
 public function exportPDF(Request $request)
 {
     // Build query with search functionality (same as report method)

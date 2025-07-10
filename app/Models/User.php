@@ -97,4 +97,9 @@ class User extends Authenticatable
     {
         return $this->reviews()->where('event_id', $eventId)->exists();
     }
+
+    public function events()
+    {
+        return $this->hasMany(\App\Models\Event::class, 'organizer_id');
+    }
 }
