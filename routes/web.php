@@ -158,6 +158,7 @@ Route::middleware(['auth', 'adminmiddleware'])->group(function () {
     Route::get('/admin/resell-tickets', [AdminController::class, 'resellTickets'])->name('admin.resell.tickets');
 });
 
+Route::get('/admin/organizer/{id}/events', [App\Http\Controllers\AdminController::class, 'viewOrganizerEvents'])->name('admin.organizer.events');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');

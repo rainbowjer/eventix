@@ -15,26 +15,84 @@ class AdminController extends Controller
 {
     public function dashboard(Request $request)
     {
-        $totalUsers = User::count();
-        $totalEvents = Event::count();
-        $totalResells = Ticket::whereNotNull('resell_price')->count();
-        $totalRevenue = Transaction::sum('amount');
+        $totalUsers = $this->getTotalUsers($request);
+        $totalEvents = $this->getTotalEvents($request);
+        $totalResells = $this->getTotalResells($request);
+        $totalRevenue = $this->getTotalRevenue($request);
+        $users = $this->getUsers($request);
+        $events = $this->getEvents($request);
+        $resellTickets = $this->getResellTickets($request);
+        $recentAdminLogs = $this->getRecentAdminLogs($request);
+        [$salesDays, $salesCounts] = $this->getSalesTrend();
+        $frequentUsers = $this->getFrequentUsers();
+        $frequentOrganizers = $this->getFrequentOrganizers();
+        $transactions = $this->getTransactions();
+        $eventPieData = $this->getEventPieData();
+        $paymentMethodData = $this->getPaymentMethodData();
+        return view('admin.dashboard', compact(
+            'totalUsers', 'totalEvents', 'totalResells', 'totalRevenue',
+            'users', 'events', 'resellTickets', 'recentAdminLogs',
+            'salesDays', 'salesCounts', 'frequentUsers', 'frequentOrganizers',
+            'transactions', 'eventPieData', 'paymentMethodData'
+        ));
+    }
+    
+    /**
+     * Helper method to get date query based on filter
+     */
+    private function getDateQuery($dateFilter)
+    {
+        $now = now();
         
-        // Global search functionality
-        $globalSearch = $request->get('global_search');
-        $searchType = $request->get('search_type', 'all');
+        switch ($dateFilter) {
+            case 'today':
+                return ['created_at', '>=', $now->startOfDay()];
+            case 'week':
+                return ['created_at', '>=', $now->startOfWeek()];
+            case 'month':
+                return ['created_at', '>=', $now->startOfMonth()];
+            case 'year':
+                return ['created_at', '>=', $now->startOfYear()];
+            default:
+                return [];
+        }
+    }
+
+    private function getTotalUsers(Request $request) {
         $dateFilter = $request->get('date_filter');
-        
-        // Apply date filtering to counts if specified
         if ($dateFilter) {
             $dateQuery = $this->getDateQuery($dateFilter);
-            $totalUsers = User::where($dateQuery)->count();
-            $totalEvents = Event::where($dateQuery)->count();
-            $totalResells = Ticket::whereNotNull('resell_price')->where($dateQuery)->count();
-            $totalRevenue = Transaction::where($dateQuery)->sum('amount');
+            return User::where($dateQuery)->count();
         }
-        
-        // User search
+        return User::count();
+    }
+    private function getTotalEvents(Request $request) {
+        $dateFilter = $request->get('date_filter');
+        if ($dateFilter) {
+            $dateQuery = $this->getDateQuery($dateFilter);
+            return Event::where($dateQuery)->count();
+        }
+        return Event::count();
+    }
+    private function getTotalResells(Request $request) {
+        $dateFilter = $request->get('date_filter');
+        if ($dateFilter) {
+            $dateQuery = $this->getDateQuery($dateFilter);
+            return Ticket::whereNotNull('resell_price')->where($dateQuery)->count();
+        }
+        return Ticket::whereNotNull('resell_price')->count();
+    }
+    private function getTotalRevenue(Request $request) {
+        $dateFilter = $request->get('date_filter');
+        if ($dateFilter) {
+            $dateQuery = $this->getDateQuery($dateFilter);
+            return Transaction::where($dateQuery)->sum('amount');
+        }
+        return Transaction::sum('amount');
+    }
+    private function getUsers(Request $request) {
+        $globalSearch = $request->get('global_search');
+        $searchType = $request->get('search_type', 'all');
         $userQuery = User::orderBy('created_at', 'desc');
         if ($request->filled('user_search')) {
             $search = $request->user_search;
@@ -43,30 +101,30 @@ class AdminController extends Controller
                   ->orWhere('email', 'like', "%$search%");
             });
         }
-        
-        // Apply global search to users if applicable
         if ($globalSearch && ($searchType == 'all' || $searchType == 'users')) {
             $userQuery->where(function($q) use ($globalSearch) {
                 $q->where('name', 'like', "%$globalSearch%")
                   ->orWhere('email', 'like', "%$globalSearch%");
             });
         }
-        $users = $userQuery->paginate(5);
-        
-        // Event search
+        return $userQuery->paginate(5);
+    }
+    private function getEvents(Request $request) {
+        $globalSearch = $request->get('global_search');
+        $searchType = $request->get('search_type', 'all');
         $eventQuery = Event::orderBy('created_at', 'desc');
         if ($request->filled('event_search')) {
             $search = $request->event_search;
             $eventQuery->where('event_name', 'like', "%$search%");
         }
-        
-        // Apply global search to events if applicable
         if ($globalSearch && ($searchType == 'all' || $searchType == 'events')) {
             $eventQuery->where('event_name', 'like', "%$globalSearch%");
         }
-        $events = $eventQuery->paginate(5);
-        
-        // Resell ticket search
+        return $eventQuery->paginate(5);
+    }
+    private function getResellTickets(Request $request) {
+        $globalSearch = $request->get('global_search');
+        $searchType = $request->get('search_type', 'all');
         $resellQuery = Ticket::select('id', 'user_id', 'event_id', 'seat_id', 'price', 'resell_price', 'resell_status')
             ->where('is_resell', true);
         if ($request->filled('resell_search')) {
@@ -81,8 +139,6 @@ class AdminController extends Controller
                   ->orWhere('resell_status', 'like', "%$search%");
             });
         }
-        
-        // Apply global search to resell tickets if applicable
         if ($globalSearch && ($searchType == 'all' || $searchType == 'resells')) {
             $resellQuery->where(function($q) use ($globalSearch) {
                 $q->whereHas('user', function($uq) use ($globalSearch) {
@@ -100,9 +156,11 @@ class AdminController extends Controller
         if ($request->filled('end_date')) {
             $resellQuery->whereDate('updated_at', '<=', $request->end_date);
         }
-        $resellTickets = $resellQuery->orderByDesc('updated_at')->paginate(5);
-        
-        // Recent admin logs search
+        return $resellQuery->orderByDesc('updated_at')->paginate(5);
+    }
+    private function getRecentAdminLogs(Request $request) {
+        $globalSearch = $request->get('global_search');
+        $searchType = $request->get('search_type', 'all');
         $adminLogQuery = AdminActivityLog::select('id', 'admin_id', 'action', 'description', 'created_at');
         if ($request->filled('adminlog_search')) {
             $search = $request->adminlog_search;
@@ -114,8 +172,6 @@ class AdminController extends Controller
                   ->orWhere('description', 'like', "%$search%");
             });
         }
-        
-        // Apply global search to admin logs if applicable
         if ($globalSearch && ($searchType == 'all')) {
             $adminLogQuery->where(function($q) use ($globalSearch) {
                 $q->whereHas('admin', function($aq) use ($globalSearch) {
@@ -131,26 +187,33 @@ class AdminController extends Controller
         if ($request->filled('end_date_adminlog')) {
             $adminLogQuery->whereDate('created_at', '<=', $request->end_date_adminlog);
         }
-        $recentAdminLogs = $adminLogQuery->orderByDesc('created_at')->take(5)->get();
-        // Sales trend for current month (per day)
+        return $adminLogQuery->orderByDesc('created_at')->take(5)->get();
+    }
+    private function getSalesTrend() {
         $salesDays = [];
         $salesCounts = [];
         $now = now();
         $startOfMonth = $now->copy()->startOfMonth();
-        $endOfMonth = $now;
         $daysInMonth = $now->day;
         for ($i = 1; $i <= $daysInMonth; $i++) {
             $date = $startOfMonth->copy()->addDays($i - 1);
-            $label = $date->format('j M'); // e.g., 1 Jul
+            $label = $date->format('j M');
             $count = Transaction::whereDate('created_at', $date->toDateString())->count();
             $salesDays[] = $label;
             $salesCounts[] = $count;
         }
-        $frequentUsers = User::where('role', 'user')->orderByDesc('login_count')->take(3)->get();
-        $frequentOrganizers =User::where('role', 'organizer')->orderByDesc('login_count')->take(3)->get();
-        // Add transactions for dashboard table
-        $transactions = Transaction::with('user', 'seat.event')->orderByDesc('created_at')->paginate(5);
-        // Top 3 events by tickets sold for pie charts (ticket count and revenue breakdown)
+        return [$salesDays, $salesCounts];
+    }
+    private function getFrequentUsers() {
+        return User::where('role', 'user')->orderByDesc('login_count')->take(3)->get();
+    }
+    private function getFrequentOrganizers() {
+        return User::where('role', 'organizer')->orderByDesc('login_count')->take(3)->get();
+    }
+    private function getTransactions() {
+        return Transaction::with('user', 'seat.event')->orderByDesc('created_at')->paginate(5);
+    }
+    private function getEventPieData() {
         $topEvents = Event::with(['tickets.transaction'])->withCount(['tickets as sold_count' => function($q) {
             $q->whereHas('transaction');
         }, 'tickets'])->orderByDesc('sold_count')->take(3)->get();
@@ -176,31 +239,33 @@ class AdminController extends Controller
                 'unsold_value' => $unsold_value
             ];
         }
-        return view('admin.dashboard', compact('totalUsers', 'totalEvents', 'totalResells', 'totalRevenue', 'users', 'events', 'resellTickets', 'recentAdminLogs', 'salesDays', 'salesCounts', 'frequentUsers', 'frequentOrganizers', 'transactions', 'eventPieData'));
+        return $eventPieData;
     }
-    
-    /**
-     * Helper method to get date query based on filter
-     */
-    private function getDateQuery($dateFilter)
-    {
-        $now = now();
-        
-        switch ($dateFilter) {
-            case 'today':
-                return ['created_at', '>=', $now->startOfDay()];
-            case 'week':
-                return ['created_at', '>=', $now->startOfWeek()];
-            case 'month':
-                return ['created_at', '>=', $now->startOfMonth()];
-            case 'year':
-                return ['created_at', '>=', $now->startOfYear()];
-            default:
-                return [];
+    private function getPaymentMethodData() {
+        $paymentMethodData = Transaction::whereNotNull('payment_method')
+            ->selectRaw('payment_method, COUNT(*) as count, SUM(amount) as total_amount')
+            ->groupBy('payment_method')
+            ->orderByDesc('count')
+            ->get()
+            ->map(function($item) {
+                return [
+                    'method' => ucfirst(str_replace('_', ' ', $item->payment_method)),
+                    'count' => $item->count,
+                    'total_amount' => $item->total_amount,
+                    'percentage' => 0
+                ];
+            });
+        $totalTransactions = $paymentMethodData->sum('count');
+        if ($totalTransactions > 0) {
+            $paymentMethodData = $paymentMethodData->map(function($item) use ($totalTransactions) {
+                $item['percentage'] = round(($item['count'] / $totalTransactions) * 100, 1);
+                return $item;
+            });
         }
+        return $paymentMethodData;
     }
 
-    public function report(Request $request)
+public function report(Request $request)
 {
     $totalSales = Transaction::sum('amount');
     $totalTickets = Transaction::count();
@@ -595,5 +660,12 @@ public function exportPDF(Request $request)
 
         $resellTickets = $query->orderByDesc('updated_at')->paginate(10);
         return view('admin.resell', compact('resellTickets'));
+    }
+
+    public function viewOrganizerEvents($id)
+    {
+        $organizer = User::where('id', $id)->where('role', 'organizer')->firstOrFail();
+        $events = Event::where('organizer_id', $organizer->id)->get();
+        return view('admin.organizer_events', compact('organizer', 'events'));
     }
 }

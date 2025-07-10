@@ -59,6 +59,8 @@ public function store(Request $request, $event)
             'seat_id' => $seat->id,
             'ticket_id' => $ticket->id,
             'amount' => $seat->price ?? 0,
+            'payment_status' => 'paid',
+            'payment_method' => 'credit_card', // Default for direct booking
         ]);
 
         $bookedSeats[] = $seat;
@@ -247,6 +249,7 @@ public function processPayment(Request $request)
             'ticket_id' => $ticket->id,
             'amount' => $seat->price,
             'payment_status' => 'paid',
+            'payment_method' => $request->payment_method,
             'purchase_date' => now(),
         ]);
 

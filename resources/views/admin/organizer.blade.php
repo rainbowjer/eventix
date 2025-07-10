@@ -53,17 +53,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($organizers as $org)
+                        @forelse($organizers as $organizer)
                         <tr>
-                            <td>{{ $org->name }}</td>
-                            <td>{{ $org->email }}</td>
-                            <td>{{ $org->events_count ?? 0 }}</td>
+                            <td>{{ $organizer->name }}</td>
+                            <td>{{ $organizer->email }}</td>
+                            <td>{{ $organizer->events_count ?? $organizer->events->count() }}</td>
                             <td>
                                 <span class="badge bg-success">Active</span>
                             </td>
-                            <td>{{ $org->created_at->format('Y-m-d') }}</td>
+                            <td>{{ $organizer->created_at->format('Y-m-d') }}</td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-outline-primary">View</a>
+                                <a href="{{ route('admin.organizer.events', $organizer->id) }}" class="btn btn-sm btn-info">View</a>
                             </td>
                         </tr>
                         @empty

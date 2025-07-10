@@ -36,6 +36,38 @@
         .modern-table { font-size: 0.95rem; }
     }
     .table-responsive { overflow-x: auto; }
+    /* Payment Method Usage Distribution Styles */
+    .payment-method-stats {
+        margin-top: 1rem;
+    }
+    .payment-method-stats .d-flex {
+        box-shadow: 0 2px 8px rgba(31,38,135,0.06);
+        border-radius: 12px;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(90deg, rgba(34,34,59,0.9) 0%, rgba(52, 152, 219, 0.7) 100%);
+        color: #fff !important;
+        transition: transform 0.1s;
+    }
+    .payment-method-stats .d-flex:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 16px rgba(31,38,135,0.12);
+    }
+    .payment-method-stats strong {
+        font-size: 1.1em;
+    }
+    #paymentMethodPieChart {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 16px rgba(31,38,135,0.08);
+        padding: 1.5rem;
+    }
+    .card-header.bg-white.fw-bold {
+        background: linear-gradient(90deg, #36A2EB 0%, #FFCE56 100%) !important;
+        color: #fff !important;
+        border-radius: 18px 18px 0 0;
+        font-size: 1.15em;
+        letter-spacing: 0.5px;
+    }
 </style>
     <h2 class="mb-4">📊 Admin Dashboard</h2>
     
@@ -172,6 +204,48 @@
         </div>
     </div>
     @endif
+    
+    <!-- Payment Method Usage Pie Chart -->
+    @if(!empty($paymentMethodData))
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white fw-bold">
+                    <i class="bi bi-credit-card"></i> Payment Method Usage Distribution
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div id="paymentMethodPieChart" style="height: 400px;"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="payment-method-stats">
+                                <h6 class="fw-bold mb-3">Payment Method Statistics</h6>
+                                @foreach($paymentMethodData as $method)
+                                <div class="d-flex justify-content-between align-items-center mb-2 p-2 rounded" 
+                                     style="background: {{ $loop->index < 6 ? ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'][$loop->index] : '#E0E0E0' }}; color: white;">
+                                    <div>
+                                        <strong>{{ $method['method'] }}</strong>
+                                        <div class="small">{{ $method['percentage'] }}%</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div>{{ $method['count'] }} transactions</div>
+                                        <div class="small">RM{{ number_format($method['total_amount'], 2) }}</div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+    
+    <!-- Top 3 Sold Tickets Modern Card -->
+    {{-- Removed as per user request --}}
+    
     <div class="row mb-4">
         <div class="col-md-6">
             <div class="card">
@@ -368,6 +442,27 @@
                 formatter: function (y) { return y + ' tickets'; }
             });
             @endforeach
+            
+            // Payment Method Pie Chart
+            @if(!empty($paymentMethodData))
+            new Morris.Donut({
+                element: 'paymentMethodPieChart',
+                data: [
+                    @foreach($paymentMethodData as $method)
+                    { 
+                        label: '{{ $method['method'] }}', 
+                        value: {{ $method['count'] }},
+                        percentage: {{ $method['percentage'] }}
+                    }@if(!$loop->last),@endif
+                    @endforeach
+                ],
+                colors: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+                resize: true,
+                formatter: function (y, data) { 
+                    return data.percentage + '% (' + y + ' transactions)'; 
+                }
+            });
+            @endif
         });
     </script>
     @endpush

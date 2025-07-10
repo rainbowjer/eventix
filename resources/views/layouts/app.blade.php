@@ -192,14 +192,16 @@
                     </li>
                     @if (Auth::user()->role === 'organizer')
                         <li class="nav-item"><a class="nav-link" href="{{ route('organizer.dashboard') }}">Organizer Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('book.history') }}">My Bookings</a></li>
                     @elseif (Auth::user()->role === 'admin')
                         <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
                     @endif
                     @if (auth()->user()->role === 'user')
                         <li class="nav-item"><a class="nav-link" href="{{ route('user.profile') }}">My Profile</a></li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('resell.my') }}">My Resell Tickets</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('book.history') }}">My Bookings</a></li>
                     @endif
-                    <li class="nav-item"><a class="nav-link" href="{{ route('book.history') }}">My Bookings</a></li>
+                    
                     <li class="nav-item"><span class="nav-link">Welcome, {{ Auth::user()->name }}</span></li>
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">

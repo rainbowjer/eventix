@@ -48,7 +48,9 @@
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-2 sidebar py-4">
-            <h4 class="text-center">🎫 EventiX</h4>
+            <a href="{{ route('welcome') }}" style="text-decoration:none;color:inherit;">
+                <h4 class="text-center">🎫 EventiX</h4>
+            </a>
             <hr>
             <a href="{{ route('admin.dashboard') }}" class="{{ Request::is('admin/dashboard') ? 'active' : '' }}">📊 Dashboard</a>
             <a href="{{ route('admin.users.index') }}" class="{{ Request::is('admin/users*') ? 'active' : '' }}">👥 Manage Users</a>

@@ -60,6 +60,7 @@ public function process(Request $request)
                 'ticket_id' => $ticket->id,
                 'amount' => $seat->price,
                 'payment_status' => 'paid',
+                'payment_method' => $request->payment_method,
                 'purchase_date' => $now,
             ]);
         }
