@@ -124,11 +124,48 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('totalUsers', 'totalEvents', 'totalResells', 'totalRevenue', 'users', 'events', 'resellTickets', 'recentAdminLogs', 'salesDays', 'salesCounts', 'frequentUsers', 'frequentOrganizers', 'transactions', 'eventPieData'));
     }
 
-    public function report()
+    public function report(Request $request)
 {
     $totalSales = Transaction::sum('amount');
     $totalTickets = Transaction::count();
-    $transactions =Transaction::with('user', 'seat.event')->latest()->get();
+    
+    // Build query with search functionality
+    $query = Transaction::with('user', 'seat.event');
+    
+    // Search by user name
+    if ($request->filled('user_search')) {
+        $search = $request->user_search;
+        $query->whereHas('user', function($q) use ($search) {
+            $q->where('name', 'like', "%$search%");
+        });
+    }
+    
+    // Search by event name
+    if ($request->filled('event_search')) {
+        $search = $request->event_search;
+        $query->whereHas('seat.event', function($q) use ($search) {
+            $q->where('event_name', 'like', "%$search%");
+        });
+    }
+    
+    // Search by seat label
+    if ($request->filled('seat_search')) {
+        $search = $request->seat_search;
+        $query->whereHas('seat', function($q) use ($search) {
+            $q->where('label', 'like', "%$search%");
+        });
+    }
+    
+    // Date range filter
+    if ($request->filled('start_date')) {
+        $query->whereDate('created_at', '>=', $request->start_date);
+    }
+    
+    if ($request->filled('end_date')) {
+        $query->whereDate('created_at', '<=', $request->end_date);
+    }
+    
+    $transactions = $query->latest()->get();
 
     return view('admin.report', compact('totalSales', 'totalTickets', 'transactions'));
 }
