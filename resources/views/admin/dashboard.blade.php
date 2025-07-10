@@ -1,6 +1,42 @@
 @extends('layouts.admin')
 
 @section('content')
+<style>
+    .modern-card {
+        background: #fff;
+        border-radius: 22px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
+        padding: 2rem 1.5rem;
+        margin: 2rem auto;
+        max-width: 1200px;
+    }
+    .modern-table th, .modern-table td {
+        vertical-align: middle !important;
+    }
+    .modern-table thead th {
+        background: #22223b;
+        color: #fff;
+        font-weight: 700;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        border: none;
+    }
+    .modern-table tbody tr {
+        transition: background 0.15s;
+    }
+    .modern-table tbody tr:nth-child(even) {
+        background: #f1f5f9;
+    }
+    .modern-table tbody tr:hover {
+        background: #e0e7ff;
+    }
+    @media (max-width: 900px) {
+        .modern-card { padding: 1rem 0.5rem; }
+        .modern-table { font-size: 0.95rem; }
+    }
+    .table-responsive { overflow-x: auto; }
+</style>
     <h2 class="mb-4">📊 Admin Dashboard</h2>
     
     <!-- Global Search Bar -->
@@ -189,7 +225,7 @@
             </div>
             <div x-show="open">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="users-table">
+                    <table class="table table-bordered table-primary modern-table" id="users-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -237,7 +273,7 @@
             </div>
             <div x-show="open">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="events-table">
+                    <table class="table table-bordered table-success modern-table" id="events-table">
                         <thead>
                             <tr>
                                 <th>Event Name</th>
@@ -283,7 +319,7 @@
             </div>
             <div x-show="open">
                 <div class="table-responsive" id="transactions-table">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-warning modern-table">
                         <thead>
                             <tr>
                                 <th>User</th>

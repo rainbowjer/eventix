@@ -15,6 +15,11 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Check if user is authenticated and is an admin
+        if (!auth()->check() || auth()->user()->role !== 'admin') {
+            return redirect()->route('dashboard')->with('error', 'Access denied. Admin privileges required.');
+        }
+
         return $next($request);
     }
 }

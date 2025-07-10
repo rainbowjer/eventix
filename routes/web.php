@@ -151,15 +151,13 @@ Route::get('/', function (Request $request) {
 });
 
 Route::get('/admin/report', [AdminController::class, 'report'])->name('admin.report');
-Route::delete('/admin/user/{id}', [AdminController::class, 'deleteUser'])->name('admin.user.delete');
+
 
 Route::middleware(['auth', 'adminmiddleware'])->group(function () {
     Route::get('/admin/organizer', [AdminController::class, 'organizer'])->name('admin.organizer');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
-});
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
@@ -183,7 +181,7 @@ Route::resource('admin/events', App\Http\Controllers\EventController::class)->na
 // });
 
 // Admin user management
-Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('users', [\App\Http\Controllers\AdminUserController::class, 'index'])->name('admin.users.index');
     Route::get('users/{user}/edit', [\App\Http\Controllers\AdminUserController::class, 'edit'])->name('admin.users.edit');
     Route::put('users/{user}', [\App\Http\Controllers\AdminUserController::class, 'update'])->name('admin.users.update');

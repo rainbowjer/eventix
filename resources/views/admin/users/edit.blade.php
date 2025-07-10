@@ -3,6 +3,12 @@
 @section('content')
 <div class="container">
     <h2 class="mb-4">Edit User</h2>
+    @if($user->role === 'admin')
+    <div class="alert alert-warning mb-3">
+        <i class="bi bi-exclamation-triangle"></i>
+        <strong>Admin User:</strong> This is an admin user. Be careful when modifying admin permissions.
+    </div>
+    @endif
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
