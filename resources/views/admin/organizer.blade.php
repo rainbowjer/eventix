@@ -30,7 +30,13 @@
     .table-responsive { overflow-x: auto; }
 </style>
 <div class="container py-4">
-    <h2 class="mb-4">Manage Organizers</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">🧑‍🔧 Manage Organizers</h2>
+        <form method="GET" action="" class="d-flex" style="max-width:350px;">
+            <input type="text" name="search" value="{{ request('search') }}" class="form-control form-control-sm me-2" placeholder="Search organizers by name or email...">
+            <button type="submit" class="btn btn-sm btn-primary">Search</button>
+        </form>
+    </div>
 
     <div class="card">
         <div class="card-body p-0">
@@ -70,5 +76,8 @@
             </div>
         </div>
     </div>
+</div>
+<div class="mt-3">
+    {{ $organizers->withQueryString()->links('pagination::bootstrap-5') }}
 </div>
 @endsection

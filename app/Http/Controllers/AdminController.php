@@ -278,7 +278,7 @@ public function organizer()
     $organizers = User::where('role', 'organizer')
         ->withCount('events')
         ->orderBy('name')
-        ->get();
+        ->paginate(15);
     return view('admin.organizer', compact('organizers'));
 }
 public function exportPDF(Request $request)
@@ -570,5 +570,30 @@ public function exportPDF(Request $request)
             fclose($handle);
         };
         return response()->streamDownload($callback, 'transactions.csv', $headers);
+    }
+
+    public function resellTickets(Request $request)
+    {
+        $query = Ticket::with(['user', 'event', 'seat'])
+            ->where('is_resell', true);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->whereHas('event', function($q2) use ($search) {
+                    $q2->where('event_name', 'like', "%$search%");
+                })
+                ->orWhereHas('user', function($q2) use ($search) {
+                    $q2->where('name', 'like', "%$search%");
+                })
+                ->orWhereHas('seat', function($q2) use ($search) {
+                    $q2->where('label', 'like', "%$search%");
+                })
+                ->orWhere('resell_status', 'like', "%$search%");
+            });
+        }
+
+        $resellTickets = $query->orderByDesc('updated_at')->paginate(10);
+        return view('admin.resell', compact('resellTickets'));
     }
 }

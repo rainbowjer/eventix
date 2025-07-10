@@ -957,9 +957,9 @@ $(document).ready(function() {
     <div class="container text-center">
         <h2 class="fw-bold mb-3">Need Help?</h2>
         <p class="mb-4">If you have questions or need support, reach out to us anytime.</p>
-        <a href="mailto:eventix.helpdesk@gmail.com" class="btn btn-outline-light btn-lg">
-            <i class="bi bi-envelope"></i> Contact Us
-        </a>
+        <a href="https://wa.me/601118882950" target="_blank" class="btn btn-success">
+        <i class="bi bi-whatsapp"></i> Contact Us
+    </a>
     </div>
 </section>
 

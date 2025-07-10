@@ -155,6 +155,7 @@ Route::get('/admin/report', [AdminController::class, 'report'])->name('admin.rep
 
 Route::middleware(['auth', 'adminmiddleware'])->group(function () {
     Route::get('/admin/organizer', [AdminController::class, 'organizer'])->name('admin.organizer');
+    Route::get('/admin/resell-tickets', [AdminController::class, 'resellTickets'])->name('admin.resell.tickets');
 });
 
 
