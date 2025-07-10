@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2 class="mb-0">📈 Reports</h2>
-    <a href="{{ route('admin.report.export.pdf') }}" class="btn btn-danger">Export to PDF</a>
+    <a href="{{ route('admin.report.export.pdf', request()->query()) }}" class="btn btn-danger">Export to PDF</a>
 </div>
 
 <!-- Search Form -->
@@ -36,12 +36,9 @@
                        value="{{ request('end_date') }}">
             </div>
             <div class="col-12">
-                <button type="submit" class="btn btn-primary me-2">
+                <button type="submit" class="btn btn-primary">
                     <i class="fas fa-search"></i> Search
                 </button>
-                <a href="{{ route('admin.report') }}" class="btn btn-secondary">
-                    <i class="fas fa-times"></i> Clear
-                </a>
             </div>
         </form>
     </div>

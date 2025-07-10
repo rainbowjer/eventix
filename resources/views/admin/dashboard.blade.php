@@ -2,6 +2,66 @@
 
 @section('content')
     <h2 class="mb-4">📊 Admin Dashboard</h2>
+    
+    <!-- Global Search Bar -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="GET" action="{{ route('admin.dashboard') }}" class="row g-3">
+                <div class="col-md-4">
+                    <label for="global_search" class="form-label">🔍 Global Search</label>
+                    <input type="text" class="form-control" id="global_search" name="global_search" 
+                           value="{{ request('global_search') }}" placeholder="Search users, events, transactions...">
+                </div>
+                <div class="col-md-3">
+                    <label for="search_type" class="form-label">Search Type</label>
+                    <select class="form-select" id="search_type" name="search_type">
+                        <option value="all" {{ request('search_type') == 'all' ? 'selected' : '' }}>All</option>
+                        <option value="users" {{ request('search_type') == 'users' ? 'selected' : '' }}>Users</option>
+                        <option value="events" {{ request('search_type') == 'events' ? 'selected' : '' }}>Events</option>
+                        <option value="transactions" {{ request('search_type') == 'transactions' ? 'selected' : '' }}>Transactions</option>
+                        <option value="resells" {{ request('search_type') == 'resells' ? 'selected' : '' }}>Resell Tickets</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="date_filter" class="form-label">Date Range</label>
+                    <select class="form-select" id="date_filter" name="date_filter">
+                        <option value="" {{ request('date_filter') == '' ? 'selected' : '' }}>All Time</option>
+                        <option value="today" {{ request('date_filter') == 'today' ? 'selected' : '' }}>Today</option>
+                        <option value="week" {{ request('date_filter') == 'week' ? 'selected' : '' }}>This Week</option>
+                        <option value="month" {{ request('date_filter') == 'month' ? 'selected' : '' }}>This Month</option>
+                        <option value="year" {{ request('date_filter') == 'year' ? 'selected' : '' }}>This Year</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    
+    <!-- Search Results Summary -->
+    @if(request('global_search') || request('search_type') != 'all' || request('date_filter'))
+    <div class="alert alert-info mb-4">
+        <i class="bi bi-info-circle"></i>
+        <strong>Search Results:</strong>
+        @if(request('global_search'))
+            Searching for "{{ request('global_search') }}"
+        @endif
+        @if(request('search_type') != 'all')
+            in {{ ucfirst(request('search_type')) }}
+        @endif
+        @if(request('date_filter'))
+            for {{ ucfirst(request('date_filter')) }}
+        @endif
+    </div>
+    @endif
+    
     <div class="row g-4 mb-4">
         <div class="col-12 col-md-6 col-lg-3">
             <div class="card shadow-sm text-center bg-primary text-white">
@@ -113,11 +173,11 @@
             <input type="text" name="user_search" value="{{ request('user_search') }}" class="form-control form-control-sm d-inline-block w-auto" placeholder="Search users...">
             <button type="submit" class="btn btn-sm btn-primary">Search</button>
         </form>
-        <a href="{{ route('admin.export.users') }}" class="btn btn-outline-primary btn-sm ms-2" title="Export Users CSV">
+        <a href="{{ route('admin.export.users', request()->query()) }}" class="btn btn-outline-primary btn-sm ms-2" title="Export Users CSV">
             <i class="bi bi-file-earmark-spreadsheet"></i>
             <span class="visually-hidden">Export Users CSV</span>
         </a>
-        <a href="{{ route('admin.export.users.pdf') }}" class="btn btn-outline-danger btn-sm ms-2" title="Export Users PDF">
+        <a href="{{ route('admin.export.users.pdf', request()->query()) }}" class="btn btn-outline-danger btn-sm ms-2" title="Export Users PDF">
             <i class="bi bi-file-earmark-pdf"></i>
             <span class="visually-hidden">Export Users PDF</span>
         </a>
@@ -161,11 +221,11 @@
             <input type="text" name="event_search" value="{{ request('event_search') }}" class="form-control form-control-sm d-inline-block w-auto" placeholder="Search events...">
             <button type="submit" class="btn btn-sm btn-primary">Search</button>
         </form>
-        <a href="{{ route('admin.export.events') }}" class="btn btn-outline-primary btn-sm ms-2" title="Export Events CSV">
+        <a href="{{ route('admin.export.events', request()->query()) }}" class="btn btn-outline-primary btn-sm ms-2" title="Export Events CSV">
             <i class="bi bi-file-earmark-spreadsheet"></i>
             <span class="visually-hidden">Export Events CSV</span>
         </a>
-        <a href="{{ route('admin.export.events.pdf') }}" class="btn btn-outline-danger btn-sm ms-2" title="Export Events PDF">
+        <a href="{{ route('admin.export.events.pdf', request()->query()) }}" class="btn btn-outline-danger btn-sm ms-2" title="Export Events PDF">
             <i class="bi bi-file-earmark-pdf"></i>
             <span class="visually-hidden">Export Events PDF</span>
         </a>
@@ -207,7 +267,7 @@
             <input type="text" name="resell_search" value="{{ request('resell_search') }}" class="form-control form-control-sm d-inline-block w-auto" placeholder="Search resell tickets (user, event, status)...">
             <button type="submit" class="btn btn-sm btn-primary">Search</button>
         </form>
-        <a href="{{ route('admin.export.transactions') }}" class="btn btn-outline-primary btn-sm ms-2" title="Export Transactions CSV">
+        <a href="{{ route('admin.export.transactions', request()->query()) }}" class="btn btn-outline-primary btn-sm ms-2" title="Export Transactions CSV">
             <i class="bi bi-file-earmark-spreadsheet"></i>
             <span class="visually-hidden">Export Transactions CSV</span>
         </a>
