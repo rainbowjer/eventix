@@ -37,6 +37,15 @@
         .modern-table { font-size: 0.95rem; }
     }
     .table-responsive { overflow-x: auto; }
+    .btn-icon {
+        padding: 0.15rem 0.35rem !important;
+        font-size: 1rem !important;
+        line-height: 1 !important;
+        border-radius: 4px !important; /* square, not round */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 <div class="container py-5">
     <div class="mb-4 text-center">
@@ -50,6 +59,7 @@
         <button type="submit" class="btn btn-gradient">Search</button>
     </form>
     <div class="modern-card">
+        <h4 class="mb-3"><i class="bi bi-ticket-perforated"></i> Active Tickets</h4>
         <div class="table-responsive">
             <table class="table modern-table align-middle mb-0">
                 <thead>
@@ -83,6 +93,8 @@
                                 $eventDateTime = null;
                             }
                             $isExpired = $eventDateTime ? $eventDateTime->isPast() : false;
+                            $ticket = $txn->ticket;
+                            $isResellApproved = $ticket && $ticket->is_resell && $ticket->resell_status === 'approved';
                         @endphp
                         <td>
                             @if($isExpired)
@@ -91,7 +103,7 @@
                                 Active
                             @endif
                         </td>
-                        <td>
+                             <td class="text-center">
                             @php
                                 $eventDate = optional(optional($txn->seat)->event)->event_date;
                                 $eventTime = optional(optional($txn->seat)->event)->event_time;
@@ -107,12 +119,12 @@
                                 $isResellApproved = $ticket && $ticket->is_resell && $ticket->resell_status === 'approved';
                             @endphp
                             @if($isExpired)
-                                <button class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1" disabled>
-                                    <i class="bi bi-download"></i> Unavailable
+                                <button class="btn btn-outline-secondary btn-sm btn-icon" disabled title="Unavailable">
+                                    <i class="bi bi-download"></i>
                                 </button>
                             @else
-                                <a href="{{ route('download.qr', $txn->id) }}" class="btn btn-outline-success btn-sm d-flex align-items-center gap-1">
-                                    <i class="bi bi-download"></i> Download
+                                <a href="{{ route('download.qr', $txn->id) }}" class="btn btn-outline-success btn-sm btn-icon" title="Download QR">
+                                    <i class="bi bi-download"></i>
                                 </a>
                             @endif
                         </td>
@@ -131,5 +143,65 @@
             </table>
         </div>
     </div>
+{{-- Resold Tickets Table --}}
+@if($resoldTransactions->count())
+<div class="modern-card mt-5">
+    <h4 class="mb-3"><i class="bi bi-arrow-repeat"></i> Resold Tickets</h4>
+    <div class="table-responsive">
+        <table class="table modern-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Event</th>
+                    <th>Seat</th>
+                    <th>Price</th>
+                    <th>Date Booked</th>
+                    <th>Status</th>
+                    <th>QR Code</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($resoldTransactions as $i => $txn)
+                <tr>
+                    <td>{{ $i+1 }}</td>
+                    <td>{{ optional(optional($txn->seat)->event)->event_name }}</td>
+                    <td>{{ optional($txn->seat)->label }}</td>
+                    <td>RM{{ number_format($txn->amount, 2) }}</td>
+                    <td>{{ $txn->created_at->format('d M Y, h:i A') }}</td>
+                    @php
+                        $eventDate = optional(optional($txn->seat)->event)->event_date;
+                        $eventTime = optional(optional($txn->seat)->event)->event_time;
+                        if ($eventDate && $eventTime) {
+                            $eventDateTime = \Carbon\Carbon::parse($eventDate . ' ' . $eventTime, 'Asia/Kuala_Lumpur');
+                        } elseif ($eventDate) {
+                            $eventDateTime = \Carbon\Carbon::parse($eventDate . ' 23:59:59', 'Asia/Kuala_Lumpur');
+                        } else {
+                            $eventDateTime = null;
+                        }
+                        $isExpired = $eventDateTime ? $eventDateTime->isPast() : false;
+                    @endphp
+                    <td>
+                        @if($isExpired)
+                            Not Active
+                        @else
+                            Active
+                        @endif
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-outline-secondary btn-sm btn-icon" disabled>
+                            <i class="bi bi-download"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-secondary btn-sm" disabled>Resold</button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
 </div>
 @endsection

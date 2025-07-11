@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Crypt;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\SvgWriter;
 use Endroid\QrCode\Writer\PdfWriter;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Endroid\QrCode\Writer\PngWriter;
 
 
 
@@ -287,16 +289,21 @@ public function confirmation()
 }
 public function downloadQr($transactionId)
 {
-    $transaction = Transaction::findOrFail($transactionId);
+    $transaction = Transaction::with(['seat.event'])->findOrFail($transactionId);
 
+    // Generate QR code as PNG
     $payload = $transaction->qr_payload ?? 'TICKET-' . $transaction->ticket_id;
-
     $qr = new QrCode($payload);
-    $writer = new PdfWriter();
-    $result = $writer->write($qr);
+    $writer = new PngWriter();
+    $qrResult = $writer->write($qr);
+    $qrDataUri = $qrResult->getDataUri();
 
-    return response($result->getString())
-        ->header('Content-Type', 'application/pdf')
-        ->header('Content-Disposition', 'attachment; filename=\"ticket-qr-' . $transaction->id . '.pdf\"');
+    // Pass event details and QR to the view
+    $pdf = Pdf::loadView('book.ticket_pdf', [
+        'transaction' => $transaction,
+        'qrDataUri' => $qrDataUri,
+    ]);
+
+    return $pdf->download('ticket-'.$transaction->id.'.pdf');
 }
 }
