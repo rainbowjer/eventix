@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->enum('payment_method', ['credit_card', 'fpx', 'tng', 'grab', 'shopee', 'boost'])->nullable()->after('payment_status');
+            $table->string('payment_method')->nullable();
+            $table->boolean('checked_in')->default(false);
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('transactions', function (Blueprint $table) {
             $table->dropColumn('payment_method');
+            $table->dropColumn('checked_in');
         });
     }
 };

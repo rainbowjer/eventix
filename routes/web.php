@@ -130,6 +130,11 @@ Route::middleware(['auth'])->group(function () {
     })->name('organizer.dashboard');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/organizer/scan', [App\Http\Controllers\OrganizerController::class, 'showScanner'])->name('organizer.scan');
+    Route::post('/organizer/validate-ticket', [App\Http\Controllers\OrganizerController::class, 'validateTicket'])->name('organizer.validateTicket');
+});
+
 
 Route::get('/', function (Request $request) {
     $query = Event::query();
