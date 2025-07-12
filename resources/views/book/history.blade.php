@@ -119,12 +119,12 @@
                                 $isResellApproved = $ticket && $ticket->is_resell && $ticket->resell_status === 'approved';
                             @endphp
                             @if($isExpired)
-                                <button class="btn btn-outline-secondary btn-sm btn-icon" disabled title="Unavailable">
-                                    <i class="bi bi-download"></i>
+                                <button class="btn btn-secondary btn-sm d-flex align-items-center gap-1" disabled title="Unavailable">
+                                    <i class="bi bi-eye"></i> View
                                 </button>
                             @else
-                                <a href="{{ route('download.qr', $txn->id) }}" class="btn btn-outline-success btn-sm btn-icon" title="Download QR">
-                                    <i class="bi bi-download"></i>
+                                <a href="{{ route('view.ticket', $txn->id) }}" class="btn btn-success btn-sm d-flex align-items-center gap-1" title="View Ticket" target="_blank">
+                                    <i class="bi bi-eye"></i> View
                                 </a>
                             @endif
                         </td>

@@ -306,4 +306,38 @@ public function downloadQr($transactionId)
 
     return $pdf->download('ticket-'.$transaction->id.'.pdf');
 }
+
+public function viewTicket($transactionId)
+{
+    $transaction = Transaction::with(['seat.event', 'ticket'])->findOrFail($transactionId);
+    
+    // Verify ownership
+    if ($transaction->user_id !== auth()->id()) {
+        abort(403, 'Unauthorized');
+    }
+    
+    // Generate QR payload
+    $payload = [
+        'ticket_id' => $transaction->ticket_id,
+        'user_id' => $transaction->user_id,
+        'event_id' => $transaction->seat->event->id,
+        'seat' => $transaction->seat->label,
+        'timestamp' => now()->timestamp,
+    ];
+    
+    // Prepare data for the view
+    $ticketData = [
+        'id' => $transaction->id,
+        'ticket_id' => $transaction->ticket_id,
+        'event_name' => $transaction->seat->event->event_name,
+        'event_date' => $transaction->seat->event->event_date,
+        'event_time' => $transaction->seat->event->event_time,
+        'location' => $transaction->seat->event->location,
+        'seat_label' => $transaction->seat->label,
+        'amount' => number_format($transaction->amount, 2),
+        'qr_payload' => Crypt::encryptString(json_encode($payload))
+    ];
+    
+    return view('book.client_ticket', compact('ticketData'));
+}
 }

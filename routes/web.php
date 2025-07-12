@@ -179,6 +179,7 @@ Route::get('/admin/export-users-pdf', [App\Http\Controllers\AdminController::cla
 Route::get('/admin/export-events-pdf', [App\Http\Controllers\AdminController::class, 'exportEventsPDF'])->name('admin.export.events.pdf');
 
 Route::get('/download-qr/{transaction}', [BookingController::class, 'downloadQr'])->name('download.qr');
+Route::get('/view-ticket/{transaction}', [BookingController::class, 'viewTicket'])->name('view.ticket');
 
 // TEMPORARILY REMOVE MIDDLEWARE FOR TESTING
 Route::resource('admin/events', App\Http\Controllers\EventController::class)->names('admin.events');
