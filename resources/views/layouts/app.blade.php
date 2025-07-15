@@ -149,6 +149,13 @@
             padding: 2rem 1.5rem;
         }
     }
+    /* Remove main padding on homepage to eliminate gap above slider */
+    @if (Request::is('/'))
+    main {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    @endif
     /* Responsive footer */
     footer {
         padding: 1.5rem 0.5rem;

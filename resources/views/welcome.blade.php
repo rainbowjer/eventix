@@ -5,20 +5,65 @@
 body {
     overflow-x: hidden !important;
     overflow-y: auto;
+    margin: 0;
+    padding: 0;
 }
 .top-slider-container {
-    width: 100%; /* changed from 100vw to 100% */
+    width: 100vw;
     max-width: 100vw;
     overflow-x: hidden;
     position: relative;
     z-index: 10;
+    margin: 0;
+    padding: 0;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+}
+.top-slider {
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0 auto;
 }
 .top-slider .carousel-item img {
-    width: 100%; /* changed from 100vw to 100% */
-    height: 60vh;
+    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
+    height: 56vh;
+    min-height: 38vh;
+    max-height: 64vh;
     object-fit: cover;
     transition: transform 2.5s cubic-bezier(.4,0,.2,1);
     will-change: transform;
+    display: block;
+    margin: 0 auto;
+}
+@media (max-width: 991.98px) {
+    .top-slider .carousel-item img {
+        height: 42vh;
+        min-height: 28vh;
+        max-height: 48vh;
+    }
+}
+@media (max-width: 768px) {
+    .top-slider-container, .top-slider {
+        width: 100vw;
+        max-width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
+    .top-slider .carousel-item img {
+        height: 36vh;
+        min-height: 22vh;
+        max-height: 40vh;
+    }
+}
+@media (max-width: 480px) {
+    .top-slider .carousel-item img {
+        height: 30vh;
+        min-height: 18vh;
+        max-height: 34vh;
+    }
 }
 .top-slider .carousel-item.active img {
     animation: sliderZoom 7s ease-in-out;
@@ -138,7 +183,7 @@ body {
 <!-- 🎉 MODERN HERO SECTION (now just below slider) -->
 <style>
 .hero-bg {
-    width: 100%;
+    width: 100vw;
     min-height: 30h;
     background: url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1600&q=80') center center/cover no-repeat;
     overflow: hidden;
@@ -146,6 +191,12 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 .hero-bg::after {
     content: '';
@@ -159,13 +210,17 @@ body {
     z-index: 2;
     text-align: center;
     color: #fff;
-    padding: 4.5rem 1.2rem 3.5rem 1.2rem;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
+    padding: 4.5rem 0 3.5rem 0;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
 }
 .hero-logo {
     margin-bottom: 1.5rem;

@@ -26,7 +26,6 @@ protected $fillable = ['user_id',
 'ticket_id',
 'amount',
 'payment_status', // enum: 'paid', 'pending', 'cancelled'
-'payment_method', // enum: 'credit_card', 'fpx', 'tng', 'grab', 'shopee', 'boost'
 'purchase_date',
 'resold_at'];
 

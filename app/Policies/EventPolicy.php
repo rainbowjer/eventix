@@ -37,8 +37,7 @@ class EventPolicy
      */
     public function update(User $user, Event $event)
     {
-        // Allow admin to update any event, or organizer to update their own
-        return $user->role === 'admin' || $user->id === $event->organizer_id;
+        return $user->id === $event->organizer_id;
     }
 
     /**
@@ -46,8 +45,7 @@ class EventPolicy
      */
     public function delete(User $user, Event $event)
     {
-        // Allow admin to delete any event, or organizer to delete their own
-        return $user->role === 'admin' || $user->id === $event->organizer_id;
+        return $user->id === $event->organizer_id;
     }
 
     /**
