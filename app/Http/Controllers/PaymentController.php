@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Transaction;
 use App\Models\Seat;
 use App\Models\Ticket;
+use Illuminate\Support\Facades\Crypt;
 
 class PaymentController extends Controller
 {
@@ -44,14 +45,25 @@ public function process(Request $request)
             $seat->is_booked = true;
             $seat->save();
 
-            // Create a ticket (if required)
+            // Generate a single QR payload and store it
+            $qrPayloadArr = [
+                'ticket_id' => null, // will set after ticket is created
+                'user_id' => $userId,
+                'event_id' => $eventId,
+                'seat' => $seat->label,
+            ];
+            // Create the ticket first to get its ID
             $ticket = Ticket::create([
                 'user_id' => $userId,
                 'event_id' => $eventId,
                 'seat_id' => $seat->id,
-                'price' => $seat->price, // Ensure price is set
-                // Add other fields if necessary
+                'price' => $seat->price,
+                'qr_payload' => '', // temp, will update below
             ]);
+            $qrPayloadArr['ticket_id'] = $ticket->id;
+            $qrPayload = Crypt::encryptString(json_encode($qrPayloadArr));
+            $ticket->qr_payload = $qrPayload;
+            $ticket->save();
 
             // Create transaction for this seat
             Transaction::create([

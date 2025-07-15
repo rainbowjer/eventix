@@ -5,7 +5,7 @@
     <h2 class="fw-bold mb-4">All Events</h2>
     
     <!-- Filter Bar (inline, one line on desktop) -->
-    <form method="GET" class="filter-bar-modern-inline mb-4 d-flex flex-wrap align-items-end gap-2">
+    <form method="GET" class="filter-bar-modern-inline mb-4 d-flex flex-wrap gap-2">
         <div class="filter-inline-field search-grow position-relative">
             <label for="search" class="form-label mb-1 visually-hidden">Search</label>
             <div class="search-bar-wrapper">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="filter-inline-field">
-            <label for="date" class="form-label mb-1 visually-hidden">Date</label>
+            <label for="date" class="form-label mb-1">Date</label>
             <select name="date" id="date" class="form-select filter-select">
                 <option value="">All Dates</option>
                 <option value="today" {{ request('date')=='today' ? 'selected' : '' }}>Today</option>
@@ -26,7 +26,7 @@
             </select>
         </div>
         <div class="filter-inline-field">
-            <label for="location" class="form-label mb-1 visually-hidden">Location</label>
+            <label for="location" class="form-label mb-1">Location</label>
             <select name="location" id="location" class="form-select filter-select">
                 <option value="">All Locations</option>
                 @foreach($locations as $loc)
@@ -35,7 +35,7 @@
             </select>
         </div>
         <div class="filter-inline-field">
-            <label for="capacity" class="form-label mb-1 visually-hidden">Availability</label>
+            <label for="capacity" class="form-label mb-1">Availability</label>
             <select name="capacity" id="capacity" class="form-select filter-select">
                 <option value="">All Events</option>
                 <option value="available" {{ request('capacity')=='available' ? 'selected' : '' }}>Available Seats</option>
@@ -44,7 +44,7 @@
             </select>
         </div>
         <div class="filter-inline-field">
-            <label for="sort" class="form-label mb-1 visually-hidden">Sort</label>
+            <label for="sort" class="form-label mb-1">Sort</label>
             <select name="sort" id="sort" class="form-select filter-select">
                 <option value="soonest" {{ request('sort')=='soonest' ? 'selected' : '' }}>Soonest</option>
                 <option value="latest" {{ request('sort')=='latest' ? 'selected' : '' }}>Latest</option>
@@ -583,7 +583,7 @@
     flex-wrap: wrap;
     gap: 1rem;
     display: flex;
-    align-items: stretch;
+    align-items: flex-end;
 }
 .filter-bar-modern-inline:focus-within {
     box-shadow: 0 12px 40px 0 #a259f744, 0 2px 0 #ff6a8844;
@@ -594,18 +594,33 @@
     max-width: 150px;
     margin-bottom: 0;
     display: flex;
-    align-items: stretch;
+    flex-direction: column;
+    align-items: flex-start;
     flex: 1 1 120px;
     flex-shrink: 1;
 }
+.filter-inline-field label {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: #444;
+    margin-left: 0.2rem;
+}
 .filter-inline-field.search-grow {
     flex-grow: 1;
-    min-width: 160px;
+    min-width: 220px;
     max-width: 100%;
+    flex-direction: row;
+    align-items: flex-end;
+}
+.filter-inline-field.search-grow label {
+    display: none;
 }
 .filter-inline-field.search-grow .form-control {
-    min-width: 160px;
+    min-width: 220px;
     max-width: 100%;
+    font-size: 1.12rem;
+    height: 48px;
 }
 .filter-inline-field .form-select,
 .filter-inline-field .form-control {
@@ -645,6 +660,11 @@
         width: 100%;
         margin-bottom: 0.5rem;
         flex: 1 1 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-inline-field label {
+        margin-left: 0;
     }
     .filter-inline-field .form-select,
     .filter-inline-field .form-control {

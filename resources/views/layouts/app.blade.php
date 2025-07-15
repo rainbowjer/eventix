@@ -199,20 +199,41 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-bell"></i>
-                            @if (Auth::user()->unreadNotifications->count() > 0)
-                                <span class="badge bg-danger">{{ Auth::user()->unreadNotifications->count() }}</span>
+                            @if (Auth::user()->notifications->where('read_at', null)->count() > 0)
+                                <span class="badge bg-danger">{{ Auth::user()->notifications->where('read_at', null)->count() }}</span>
                             @endif
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notifDropdown">
-                            @forelse (Auth::user()->unreadNotifications as $notification)
+                            @php
+                                $notifications = Auth::user()->notifications->take(4);
+                            @endphp
+                            @forelse ($notifications as $notification)
                                 <li>
-                                    <a class="dropdown-item" href="#">
-                                        {{ $notification->data['message'] }}
+                                    <a class="dropdown-item d-flex align-items-start gap-2" href="#">
+                                        @php
+                                            $status = $notification->data['status'] ?? null;
+                                            $event = $notification->data['event_name'] ?? null;
+                                            $message = $notification->data['message'] ?? null;
+                                            $created = $notification->created_at ? $notification->created_at->diffForHumans() : '';
+                                            $icon = $status === 'approved' ? 'bi bi-check-circle-fill text-success' : ($status === 'rejected' ? 'bi bi-x-circle-fill text-danger' : 'bi bi-info-circle-fill text-secondary');
+                                            $badgeClass = $status === 'approved' ? 'bg-success' : ($status === 'rejected' ? 'bg-danger' : 'bg-secondary');
+                                        @endphp
+                                        <i class="{{ $icon }} fs-5 mt-1"></i>
+                                        <div class="flex-grow-1">
+                                            <div class="fw-semibold">{{ $event }}</div>
+                                            <div>{!! $message !!}</div>
+                                            <span class="badge {{ $badgeClass }} text-white mt-1">{{ ucfirst($status) }}</span>
+                                            <small class="text-muted d-block">{{ $created }}</small>
+                                        </div>
                                     </a>
                                 </li>
                             @empty
-                                <li><span class="dropdown-item text-muted">No new notifications</span></li>
+                                <li><span class="dropdown-item text-muted">No notifications</span></li>
                             @endforelse
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-center text-primary" href="{{ route('notifications.index') }}">See all notifications</a>
+                            </li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="POST" action="{{ route('notifications.read') }}">

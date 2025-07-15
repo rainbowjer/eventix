@@ -25,6 +25,19 @@ class OrganizerResellController extends Controller
     }
   public function approve(Ticket $ticket)
 {
+    \Log::info('Approving ticket ID: ' . $ticket->id);
+    $transaction = $ticket->transaction;
+    if (!$transaction) {
+        \Log::error('No transaction found for ticket ID: ' . $ticket->id);
+    } else {
+        \Log::info('Transaction found: ' . $transaction->id . ' for ticket ID: ' . $ticket->id);
+        $user = $transaction->user;
+        if (!$user) {
+            \Log::error('No user found for transaction ID: ' . $transaction->id);
+        } else {
+            \Log::info('User found: ' . $user->id . ' for transaction ID: ' . $transaction->id);
+        }
+    }
     $ticket->resell_status = 'approved';
     $ticket->save();
     // Make the seat available again

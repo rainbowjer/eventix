@@ -17,6 +17,7 @@ class Ticket extends Model
         'status',
         'resell_status',
         'resell_admin_note',
+        'qr_payload',
     ];
 
     protected $casts = [

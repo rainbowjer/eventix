@@ -201,3 +201,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 Route::get('admin/report/export/pdf', [AdminController::class, 'exportPDF'])->name('admin.report.export.pdf');
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
+});

@@ -7,10 +7,8 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class TicketResellStatusNotification extends Notification implements ShouldQueue
+class TicketResellStatusNotification extends Notification
 {
-    use Queueable;
-
     public $ticket;
     public $status;
 
@@ -22,7 +20,7 @@ class TicketResellStatusNotification extends Notification implements ShouldQueue
 
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     public function toMail($notifiable)
