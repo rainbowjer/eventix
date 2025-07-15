@@ -94,9 +94,38 @@
     }
 </style>
 <div class="container py-4">
+    @if(isset($isAdmin) && $isAdmin)
+        <form method="GET" class="row g-3 mb-4 align-items-end">
+            <div class="col-md-3">
+                <label for="search" class="form-label">Search</label>
+                <input type="text" class="form-control" id="search" name="search" value="{{ request('search') }}" placeholder="Event name, location, description">
+            </div>
+            <div class="col-md-3">
+                <label for="organizer_id" class="form-label">Organizer</label>
+                <select class="form-select" id="organizer_id" name="organizer_id">
+                    <option value="">All Organizers</option>
+                    @foreach($organizers as $org)
+                        <option value="{{ $org->id }}" {{ request('organizer_id') == $org->id ? 'selected' : '' }}>{{ $org->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label for="date_from" class="form-label">Date From</label>
+                <input type="date" class="form-control" id="date_from" name="date_from" value="{{ request('date_from') }}">
+            </div>
+            <div class="col-md-2">
+                <label for="date_to" class="form-label">Date To</label>
+                <input type="date" class="form-control" id="date_to" name="date_to" value="{{ request('date_to') }}">
+            </div>
+            <div class="col-md-2 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Filter</button>
+                <a href="?export=csv{{ request()->getQueryString() ? '&' . http_build_query(request()->except('export')) : '' }}" class="btn btn-success w-100"><i class="bi bi-download"></i> Export CSV</a>
+            </div>
+        </form>
+    @endif
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="modern-header"><i class="bi bi-calendar3"></i> My Events</h2>
-        @if(auth()->user()->role === 'organizer' || auth()->user()->role === 'admin')
+        @if(auth()->user()->role === 'organizer' || (isset($isAdmin) && $isAdmin))
             <a href="{{ route('events.create') }}" class="btn-gradient" style="background:linear-gradient(90deg,#22c55e 0%,#16a34a 100%)"><i class="bi bi-plus-circle"></i> Create Event</a>
         @endif
     </div>
@@ -117,7 +146,10 @@
                                 <strong>Date:</strong> {{ $event->event_date }}<br>
                                 <strong>Event Time:</strong> {{ \Carbon\Carbon::parse($event->event_time)->format('h:i A') }}<br>
                                 <strong>Location:</strong> {{ $event->location }}<br>
-                                <strong>Seats Left:</strong> {{ $event->seats->where('is_booked', false)->count() }}
+                                <strong>Seats Left:</strong> {{ $event->seats->where('is_booked', false)->count() }}<br>
+                                @if(isset($isAdmin) && $isAdmin)
+                                    <strong>Organizer:</strong> {{ $event->organizer ? $event->organizer->name : '-' }}<br>
+                                @endif
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mt-2">
@@ -126,24 +158,33 @@
                             <button class="btn-gradient" style="background:linear-gradient(90deg,#ff6a88 0%,#ef4444 100%)" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $event->id }}"><i class="bi bi-trash"></i> Delete</button>
                             @if(auth()->user()->role === 'admin')
                                 @if(!$event->approved)
+                                    {{-- Approve button: admin can approve event --}}
+                                    {{--
                                     <form action="{{ route('admin.events.approve', $event->id) }}" method="POST" class="d-inline-block ms-2">
                                         @csrf
                                         <button type="submit" class="btn-gradient" style="background:linear-gradient(90deg,#fbbf24 0%,#f59e42 100%)"><i class="bi bi-check-circle"></i> Approve</button>
                                     </form>
+                                    --}}
                                 @else
                                     <span class="badge bg-success ms-2">Approved</span>
                                 @endif
                                 @if($event->published)
+                                    {{-- Unpublish button: admin can unpublish event --}}
+                                    {{--
                                     <form action="{{ route('admin.events.unpublish', $event->id) }}" method="POST" class="d-inline-block ms-2">
                                         @csrf
                                         <button type="submit" class="btn-gradient" style="background:linear-gradient(90deg,#6366f1 0%,#a259f7 100%)"><i class="bi bi-eye-slash"></i> Unpublish</button>
                                     </form>
+                                    --}}
                                     <span class="badge bg-primary ms-2">Published</span>
                                 @else
+                                    {{-- Publish button: admin can publish event --}}
+                                    {{--
                                     <form action="{{ route('admin.events.publish', $event->id) }}" method="POST" class="d-inline-block ms-2">
                                         @csrf
                                         <button type="submit" class="btn-gradient" style="background:linear-gradient(90deg,#22c55e 0%,#16a34a 100%)"><i class="bi bi-eye"></i> Publish</button>
                                     </form>
+                                    --}}
                                 @endif
                             @endif
                         </div>

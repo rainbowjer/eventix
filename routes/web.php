@@ -185,9 +185,9 @@ Route::get('/view-ticket/{transaction}', [BookingController::class, 'viewTicket'
 Route::resource('admin/events', App\Http\Controllers\EventController::class)->names('admin.events');
 // Route::middleware(['auth', 'adminmiddleware'])->group(function () {
 //     Route::resource('admin/events', App\Http\Controllers\EventController::class)->names('admin.events');
-//     Route::post('/admin/events/{id}/approve', [App\Http\Controllers\EventController::class, 'approve'])->name('admin.events.approve');
-//     Route::post('/admin/events/{id}/publish', [App\Http\Controllers\EventController::class, 'publish'])->name('admin.events.publish');
-//     Route::post('/admin/events/{id}/unpublish', [App\Http\Controllers\EventController::class, 'unpublish'])->name('admin.events.unpublish');
+    Route::post('/admin/events/{id}/approve', [App\Http\Controllers\EventController::class, 'approve'])->name('admin.events.approve');
+    Route::post('/admin/events/{id}/publish', [App\Http\Controllers\EventController::class, 'publish'])->name('admin.events.publish');
+    Route::post('/admin/events/{id}/unpublish', [App\Http\Controllers\EventController::class, 'unpublish'])->name('admin.events.unpublish');
 // });
 
 // Admin user management

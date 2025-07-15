@@ -244,7 +244,7 @@
                     @csrf
                     <!-- Modern Account Type Button Group -->
                     <div style="margin-bottom:2rem;text-align:center;">
-                        <span style="font-size:0.98rem;color:#a259f7;font-weight:600;margin-bottom:0.5rem;letter-spacing:0.5px;display:block;text-align:center;">Choose YourAccount Type</span>
+                        <span style="font-size:0.98rem;color:#a259f7;font-weight:600;margin-bottom:0.5rem;letter-spacing:0.5px;display:block;text-align:center;">Choose Your Account Type</span>
                         <div class="account-type-btn-group" style="display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;">
                             <button type="button" class="account-type-btn" data-value="user" tabindex="0" style="flex:1 1 120px;min-width:120px;max-width:160px;display:flex;align-items:center;justify-content:center;padding:0.7rem 1.2rem;border-radius:2rem;background:#fff;border:2.5px solid #a259f7;color:#a259f7;font-weight:700;font-size:1.08rem;box-shadow:0 2px 12px 0 rgba(123,47,242,0.10);transition:box-shadow 0.18s,border 0.18s,background 0.18s,color 0.18s;outline:none;gap:0.6rem;cursor:pointer;">
                                 <i class="bi bi-person" style="font-size:1.3rem;"></i> User

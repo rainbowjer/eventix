@@ -22,6 +22,12 @@
         z-index: 2;
         border: none;
     }
+    .modern-table thead th:not(:first-child) {
+        border-top-left-radius: 0;
+    }
+    .modern-table thead th:not(:last-child) {
+        border-top-right-radius: 0;
+    }
     .modern-table tbody tr {
         transition: background 0.15s;
     }
@@ -299,7 +305,7 @@
             </div>
             <div x-show="open">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-primary modern-table" id="users-table">
+                    <table class="table table-bordered table-striped modern-table" id="users-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -347,7 +353,7 @@
             </div>
             <div x-show="open">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-success modern-table" id="events-table">
+                    <table class="table table-bordered table-striped modern-table" id="events-table">
                         <thead>
                             <tr>
                                 <th>Event Name</th>
@@ -393,7 +399,7 @@
             </div>
             <div x-show="open">
                 <div class="table-responsive" id="transactions-table">
-                    <table class="table table-bordered table-warning modern-table">
+                    <table class="table table-bordered table-striped modern-table">
                         <thead>
                             <tr>
                                 <th>User</th>

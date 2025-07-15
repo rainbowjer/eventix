@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
+use App\Models\User;
 
 class EventController extends Controller
 {
@@ -16,17 +17,30 @@ class EventController extends Controller
 
     public function index(Request $request)
     {
-        $query = Event::where('organizer_id', auth()->id());
+        $user = auth()->user();
+        $isAdmin = $user && $user->role === 'admin';
+        $query = $isAdmin ? Event::query() : Event::where('organizer_id', $user->id);
 
+        // Search by event name/location/description
         if ($request->filled('search')) {
-            $query->where('event_name', 'like', '%' . $request->search . '%');
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('event_name', 'like', "%$search%")
+                  ->orWhere('location', 'like', "%$search%")
+                  ->orWhere('description', 'like', "%$search%")
+                ;
+            });
         }
 
-        if ($request->filled('state')) {
-            $query->where('location', 'like', '%' . $request->state . '%');
+        // Filter by organizer (admin only)
+        if ($isAdmin && $request->filled('organizer_id')) {
+            $query->where('organizer_id', $request->organizer_id);
         }
 
-        if ($request->filled('date')) {
+        // Date range filter
+        if ($request->filled('date_from') && $request->filled('date_to')) {
+            $query->whereBetween('event_date', [$request->date_from, $request->date_to]);
+        } elseif ($request->filled('date')) {
             $today = Carbon::today();
             if ($request->date == 'today') {
                 $query->whereDate('event_date', $today);
@@ -37,9 +51,37 @@ class EventController extends Controller
             }
         }
 
-        $events = $query->orderBy('event_date')->get();
+        // Export to CSV (admin only)
+        if ($isAdmin && $request->has('export') && $request->export === 'csv') {
+            $events = $query->with('organizer')->orderBy('event_date')->get();
+            $filename = 'events_export_' . now()->format('Ymd_His') . '.csv';
+            $headers = [
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => "attachment; filename=$filename",
+            ];
+            $columns = ['ID', 'Event Name', 'Date', 'Time', 'Location', 'Organizer', 'Description'];
+            $callback = function() use ($events, $columns) {
+                $file = fopen('php://output', 'w');
+                fputcsv($file, $columns);
+                foreach ($events as $event) {
+                    fputcsv($file, [
+                        $event->id,
+                        $event->event_name,
+                        $event->event_date,
+                        $event->event_time,
+                        $event->location,
+                        $event->organizer ? $event->organizer->name : '',
+                        $event->description,
+                    ]);
+                }
+                fclose($file);
+            };
+            return response()->stream($callback, 200, $headers);
+        }
 
-        return view('events.index', compact('events'));
+        $events = $query->with('organizer')->orderBy('event_date')->get();
+        $organizers = $isAdmin ? User::where('role', 'organizer')->get() : collect();
+        return view('events.index', compact('events', 'organizers', 'isAdmin'));
     }
 
     public function show($id)

@@ -81,7 +81,7 @@
                         <td>{{ optional(optional($txn->seat)->event)->event_name }}</td>
                         <td>{{ optional($txn->seat)->label }}</td>
                         <td>RM{{ number_format($txn->amount, 2) }}</td>
-                        <td>{{ $txn->created_at->format('d M Y, h:i A') }}</td>
+                        <td>{{ $txn->created_at->timezone('Asia/Kuala_Lumpur')->format('d M Y, h:i A') }}</td>
                         @php
                             $eventDate = optional(optional($txn->seat)->event)->event_date;
                             $eventTime = optional(optional($txn->seat)->event)->event_time;
@@ -168,7 +168,7 @@
                     <td>{{ optional(optional($txn->seat)->event)->event_name }}</td>
                     <td>{{ optional($txn->seat)->label }}</td>
                     <td>RM{{ number_format($txn->amount, 2) }}</td>
-                    <td>{{ $txn->created_at->format('d M Y, h:i A') }}</td>
+                    <td>{{ $txn->created_at->timezone('Asia/Kuala_Lumpur')->format('d M Y, h:i A') }}</td>
                     @php
                         $eventDate = optional(optional($txn->seat)->event)->event_date;
                         $eventTime = optional(optional($txn->seat)->event)->event_time;

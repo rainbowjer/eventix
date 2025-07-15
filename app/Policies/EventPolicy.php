@@ -35,18 +35,20 @@ class EventPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(\App\Models\User $user, \App\Models\Event $event)
-{
-    return $user->id === $event->organizer_id;
-}
+    public function update(User $user, Event $event)
+    {
+        // Allow admin to update any event, or organizer to update their own
+        return $user->role === 'admin' || $user->id === $event->organizer_id;
+    }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(\App\Models\User $user, \App\Models\Event $event)
-{
-    return $user->id === $event->organizer_id;
-}
+    public function delete(User $user, Event $event)
+    {
+        // Allow admin to delete any event, or organizer to delete their own
+        return $user->role === 'admin' || $user->id === $event->organizer_id;
+    }
 
     /**
      * Determine whether the user can restore the model.
