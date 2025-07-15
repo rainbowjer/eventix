@@ -4,9 +4,9 @@
 <div class="container py-5">
     <h2 class="fw-bold mb-4">All Events</h2>
     
-    <!-- Filter Bar (moved to top) -->
-    <form method="GET" class="row g-2 align-items-end mb-4 filter-bar-modern position-relative">
-        <div class="col-md-3 col-12 mb-2 mb-md-0 position-relative">
+    <!-- Filter Bar (inline, one line on desktop) -->
+    <form method="GET" class="filter-bar-modern-inline mb-4 d-flex flex-wrap align-items-end gap-2">
+        <div class="filter-inline-field search-grow position-relative">
             <label for="search" class="form-label mb-1 visually-hidden">Search</label>
             <div class="search-bar-wrapper">
                 <span class="search-icon"><i class="fas fa-search"></i></span>
@@ -16,8 +16,8 @@
                 @endif
             </div>
         </div>
-        <div class="col-md-2 col-6 mb-2 mb-md-0">
-            <label for="date" class="form-label mb-1">Date</label>
+        <div class="filter-inline-field">
+            <label for="date" class="form-label mb-1 visually-hidden">Date</label>
             <select name="date" id="date" class="form-select filter-select">
                 <option value="">All Dates</option>
                 <option value="today" {{ request('date')=='today' ? 'selected' : '' }}>Today</option>
@@ -25,8 +25,8 @@
                 <option value="this-month" {{ request('date')=='this-month' ? 'selected' : '' }}>This Month</option>
             </select>
         </div>
-        <div class="col-md-2 col-6 mb-2 mb-md-0">
-            <label for="location" class="form-label mb-1">Location</label>
+        <div class="filter-inline-field">
+            <label for="location" class="form-label mb-1 visually-hidden">Location</label>
             <select name="location" id="location" class="form-select filter-select">
                 <option value="">All Locations</option>
                 @foreach($locations as $loc)
@@ -34,8 +34,8 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-2 col-6 mb-2 mb-md-0">
-            <label for="capacity" class="form-label mb-1">Availability</label>
+        <div class="filter-inline-field">
+            <label for="capacity" class="form-label mb-1 visually-hidden">Availability</label>
             <select name="capacity" id="capacity" class="form-select filter-select">
                 <option value="">All Events</option>
                 <option value="available" {{ request('capacity')=='available' ? 'selected' : '' }}>Available Seats</option>
@@ -43,15 +43,15 @@
                 <option value="hot" {{ request('capacity')=='hot' ? 'selected' : '' }}>🔥 Hot Events</option>
             </select>
         </div>
-        <div class="col-md-2 col-6 mb-2 mb-md-0">
-            <label for="sort" class="form-label mb-1">Sort</label>
+        <div class="filter-inline-field">
+            <label for="sort" class="form-label mb-1 visually-hidden">Sort</label>
             <select name="sort" id="sort" class="form-select filter-select">
                 <option value="soonest" {{ request('sort')=='soonest' ? 'selected' : '' }}>Soonest</option>
                 <option value="latest" {{ request('sort')=='latest' ? 'selected' : '' }}>Latest</option>
             </select>
         </div>
-        <div class="col-md-1 col-12 d-grid">
-            <button type="submit" class="btn filter-btn fw-bold w-100"><i class="fas fa-filter"></i></button>
+        <div class="filter-inline-field">
+            <button type="submit" class="btn filter-btn fw-bold"><i class="fas fa-filter"></i></button>
         </div>
     </form>
 
@@ -252,6 +252,8 @@
     margin-bottom: 2.2rem;
     border: 1.5px solid #f3eaff;
     transition: box-shadow 0.2s, border 0.2s;
+    max-width: 440px;
+    margin: 0 auto;
 }
 .filter-bar-modern:focus-within {
     box-shadow: 0 12px 40px 0 #a259f744, 0 2px 0 #ff6a8844;
@@ -568,27 +570,94 @@
     color: #ffc107;
 }
 
-@media (max-width: 768px) {
-    .concert-card-img { height: 80px; max-height: 180px; }
-    .concert-title { font-size: 1.1rem; }
-    .concert-card-body { padding: 0.8rem 0.7rem 1rem 0.7rem; }
-    .filter-bar-modern { padding: 1rem 0.5rem 0.5rem 0.5rem; flex-direction: column !important; }
-    .search-bar-input, .filter-select { height: 2.2rem; font-size: 1rem; }
-    .recently-viewed-section { padding: 1rem; }
-    .concert-actions { flex-direction: column; }
-    .concert-card { padding: 0.5rem; }
-    .concert-title { font-size: 1.1rem; }
-    .btn, .concert-book-btn { width: 100% !important; margin-bottom: 0.5em; }
-    .filter-bar-modern .form-label { font-size: 0.95rem; }
-    .filter-bar-modern .form-select, .filter-bar-modern .form-control { font-size: 0.98rem; }
-    .row > [class^='col-'] { margin-bottom: 1rem; }
-    .recent-event-img { height: 60px; }
+.filter-bar-modern-inline {
+    background: linear-gradient(90deg, #f8f8ff 0%, #f3eaff 100%);
+    border-radius: 2.2rem;
+    box-shadow: 0 8px 32px 0 #a259f722, 0 1.5px 0 #ff6a8822;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2.2rem;
+    border: 1.5px solid #f3eaff;
+    transition: box-shadow 0.2s, border 0.2s;
+    max-width: 100%;
+    overflow-x: auto;
+    flex-wrap: wrap;
+    gap: 1rem;
+    display: flex;
+    align-items: stretch;
 }
-@media (max-width: 480px) {
-    .filter-bar-modern { padding: 0.5rem 0.2rem 0.2rem 0.2rem; }
-    .concert-card-body { padding: 0.5rem 0.3rem 0.7rem 0.3rem; }
-    .concert-title { font-size: 1rem; }
-    .recent-event-img { height: 40px; }
+.filter-bar-modern-inline:focus-within {
+    box-shadow: 0 12px 40px 0 #a259f744, 0 2px 0 #ff6a8844;
+    border: 1.5px solid #a259f7;
+}
+.filter-inline-field {
+    min-width: 110px;
+    max-width: 150px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: stretch;
+    flex: 1 1 120px;
+    flex-shrink: 1;
+}
+.filter-inline-field.search-grow {
+    flex-grow: 1;
+    min-width: 160px;
+    max-width: 100%;
+}
+.filter-inline-field.search-grow .form-control {
+    min-width: 160px;
+    max-width: 100%;
+}
+.filter-inline-field .form-select,
+.filter-inline-field .form-control {
+    min-width: 100px;
+    max-width: 150px;
+    width: 100%;
+    border-radius: 2rem;
+    height: 40px;
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+    font-size: 1.02rem;
+}
+.filter-inline-field .btn.filter-btn {
+    min-width: 40px;
+    max-width: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 1.1rem;
+    margin: 0;
+    box-shadow: none;
+    vertical-align: middle;
+}
+@media (max-width: 991.98px) {
+    .filter-bar-modern-inline {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem 0.5rem;
+    }
+    .filter-inline-field,
+    .filter-inline-field.search-grow {
+        max-width: 100%;
+        width: 100%;
+        margin-bottom: 0.5rem;
+        flex: 1 1 100%;
+    }
+    .filter-inline-field .form-select,
+    .filter-inline-field .form-control {
+        max-width: 100%;
+        min-width: 0;
+        height: 44px;
+    }
+    .filter-inline-field .btn.filter-btn {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        height: 44px;
+    }
 }
 </style>
 
