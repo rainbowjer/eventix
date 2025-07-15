@@ -91,16 +91,37 @@
         .modern-event-card { padding: 1rem 0.5rem; }
         .row { flex-direction: column; }
         .col-md-6 { max-width: 100%; flex: 0 0 100%; }
+        .btn-gradient { width: 100%; justify-content: center; margin-bottom: 0.5em; }
+        .card-img-top { max-height: 140px; }
+        .modern-event-title { font-size: 1rem; }
+        .modern-event-details { font-size: 0.98rem; }
+        .d-flex.justify-content-between.align-items-center.mt-2 { flex-direction: column; gap: 0.5rem; }
+    }
+    @media (max-width: 480px) {
+        .modern-header { font-size: 1rem; }
+        .modern-event-card { padding: 0.7rem 0.2rem; }
+        .modern-event-title { font-size: 0.95rem; }
+        .modern-event-details { font-size: 0.93rem; }
+        .card-img-top { max-height: 90px; }
+    }
+    /* Responsive image for event banner */
+    .card-img-top {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 16px;
+        margin-bottom: 1rem;
     }
 </style>
 <div class="container py-4">
     @if(isset($isAdmin) && $isAdmin)
         <form method="GET" class="row g-3 mb-4 align-items-end">
-            <div class="col-md-3">
+            <div class="col-md-3 col-12 mb-2 mb-md-0">
                 <label for="search" class="form-label">Search</label>
                 <input type="text" class="form-control" id="search" name="search" value="{{ request('search') }}" placeholder="Event name, location, description">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-12 mb-2 mb-md-0">
                 <label for="organizer_id" class="form-label">Organizer</label>
                 <select class="form-select" id="organizer_id" name="organizer_id">
                     <option value="">All Organizers</option>
@@ -109,21 +130,21 @@
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-12 mb-2 mb-md-0">
                 <label for="date_from" class="form-label">Date From</label>
                 <input type="date" class="form-control" id="date_from" name="date_from" value="{{ request('date_from') }}">
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-12 mb-2 mb-md-0">
                 <label for="date_to" class="form-label">Date To</label>
                 <input type="date" class="form-control" id="date_to" name="date_to" value="{{ request('date_to') }}">
             </div>
-            <div class="col-md-2 d-flex gap-2">
+            <div class="col-md-2 col-12 d-flex gap-2">
                 <button type="submit" class="btn btn-primary w-100"><i class="bi bi-search"></i> Filter</button>
                 <a href="?export=csv{{ request()->getQueryString() ? '&' . http_build_query(request()->except('export')) : '' }}" class="btn btn-success w-100"><i class="bi bi-download"></i> Export CSV</a>
             </div>
         </form>
     @endif
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-2">
         <h2 class="modern-header"><i class="bi bi-calendar3"></i> My Events</h2>
         @if(auth()->user()->role === 'organizer' || (isset($isAdmin) && $isAdmin))
             <a href="{{ route('events.create') }}" class="btn-gradient" style="background:linear-gradient(90deg,#22c55e 0%,#16a34a 100%)"><i class="bi bi-plus-circle"></i> Create Event</a>

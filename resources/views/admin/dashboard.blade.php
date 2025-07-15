@@ -74,19 +74,27 @@
         font-size: 1.15em;
         letter-spacing: 0.5px;
     }
+    /* Responsive tweaks for dashboard */
+    @media (max-width: 767.98px) {
+        .modern-card { padding: 0.5rem 0.2rem; }
+        .row.g-4 > [class^='col-'] { margin-bottom: 1.5rem; }
+        .card .fs-1 { font-size: 2rem !important; }
+        .card-title { font-size: 1.2rem !important; }
+    }
 </style>
+<div class="container-fluid px-2 px-md-4">
     <h2 class="mb-4">📊 Admin Dashboard</h2>
     
     <!-- Global Search Bar -->
     <div class="card mb-4">
         <div class="card-body">
             <form method="GET" action="{{ route('admin.dashboard') }}" class="row g-3">
-                <div class="col-md-4">
+                <div class="col-md-4 col-12">
                     <label for="global_search" class="form-label">🔍 Global Search</label>
                     <input type="text" class="form-control" id="global_search" name="global_search" 
                            value="{{ request('global_search') }}" placeholder="Search users, events, transactions...">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-12">
                     <label for="search_type" class="form-label">Search Type</label>
                     <select class="form-select" id="search_type" name="search_type">
                         <option value="all" {{ request('search_type') == 'all' ? 'selected' : '' }}>All</option>
@@ -96,7 +104,7 @@
                         <option value="resells" {{ request('search_type') == 'resells' ? 'selected' : '' }}>Resell Tickets</option>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-12">
                     <label for="date_filter" class="form-label">Date Range</label>
                     <select class="form-select" id="date_filter" name="date_filter">
                         <option value="" {{ request('date_filter') == '' ? 'selected' : '' }}>All Time</option>
@@ -106,10 +114,10 @@
                         <option value="year" {{ request('date_filter') == 'year' ? 'selected' : '' }}>This Year</option>
                     </select>
                 </div>
-                <div class="col-md-2">
-                    <label class="form-label">&nbsp;</label>
+                <div class="col-md-2 col-12">
+                    <label class="form-label d-none d-md-block">&nbsp;</label>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary w-100">
                             <i class="bi bi-search"></i> Search
                         </button>
                     </div>
@@ -472,6 +480,7 @@
         });
     </script>
     @endpush
+</div>
 @endsection
 
 @push('scripts')

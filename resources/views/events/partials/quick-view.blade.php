@@ -1,15 +1,14 @@
-<div class="quick-view-content">
-    <div class="row">
-        <div class="col-md-6">
+<div class="quick-view-content container-fluid">
+    <div class="row g-3 flex-md-row flex-column">
+        <div class="col-md-6 col-12 mb-3 mb-md-0">
             @if ($event->banner_image)
-                <img src="{{ asset('storage/' . $event->banner_image) }}" class="img-fluid rounded" alt="Event Banner">
+                <img src="{{ asset('storage/' . $event->banner_image) }}" class="img-fluid rounded w-100 mb-3 mb-md-0" alt="Event Banner">
             @else
-                <img src="{{ asset('images/concert1.jpg') }}" class="img-fluid rounded" alt="Concert Image">
+                <img src="{{ asset('images/concert1.jpg') }}" class="img-fluid rounded w-100 mb-3 mb-md-0" alt="Concert Image">
             @endif
-
             <!-- Seat Availability Section (from show.blade.php) -->
             <div class="mb-3 mt-4">
-                <h5>🎟 Available Seats</h5>
+                <h5 class="fw-semibold">🎟 Available Seats</h5>
                 <ul class="list-unstyled">
                     @php
                         $types = ['VIP' => 150, 'GENERAL' => 80, 'ECONOMY' => 50];
@@ -28,27 +27,24 @@
                 <small class="text-muted">Total seats: {{ $event->seats->count() }}</small>
             </div>
         </div>
-        <div class="col-md-6">
-            <h4 class="mb-3">{{ $event->event_name }}</h4>
-            
+        <div class="col-md-6 col-12">
+            <h4 class="mb-3 fw-bold">{{ $event->event_name }}</h4>
             <!-- Rating Display -->
             <div class="rating-display mb-3">
                 @php $avgRating = $event->getAverageRating(); @endphp
-                <div class="stars">
+                <div class="stars d-inline-block">
                     @for($i = 1; $i <= 5; $i++)
                         <i class="fas fa-star {{ $i <= $avgRating ? 'text-warning' : 'text-muted' }}"></i>
                     @endfor
                     <span class="rating-text ms-2">{{ number_format($avgRating, 1) }} ({{ $event->getReviewsCount() }} reviews)</span>
                 </div>
             </div>
-
             <!-- Event Details -->
             <div class="event-details mb-3">
                 <p><i class="fas fa-calendar-alt text-primary"></i> <strong>Date:</strong> {{ $event->event_date }}</p>
                 <p><i class="fas fa-clock text-primary"></i> <strong>Time:</strong> {{ $event->event_time }}</p>
                 <p><i class="fas fa-map-marker-alt text-primary"></i> <strong>Location:</strong> {{ $event->location }}</p>
                 <p><i class="fas fa-user text-primary"></i> <strong>Organizer:</strong> {{ $event->organizer->name }}</p>
-                
                 <!-- Capacity Status -->
                 <p>
                     <i class="fas fa-ticket-alt text-primary"></i> 
@@ -60,52 +56,47 @@
                     @endif
                 </p>
             </div>
-
             @if (!empty($event->description))
                 <div class="event-description mb-3">
-                    <h6>Description:</h6>
-                    <p>{{ $event->description }}</p>
+                    <h6 class="fw-semibold">Description:</h6>
+                    <p class="mb-0">{{ $event->description }}</p>
                 </div>
             @endif
-
             <!-- Action Buttons -->
-            <div class="action-buttons">
+            <div class="action-buttons d-flex flex-wrap gap-2 mt-3 flex-column flex-md-row">
                 @if(auth()->check())
-                    <button class="btn btn-outline-danger btn-sm favorite-toggle-quick" data-event-id="{{ $event->id }}" data-is-favorited="{{ $isFavorited ? 'true' : 'false' }}">
+                    <button class="btn btn-outline-danger btn-sm favorite-toggle-quick w-100 w-md-auto" data-event-id="{{ $event->id }}" data-is-favorited="{{ $isFavorited ? 'true' : 'false' }}">
                         <i class="fas fa-heart {{ $isFavorited ? 'text-danger' : 'text-muted' }}"></i> 
                         {{ $isFavorited ? 'Remove from Favorites' : 'Add to Favorites' }}
                     </button>
-                    
                     @if(!$userReview)
-                        <button class="btn btn-outline-primary btn-sm ms-2" onclick="openReviewModal({{ $event->id }})">
+                        <button class="btn btn-outline-primary btn-sm ms-0 ms-md-2 w-100 w-md-auto" onclick="openReviewModal({{ $event->id }})">
                             <i class="fas fa-star"></i> Write Review
                         </button>
                     @else
-                        <button class="btn btn-outline-warning btn-sm ms-2" onclick="editReview({{ $event->id }})">
+                        <button class="btn btn-outline-warning btn-sm ms-0 ms-md-2 w-100 w-md-auto" onclick="editReview({{ $event->id }})">
                             <i class="fas fa-edit"></i> Edit Review
                         </button>
                     @endif
-                    
                     @if(!$event->isSoldOut())
-                        <a href="{{ route('book.ticket', $event->id) }}" class="btn btn-primary btn-sm ms-2">
+                        <a href="{{ route('book.ticket', $event->id) }}" class="btn btn-primary btn-sm ms-0 ms-md-2 w-100 w-md-auto">
                             <i class="fas fa-ticket-alt"></i> Buy Tickets
                         </a>
                     @endif
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('login') }}" class="btn btn-primary btn-sm w-100 w-md-auto">
                         <i class="fas fa-sign-in-alt"></i> Login to Book
                     </a>
                 @endif
             </div>
-
             <!-- Reviews Section -->
             <div class="reviews-section mt-4">
-                <h5>Reviews</h5>
+                <h5 class="fw-semibold">Reviews</h5>
                 @if($event->reviews->count() > 0)
                     <div class="reviews-list">
                         @foreach($event->reviews->take(5) as $review)
                             <div class="review-item border-bottom pb-3 mb-3">
-                                <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap">
                                     <div>
                                         <div class="stars mb-1">
                                             @for($i = 1; $i <= 5; $i++)
@@ -168,6 +159,13 @@
 .rating-text {
     font-size: 0.9rem;
     color: #666;
+}
+@media (max-width: 768px) {
+    .quick-view-content { padding: 0.5rem; }
+    .action-buttons { flex-direction: column !important; }
+    .action-buttons .btn { width: 100% !important; margin-bottom: 0.5em; }
+    .event-details p, .event-description, .reviews-section, .review-item { font-size: 0.95rem; }
+    .col-md-6 { margin-bottom: 1rem; }
 }
 </style>
 

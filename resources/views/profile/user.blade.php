@@ -195,6 +195,7 @@
         .profile-avatar { width: 64px; height: 64px; }
         .row.g-4 { flex-direction: column; }
         .col-md-4, .col-md-8, .col-md-7 { max-width: 100%; flex: 0 0 100%; }
+        .btn, .profile-upload-btn, .badge, .role-badge { width: 100%; margin-bottom: 0.5em; }
     }
 </style>
 <script>

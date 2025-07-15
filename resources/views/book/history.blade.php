@@ -46,17 +46,26 @@
         align-items: center;
         justify-content: center;
     }
+    @media (max-width: 768px) {
+        .modern-card { padding: 0.5rem 0.2rem; }
+        .btn-gradient, .btn, .btn-icon { width: 100%; margin-bottom: 0.5em; justify-content: center; }
+        .input-group { flex-direction: column; }
+    }
 </style>
 <div class="container py-5">
     <div class="mb-4 text-center">
         <h2><i class="bi bi-journal-text"></i> My Booking History</h2>
     </div>
-    <form method="GET" action="{{ route('book.history') }}" class="mb-4 d-flex align-items-center justify-content-center" style="gap: 0.5rem;">
-        <div class="input-group" style="max-width:350px;">
-            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search your bookings..." class="form-control border-start-0" style="border-radius: 0 12px 12px 0;">
+    <form method="GET" action="{{ route('book.history') }}" class="mb-4 row g-2 align-items-center justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search your bookings..." class="form-control border-start-0" style="border-radius: 0 12px 12px 0;">
+            </div>
         </div>
-        <button type="submit" class="btn btn-gradient">Search</button>
+        <div class="col-12 col-md-auto">
+            <button type="submit" class="btn btn-gradient w-100">Search</button>
+        </div>
     </form>
     <div class="modern-card">
         <h4 class="mb-3"><i class="bi bi-ticket-perforated"></i> Active Tickets</h4>

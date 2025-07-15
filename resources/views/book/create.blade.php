@@ -13,27 +13,27 @@
         @csrf
 
         {{-- Legend --}}
-        <div class="d-flex justify-content-center gap-3 mb-3">
-            <span class="badge bg-warning text-dark">🎟️ VIP</span>
-            <span class="badge bg-primary">🪑 General</span>
-            <span class="badge bg-orange text-white" style="background-color: darkorange;">💺 Economy</span>
-            <span class="badge bg-success">✅ Selected</span>
-            <span class="badge bg-secondary">❌ Booked</span>
+        <div class="d-flex flex-wrap justify-content-center gap-2 gap-md-3 mb-3">
+            <span class="badge bg-warning text-dark mb-2">🎟️ VIP</span>
+            <span class="badge bg-primary mb-2">🪑 General</span>
+            <span class="badge bg-orange text-white mb-2" style="background-color: darkorange;">💺 Economy</span>
+            <span class="badge bg-success mb-2">✅ Selected</span>
+            <span class="badge bg-secondary mb-2">❌ Booked</span>
         </div>
 
         {{-- Seat Map --}}
-        <div class="seat-map-wrapper">
+        <div class="seat-map-wrapper w-100 px-1 px-md-4">
             <div class="stage mb-3">STAGE</div>
 
             {{-- VIP --}}
             <div class="zone zone-vip mb-4">
                 <div class="zone-label mb-2">🎟️ VIP - (RM100)</div>
-                <div class="seat-row justify-content-center">
+                <div class="seat-row justify-content-center flex-wrap">
                     @php
                         $vipGrouped = $event->seats->where('type', 'VIP')->groupBy(fn($seat) => substr($seat->label, 0, 1));
                     @endphp
                     @foreach ($vipGrouped as $row => $seatsInRow)
-                        <div class="d-flex align-items-center mb-2">
+                        <div class="d-flex align-items-center mb-2 flex-wrap">
                             <div class="me-2 fw-bold" style="width: 30px;">{{ $row }}</div>
                             <div class="seat-row flex-wrap">
                                 @foreach ($seatsInRow as $seat)
@@ -53,7 +53,7 @@
                         $generalGrouped = $event->seats->where('type', 'GENERAL')->groupBy(fn($seat) => substr($seat->label, 0, 1));
                     @endphp
                     @foreach ($generalGrouped as $row => $seatsInRow)
-                        <div class="d-flex align-items-center mb-2">
+                        <div class="d-flex align-items-center mb-2 flex-wrap">
                             <div class="me-2 fw-bold" style="width: 30px;">{{ $row }}</div>
                             <div class="seat-row flex-wrap">
                                 @foreach ($seatsInRow as $seat)
@@ -73,7 +73,7 @@
                         $economyGrouped = $event->seats->where('type', 'ECONOMY')->groupBy(fn($seat) => substr($seat->label, 0, 1));
                     @endphp
                     @foreach ($economyGrouped as $row => $seatsInRow)
-                        <div class="d-flex align-items-center mb-2">
+                        <div class="d-flex align-items-center mb-2 flex-wrap">
                             <div class="me-2 fw-bold" style="width: 30px;">{{ $row }}</div>
                             <div class="seat-row flex-wrap">
                                 @foreach ($seatsInRow as $seat)
@@ -102,7 +102,7 @@
 
         {{-- ✅ Submit button INSIDE the form --}}
         <div class="text-center mt-4">
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success w-100 w-md-auto">
                 🎟️ Confirm Booking & Make Payment
             </button>
         </div>
@@ -274,6 +274,12 @@ function updateSummary() {
     }
     .btn-seat:hover .seat-price-tooltip {
         opacity: 1;
+    }
+    @media (max-width: 768px) {
+        .seat-map-wrapper { padding: 0 0.2rem !important; }
+        .zone-label { font-size: 1rem; }
+        .seat-row { flex-wrap: wrap; }
+        .btn, .badge { width: 100%; margin-bottom: 0.5em; }
     }
 </style>
 <style>

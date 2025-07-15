@@ -7,11 +7,11 @@
         <p id="loading-message">Your ticket is being generated. Please wait...</p>
     </div>
     
-    <div id="ticket-container" style="display: none; max-width: 500px; width: 100%;">
+    <div id="ticket-container" class="w-100" style="display: none; max-width: 500px;">
         <!-- Ticket will be rendered here -->
     </div>
     
-    <button id="download-pdf" class="btn btn-primary mt-4" style="display: none;">
+    <button id="download-pdf" class="btn btn-primary mt-4 w-100 w-md-auto" style="display: none;">
         <i class="bi bi-download"></i> Download Ticket
     </button>
 </div>
@@ -29,13 +29,13 @@
             
             // Format ticket HTML
         const ticketHTML = `
-            <div class="ticket-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(60,72,88,0.10); padding: 32px 28px 24px 28px; position: relative;">
+            <div class="ticket-card" style="background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(60,72,88,0.10); padding: 32px 28px 24px 28px; position: relative; width: 100%; max-width: 500px;">
                 <div class="header" style="text-align: center; margin-bottom: 18px;">
-                    <img src="/eventix-logo.png" style="max-height: 48px; margin-bottom: 8px;" alt="EventiX Logo">
+                    <img src="/eventix-logo.png" style="max-height: 48px; margin-bottom: 8px; max-width: 100%; height: auto;" alt="EventiX Logo">
                     <div style="font-size: 1.6rem; font-weight: 700; color: #22223b; margin-bottom: 6px;">${ticketData.event_name}</div>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 18px;">
-                    <div style="flex: 1;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; margin-top: 18px;">
+                    <div style="flex: 1 1 180px; min-width: 180px;">
                         <div style="font-size: 1.05rem; color: #444; margin-bottom: 4px;"><strong>Date:</strong> ${ticketData.event_date}</div>
                         <div style="font-size: 1.05rem; color: #444; margin-bottom: 4px;"><strong>Time:</strong> ${ticketData.event_time}</div>
                         <div style="font-size: 1.05rem; color: #444; margin-bottom: 4px;"><strong>Venue:</strong> ${ticketData.location}</div>
@@ -43,8 +43,8 @@
                         <div style="font-size: 1.05rem; color: #444; margin-bottom: 4px;"><strong>Price:</strong> RM${ticketData.amount}</div>
                         <div style="font-size: 1.05rem; color: #444; margin-bottom: 4px;"><strong>Ticket ID:</strong> ${ticketData.ticket_id}</div>
                     </div>
-                    <div style="flex: 0 0 140px; text-align: center;">
-                        <div id="qrcode" style="border: 4px solid #e0e7ff; border-radius: 12px; background: #f8fafc; width: 140px; height: 140px;"></div>
+                    <div style="flex: 0 0 140px; text-align: center; width: 100%; max-width: 140px; margin: 0 auto;">
+                        <div id="qrcode" style="border: 4px solid #e0e7ff; border-radius: 12px; background: #f8fafc; width: 140px; height: 140px; margin: 0 auto;"></div>
                     </div>
                 </div>
                 <div style="text-align: center; margin-top: 28px; font-size: 0.98rem; color: #888;">

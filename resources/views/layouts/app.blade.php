@@ -99,6 +99,8 @@
         border-radius: 12px;
         margin-right: 0.75rem;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        max-width: 100%; /* Responsive logo */
+        height: auto;
     }
     .navbar .navbar-toggler {
         border: none;
@@ -131,10 +133,33 @@
         filter: drop-shadow(0 0 32px #fff6) drop-shadow(0 0 8px #a259f7cc);
         animation: heroLogoGlow 2.5s infinite alternate;
         border-radius: 16px;
+        max-width: 100%;
+        height: auto;
     }
     @keyframes heroLogoGlow {
         0% { filter: drop-shadow(0 0 12px #fff6) drop-shadow(0 0 8px #a259f7cc); }
         100% { filter: drop-shadow(0 0 32px #fff9) drop-shadow(0 0 16px #a259f7); }
+    }
+    /* Responsive main content padding */
+    main {
+        padding: 1.5rem 0.5rem;
+    }
+    @media (min-width: 768px) {
+        main {
+            padding: 2rem 1.5rem;
+        }
+    }
+    /* Responsive footer */
+    footer {
+        padding: 1.5rem 0.5rem;
+        text-align: center;
+        font-size: 1rem;
+    }
+    @media (min-width: 768px) {
+        footer {
+            padding: 2rem 1.5rem;
+            font-size: 1.1rem;
+        }
     }
     </style>
 </head>
@@ -142,7 +167,7 @@
 <body>
 {{-- Navbar --}}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-    <div class="container">
+    <div class="container-fluid px-2 px-md-4">
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
         <img src="{{ asset('images/eventixlogo.png') }}" alt="EventiX Logo" class="glow-logo" style="height:60px;">
         </a>

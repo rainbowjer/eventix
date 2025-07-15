@@ -6,7 +6,7 @@
     
     <!-- Filter Bar (moved to top) -->
     <form method="GET" class="row g-2 align-items-end mb-4 filter-bar-modern position-relative">
-        <div class="col-md-3 position-relative">
+        <div class="col-md-3 col-12 mb-2 mb-md-0 position-relative">
             <label for="search" class="form-label mb-1 visually-hidden">Search</label>
             <div class="search-bar-wrapper">
                 <span class="search-icon"><i class="fas fa-search"></i></span>
@@ -16,7 +16,7 @@
                 @endif
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-6 mb-2 mb-md-0">
             <label for="date" class="form-label mb-1">Date</label>
             <select name="date" id="date" class="form-select filter-select">
                 <option value="">All Dates</option>
@@ -25,7 +25,7 @@
                 <option value="this-month" {{ request('date')=='this-month' ? 'selected' : '' }}>This Month</option>
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-6 mb-2 mb-md-0">
             <label for="location" class="form-label mb-1">Location</label>
             <select name="location" id="location" class="form-select filter-select">
                 <option value="">All Locations</option>
@@ -34,7 +34,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-6 mb-2 mb-md-0">
             <label for="capacity" class="form-label mb-1">Availability</label>
             <select name="capacity" id="capacity" class="form-select filter-select">
                 <option value="">All Events</option>
@@ -43,15 +43,15 @@
                 <option value="hot" {{ request('capacity')=='hot' ? 'selected' : '' }}>🔥 Hot Events</option>
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 col-6 mb-2 mb-md-0">
             <label for="sort" class="form-label mb-1">Sort</label>
             <select name="sort" id="sort" class="form-select filter-select">
                 <option value="soonest" {{ request('sort')=='soonest' ? 'selected' : '' }}>Soonest</option>
                 <option value="latest" {{ request('sort')=='latest' ? 'selected' : '' }}>Latest</option>
             </select>
         </div>
-        <div class="col-md-1 d-grid">
-            <button type="submit" class="btn filter-btn fw-bold"><i class="fas fa-filter"></i></button>
+        <div class="col-md-1 col-12 d-grid">
+            <button type="submit" class="btn filter-btn fw-bold w-100"><i class="fas fa-filter"></i></button>
         </div>
     </form>
 
@@ -84,13 +84,13 @@
 
     <div class="row">
         @forelse ($events as $event)
-            <div class="col-md-4 mb-4">
-                <div class="concert-card shadow-sm">
+            <div class="col-md-4 col-12 mb-4">
+                <div class="concert-card shadow-sm h-100 d-flex flex-column">
                     <!-- Event image -->
                     @if ($event->banner_image)
-                        <img src="{{ asset('storage/' . $event->banner_image) }}" class="concert-card-img" alt="Event Banner">
+                        <img src="{{ asset('storage/' . $event->banner_image) }}" class="concert-card-img img-fluid w-100" alt="Event Banner">
                     @else
-                        <img src="{{ asset('images/concert1.jpg') }}" class="concert-card-img" alt="Concert Image">
+                        <img src="{{ asset('images/concert1.jpg') }}" class="concert-card-img img-fluid w-100" alt="Concert Image">
                     @endif
                     
                     <!-- Badges: Stack vertically -->
@@ -157,16 +157,16 @@
                         <div class="concert-info"><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> {{ $event->event_date }}</div>
                         <div class="concert-info"><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ $event->location }}</div>
                         
-                        <div class="concert-actions mt-3">
-                            <button class="btn btn-outline-primary btn-sm quick-view-btn me-2" data-event-id="{{ $event->id }}">
+                        <div class="concert-actions mt-3 d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-primary btn-sm quick-view-btn me-2 w-100 w-md-auto" data-event-id="{{ $event->id }}">
                                 <i class="fas fa-eye"></i> Quick View
                             </button>
                             @if(auth()->check())
-                                <a href="{{ route('book.ticket', $event->id) }}" class="concert-book-btn">
+                                <a href="{{ route('book.ticket', $event->id) }}" class="concert-book-btn w-100 w-md-auto">
                                     <i class="fas fa-ticket-alt"></i> Buy Now
                                 </a>
                             @else
-                                <a href="{{ route('login') }}" class="concert-book-btn" title="Login to book this event">
+                                <a href="{{ route('login') }}" class="concert-book-btn w-100 w-md-auto" title="Login to book this event">
                                     <i class="fas fa-ticket-alt"></i> Login to Book
                                 </a>
                             @endif
@@ -569,13 +569,26 @@
 }
 
 @media (max-width: 768px) {
-    .concert-card-img { height: 80px; }
+    .concert-card-img { height: 80px; max-height: 180px; }
     .concert-title { font-size: 1.1rem; }
     .concert-card-body { padding: 0.8rem 0.7rem 1rem 0.7rem; }
-    .filter-bar-modern { padding: 1rem 0.5rem 0.5rem 0.5rem; }
+    .filter-bar-modern { padding: 1rem 0.5rem 0.5rem 0.5rem; flex-direction: column !important; }
     .search-bar-input, .filter-select { height: 2.2rem; font-size: 1rem; }
     .recently-viewed-section { padding: 1rem; }
     .concert-actions { flex-direction: column; }
+    .concert-card { padding: 0.5rem; }
+    .concert-title { font-size: 1.1rem; }
+    .btn, .concert-book-btn { width: 100% !important; margin-bottom: 0.5em; }
+    .filter-bar-modern .form-label { font-size: 0.95rem; }
+    .filter-bar-modern .form-select, .filter-bar-modern .form-control { font-size: 0.98rem; }
+    .row > [class^='col-'] { margin-bottom: 1rem; }
+    .recent-event-img { height: 60px; }
+}
+@media (max-width: 480px) {
+    .filter-bar-modern { padding: 0.5rem 0.2rem 0.2rem 0.2rem; }
+    .concert-card-body { padding: 0.5rem 0.3rem 0.7rem 0.3rem; }
+    .concert-title { font-size: 1rem; }
+    .recent-event-img { height: 40px; }
 }
 </style>
 

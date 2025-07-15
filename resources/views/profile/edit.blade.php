@@ -229,8 +229,10 @@
         .profile-avatar { width: 80px; height: 80px; }
     }
     @media (max-width: 768px) {
-        .profile-card, .profile-bg { padding: 0.5rem; }
-        .profile-avatar { width: 64px; height: 64px; }
+        .profile-bg { padding-top: 1rem; padding-bottom: 1rem; }
+        .profile-card { padding: 1rem 0.5rem; }
+        .profile-avatar { width: 80px; height: 80px; }
+        .profile-upload-btn, .btn, .form-control { width: 100%; margin-bottom: 0.5em; }
         .row.g-4 { flex-direction: column; }
         .col-md-4, .col-md-8, .col-md-7 { max-width: 100%; flex: 0 0 100%; }
     }

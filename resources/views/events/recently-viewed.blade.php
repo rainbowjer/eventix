@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-2">
         <h2 class="fw-bold"><i class="fas fa-history text-primary"></i> Recently Viewed Events</h2>
-        <a href="{{ route('events.all') }}" class="btn btn-outline-primary">
+        <a href="{{ route('events.all') }}" class="btn btn-outline-primary w-100 w-md-auto">
             <i class="fas fa-arrow-left"></i> Back to All Events
         </a>
     </div>
@@ -12,13 +12,13 @@
     @if($recentlyViewed->count() > 0)
         <div class="row">
             @foreach($recentlyViewed as $event)
-                <div class="col-md-4 mb-4">
-                    <div class="concert-card shadow-sm">
+                <div class="col-md-4 col-12 mb-4">
+                    <div class="concert-card shadow-sm h-100 d-flex flex-column">
                         <!-- Event image -->
                         @if ($event->banner_image)
-                            <img src="{{ asset('storage/' . $event->banner_image) }}" class="concert-card-img" alt="Event Banner">
+                            <img src="{{ asset('storage/' . $event->banner_image) }}" class="concert-card-img img-fluid w-100" alt="Event Banner">
                         @else
-                            <img src="{{ asset('images/concert1.jpg') }}" class="concert-card-img" alt="Concert Image">
+                            <img src="{{ asset('images/concert1.jpg') }}" class="concert-card-img img-fluid w-100" alt="Concert Image">
                         @endif
                         
                         <!-- Capacity Status Badge -->
@@ -64,16 +64,16 @@
                             <div class="concert-info"><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> {{ $event->event_date }}</div>
                             <div class="concert-info"><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong> {{ $event->location }}</div>
                             
-                            <div class="concert-actions mt-3">
-                                <button class="btn btn-outline-primary btn-sm quick-view-btn me-2" data-event-id="{{ $event->id }}">
+                            <div class="concert-actions mt-3 d-flex flex-wrap gap-2">
+                                <button class="btn btn-outline-primary btn-sm quick-view-btn me-2 w-100 w-md-auto" data-event-id="{{ $event->id }}">
                                     <i class="fas fa-eye"></i> Quick View
                                 </button>
                                 @if(!$event->isSoldOut())
-                                    <a href="{{ route('events.show', $event->id) }}" class="concert-book-btn">
+                                    <a href="{{ route('events.show', $event->id) }}" class="concert-book-btn w-100 w-md-auto">
                                         <i class="fas fa-ticket-alt"></i> Buy Now
                                     </a>
                                 @else
-                                    <button class="concert-book-btn" disabled>
+                                    <button class="concert-book-btn w-100 w-md-auto" disabled>
                                         <i class="fas fa-times"></i> Sold Out
                                     </button>
                                 @endif
@@ -272,10 +272,18 @@
 }
 
 @media (max-width: 768px) {
-    .concert-card-img { height: 80px; }
+    .concert-card { padding: 0.5rem; }
     .concert-title { font-size: 1.1rem; }
+    .concert-card-img { max-height: 180px; height: 80px; }
+    .btn, .concert-book-btn { width: 100% !important; margin-bottom: 0.5em; }
     .concert-card-body { padding: 0.8rem 0.7rem 1rem 0.7rem; }
     .concert-actions { flex-direction: column; }
+    .row > [class^='col-'] { margin-bottom: 1rem; }
+}
+@media (max-width: 480px) {
+    .concert-card-body { padding: 0.5rem 0.3rem 0.7rem 0.3rem; }
+    .concert-title { font-size: 1rem; }
+    .concert-card-img { height: 60px; }
 }
 </style>
 

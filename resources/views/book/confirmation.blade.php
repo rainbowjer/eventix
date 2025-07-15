@@ -11,6 +11,7 @@
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
         padding: 2.5rem 2rem;
         max-width: 450px;
+        width: 100%;
         margin: 3rem auto;
     }
     .modern-seats {
@@ -49,6 +50,7 @@
         box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.10);
         text-decoration: none;
         display: inline-block;
+        width: auto;
     }
     .modern-btn:hover {
         background: linear-gradient(90deg, #06b6d4 0%, #6366f1 100%);
@@ -81,6 +83,13 @@
         font-size: 4rem;
         color: #10b981;
         margin-bottom: 1rem;
+    }
+    @media (max-width: 600px) {
+        .modern-card { padding: 1rem 0.5rem; }
+        .modern-title { font-size: 1.2rem; }
+        .modern-btn { width: 100%; padding: 0.75rem 0.5rem; font-size: 1rem; }
+        .modern-seat-badge { font-size: 0.95rem; padding: 0.5rem 0.7rem; }
+        .modern-total { font-size: 1rem; padding: 0.5rem 0.7rem; }
     }
 </style>
 

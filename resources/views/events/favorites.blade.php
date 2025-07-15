@@ -276,6 +276,13 @@
     .concert-title { font-size: 1.1rem; }
     .concert-card-body { padding: 0.8rem 0.7rem 1rem 0.7rem; }
     .concert-actions { flex-direction: column; }
+    .btn, .concert-book-btn { width: 100% !important; margin-bottom: 0.5em; }
+    .row > [class^='col-'] { margin-bottom: 1rem; }
+}
+@media (max-width: 480px) {
+    .concert-card-body { padding: 0.5rem 0.3rem 0.7rem 0.3rem; }
+    .concert-title { font-size: 1rem; }
+    .concert-card-img { height: 60px; }
 }
 </style>
 

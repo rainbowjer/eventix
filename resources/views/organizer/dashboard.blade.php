@@ -118,6 +118,13 @@
         .modern-card { padding: 1rem 0.5rem; }
         .row.g-4 { flex-direction: column; }
         .col-md-6 { max-width: 100%; flex: 0 0 100%; }
+        .btn-gradient { width: 100%; justify-content: center; margin-bottom: 0.5em; }
+    }
+    @media (max-width: 480px) {
+        .dashboard-header { font-size: 1rem; }
+        .modern-card { padding: 0.7rem 0.2rem; }
+        .modern-card .card-title { font-size: 1rem; }
+        .btn-gradient { font-size: 0.98rem; padding: 0.48rem 1rem; }
     }
 </style>
 <script>

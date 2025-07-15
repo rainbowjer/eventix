@@ -183,6 +183,26 @@ body {
 }
 @media (max-width: 900px) {
     .two-column-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .left-column { border-right: none; padding-right: 0; }
+}
+@media (max-width: 768px) {
+    .modern-card { padding: 1.2rem 0.5rem; }
+    .modern-title { font-size: 1.3rem; }
+    .modern-section-title { font-size: 1rem; }
+    .modern-info-list span, .modern-seat-badge, .method-desc { font-size: 0.98rem; }
+    .modern-total { font-size: 1.1rem; padding: 0.7rem 1rem; }
+    .pay-btn { width: 100% !important; font-size: 1.05rem; padding: 0.8rem 1.2rem; }
+    .payment-methods-grid { gap: 0.7rem; }
+    .payment-method { flex-direction: column; align-items: flex-start; padding: 0.8rem 0.7rem; }
+    .payment-icon { width: 36px; height: 24px; margin-bottom: 0.5rem; }
+}
+@media (max-width: 480px) {
+    .modern-card { padding: 0.7rem 0.2rem; }
+    .modern-title { font-size: 1.05rem; }
+    .modern-section-title { font-size: 0.93rem; }
+    .modern-info-list span, .modern-seat-badge, .method-desc { font-size: 0.93rem; }
+    .modern-total { font-size: 1rem; padding: 0.5rem 0.7rem; }
+    .pay-btn { font-size: 0.98rem; padding: 0.7rem 0.7rem; }
 }
 .left-column {
     border-right: 1px solid #e5e7eb;

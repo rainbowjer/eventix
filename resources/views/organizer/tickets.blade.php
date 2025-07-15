@@ -110,6 +110,15 @@
         .modern-card { padding: 1rem 0.5rem; }
         .analytics-value { font-size: 1.1rem; }
         .section-title { font-size: 1.1rem; }
+        .row.mb-4.justify-content-center > [class^='col-'] { max-width: 100%; flex: 0 0 100%; margin-bottom: 1rem; }
+        .d-flex.justify-content-end.mb-3 { flex-direction: column !important; gap: 0.5rem !important; align-items: stretch !important; }
+        .btn-action { width: 100% !important; margin-bottom: 0.5em; }
+    }
+    @media (max-width: 480px) {
+        .modern-header { font-size: 1rem; }
+        .modern-card { padding: 0.7rem 0.2rem; }
+        .section-title { font-size: 0.98rem; }
+        .analytics-value { font-size: 1rem; }
     }
 </style>
 <div class="container py-5" style="min-height: 100vh;">
