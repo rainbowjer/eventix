@@ -200,6 +200,14 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 Route::get('admin/report/export/pdf', [AdminController::class, 'exportPDF'])->name('admin.report.export.pdf');
 
+// About Us section
+Route::prefix('about')->group(function () {
+    Route::view('/eventix', 'about.about_eventix')->name('about.eventix');
+    Route::view('/contact', 'about.contact_us')->name('about.contact');
+    Route::view('/fees', 'about.our_fees')->name('about.fees');
+    Route::view('/manual', 'about.user_manual')->name('about.manual');
+});
+
 require __DIR__.'/auth.php';
 
 Route::middleware(['auth'])->group(function () {

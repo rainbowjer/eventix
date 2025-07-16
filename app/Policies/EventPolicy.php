@@ -61,6 +61,6 @@ class EventPolicy
      */
     public function forceDelete(User $user, Event $event): bool
     {
-        return false;
+        return false; 
     }
 }

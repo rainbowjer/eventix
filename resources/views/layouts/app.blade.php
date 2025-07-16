@@ -176,13 +176,13 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container-fluid px-2 px-md-4">
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-        <img src="{{ asset('images/eventixlogo.png') }}" alt="EventiX Logo" class="glow-logo" style="height:60px;">
+        <img src="{{ asset('images/eventixlogo.png') }}" alt="EventiX Logo" class="glow-logo" style="height:40px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto align-items-lg-center">
+        <div class="collapse navbar-collapse py-1" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center" style="gap: 0.5rem;">
                 @guest
                     <li class="nav-item"><a class="nav-link" href="{{ route('events.all') }}">Events</a></li>
                 @else
@@ -256,6 +256,17 @@
                     @endif
                     
                     <li class="nav-item"><span class="nav-link">Welcome, {{ Auth::user()->name }}</span></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            About Us
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item" href="{{ route('about.eventix') }}">About EventiX</a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.contact') }}">Contact Us</a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.fees') }}">Our Fees (No fee)</a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.manual') }}">User Manual</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="POST" class="d-inline">
                             @csrf
@@ -347,5 +358,6 @@
 </script>
 
 @stack('scripts')
+<script src="//unpkg.com/alpinejs" defer></script>
 </body>
 </html>

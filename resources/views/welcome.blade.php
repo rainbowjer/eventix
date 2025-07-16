@@ -27,11 +27,8 @@ body {
 }
 .top-slider .carousel-item img {
     width: 100vw;
-    min-width: 100vw;
     max-width: 100vw;
-    height: 56vh;
-    min-height: 38vh;
-    max-height: 64vh;
+    height: auto;
     object-fit: cover;
     transition: transform 2.5s cubic-bezier(.4,0,.2,1);
     will-change: transform;
@@ -40,29 +37,23 @@ body {
 }
 @media (max-width: 991.98px) {
     .top-slider .carousel-item img {
-        height: 42vh;
-        min-height: 28vh;
-        max-height: 48vh;
+        height: auto;
+        min-height: unset;
+        max-height: 60vw;
     }
 }
 @media (max-width: 768px) {
-    .top-slider-container, .top-slider {
-        width: 100vw;
-        max-width: 100vw;
-        margin: 0;
-        padding: 0;
-    }
     .top-slider .carousel-item img {
-        height: 36vh;
-        min-height: 22vh;
-        max-height: 40vh;
+        height: auto;
+        min-height: unset;
+        max-height: 70vw;
     }
 }
 @media (max-width: 480px) {
     .top-slider .carousel-item img {
-        height: 30vh;
-        min-height: 18vh;
-        max-height: 34vh;
+        height: auto;
+        min-height: unset;
+        max-height: 90vw;
     }
 }
 .top-slider .carousel-item.active img {

@@ -34,6 +34,20 @@
                             </x-nav-link>
                         @endif
                     @endauth
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none">
+                            About Us
+                            <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                        <div x-show="open" @click.away="open = false" class="absolute z-50 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                            <a href="{{ route('about.eventix') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">About EventiX</a>
+                            <a href="{{ route('about.contact') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Contact Us</a>
+                            <a href="{{ route('about.fees') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Our Fees (No fee)</a>
+                            <a href="{{ route('about.manual') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">User Manual</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -108,6 +122,22 @@
                     </x-responsive-nav-link>
                 @endif
             @endauth
+        </div>
+
+        <!-- About Us in Responsive Menu -->
+        <div class="pt-2 pb-3 space-y-1">
+            <button @click="openAbout = !openAbout" class="w-full flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 focus:outline-none">
+                <span>About Us</span>
+                <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+            <div x-show="openAbout" class="pl-4">
+                <a href="{{ route('about.eventix') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">About EventiX</a>
+                <a href="{{ route('about.contact') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Contact Us</a>
+                <a href="{{ route('about.fees') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Our Fees (No fee)</a>
+                <a href="{{ route('about.manual') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">User Manual</a>
+            </div>
         </div>
 
         <!-- Responsive Settings Options -->
