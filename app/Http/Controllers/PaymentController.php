@@ -8,6 +8,8 @@ use App\Models\Transaction;
 use App\Models\Seat;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Crypt;
+use App\Mail\TicketPurchased;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -75,6 +77,11 @@ public function process(Request $request)
                 'payment_method' => $request->payment_method,
                 'purchase_date' => $now,
             ]);
+
+            // Send ticket email and log
+            $user = auth()->user(); // Assuming $user is available here
+            \Log::info('Sending ticket email to: ' . $user->email);
+            Mail::to($user->email)->send(new TicketPurchased($ticket));
         }
     }
 
