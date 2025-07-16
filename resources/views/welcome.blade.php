@@ -142,32 +142,35 @@ body {
     margin: 0 4px;
 }
 </style>
-<div class="top-slider-container">
-    <div id="homepageCarousel" class="carousel slide carousel-fade top-slider" data-bs-ride="carousel" data-bs-interval="4000" data-bs-pause="hover">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#homepageCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#homepageCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#homepageCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+<!-- Add container-fluid to main sections for better responsiveness -->
+<div class="container-fluid px-0">
+    <div class="top-slider-container">
+        <div id="homepageCarousel" class="carousel slide carousel-fade top-slider" data-bs-ride="carousel" data-bs-interval="4000" data-bs-pause="hover">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#homepageCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#homepageCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#homepageCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{ asset('images/concert1.jpg') }}" class="d-block w-100" alt="Slide 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/concert3.jpg') }}" class="d-block w-100" alt="Slide 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ asset('images/concert2.jpg') }}" class="d-block w-100" alt="Slide 3">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#homepageCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#homepageCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{ asset('images/concert1.jpg') }}" class="d-block w-100" alt="Slide 1">
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('images/concert3.jpg') }}" class="d-block w-100" alt="Slide 2">
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('images/concert2.jpg') }}" class="d-block w-100" alt="Slide 3">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#homepageCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#homepageCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
     </div>
 </div>
 
@@ -291,39 +294,38 @@ body {
     .hero-content { padding: 2.2rem 0.2rem 1.5rem 0.2rem; }
 }
 </style>
-<div class="hero-bg">
-    <div class="hero-floating-notes">
-        <svg class="hero-note" style="left:15%;animation-delay:0.5s;" width="32" height="32" viewBox="0 0 40 40"><text x="0" y="30" font-size="32">🎵</text></svg>
-        <svg class="hero-note" style="left:30%;animation-delay:1.2s;" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="24" font-size="32">🎶</text></svg>
-        <svg class="hero-note" style="left:60%;animation-delay:2.1s;" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="24" font-size="32">🎤</text></svg>
-        <svg class="hero-note" style="left:80%;animation-delay:0.7s;" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="24" font-size="32">🎸</text></svg>
-        <svg class="hero-note" style="left:50%;animation-delay:1.7s;" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="24" font-size="32">🎷</text></svg>
-    </div>
-    <div class="hero-content">
-        <div class="hero-logo">
-            
+<!-- Hero Section: add container and responsive padding -->
+<div class="container-fluid px-0">
+    <div class="hero-bg">
+        <div class="hero-floating-notes">
+            <svg class="hero-note" style="left:15%;animation-delay:0.5s;" width="32" height="32" viewBox="0 0 40 40"><text x="0" y="30" font-size="32">🎵</text></svg>
+            <svg class="hero-note" style="left:30%;animation-delay:1.2s;" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="24" font-size="32">🎶</text></svg>
+            <svg class="hero-note" style="left:60%;animation-delay:2.1s;" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="24" font-size="32">🎤</text></svg>
+            <svg class="hero-note" style="left:80%;animation-delay:0.7s;" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="24" font-size="32">🎸</text></svg>
+            <svg class="hero-note" style="left:50%;animation-delay:1.7s;" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="24" font-size="32">🎷</text></svg>
         </div>
-        <div class="hero-title">Welcome to EventiX</div>
-        <div class="hero-desc">Your all-in-one e-ticketing solution for concerts, shows, and events in Malaysia.<br>Book, resell, and experience the best events with ease!</div>
-        <!-- <a href="{{ route('events.all') }}" class="hero-cta-btn">Browse Events</a> -->
+        <div class="hero-content">
+            <div class="hero-logo">
+                
+            </div>
+            <div class="hero-title">Welcome to EventiX</div>
+            <div class="hero-desc">Your all-in-one e-ticketing solution for concerts, shows, and events in Malaysia.<br>Book, resell, and experience the best events with ease!</div>
+            <!-- <a href="{{ route('events.all') }}" class="hero-cta-btn">Browse Events</a> -->
+        </div>
     </div>
 </div>
 
 <!-- ✅ ABOUT SECTION (Side by Side) -->
 <section class="py-5 bg-light">
     <div class="container">
-        <div class="row align-items-center g-0">
-            <div class="col-md-6 d-flex justify-content-center align-items-center" style="min-height:220px;">
-                <img src="{{ asset('images/eventixlogo.png') }}" alt="EventiX Logo" class="glow-logo" style="height:180px;">
+        <div class="row align-items-center g-3 g-md-5 flex-column flex-md-row">
+            <div class="col-12 col-md-6 d-flex justify-content-center align-items-center mb-4 mb-md-0" style="min-height:180px;">
+                <img src="{{ asset('images/eventixlogo.png') }}" alt="EventiX Logo" class="glow-logo img-fluid" style="height:120px; max-width:90vw;">
             </div>
-            <div class="col-md-6">
+            <div class="col-12 col-md-6">
                 <h2 class="fw-bold">About EventiX</h2>
-                <p class="lead ">
-                    EventiX is a powerful and user-friendly e-ticketing platform that lets you discover, book, and resell tickets for events across Malaysia. Whether you're attending concerts, workshops, sports, or community events — we make the process simple, fast, and secure.
-                </p>
-                <p>
-                    Event organizers can easily create, manage, and sell tickets, while users can browse upcoming events, purchase tickets, and even resell them if needed. All in one place.
-                </p>
+                <p class="lead">EventiX is a powerful and user-friendly e-ticketing platform that lets you discover, book, and resell tickets for events across Malaysia. Whether you're attending concerts, workshops, sports, or community events — we make the process simple, fast, and secure.</p>
+                <p>Event organizers can easily create, manage, and sell tickets, while users can browse upcoming events, purchase tickets, and even resell them if needed. All in one place.</p>
                 <!-- <a href="{{ route('events.index') }}" class="btn btn-outline-primary mt-3">Explore Events</a> -->
             </div>
         </div>
@@ -346,16 +348,16 @@ body {
         <h2 class="text-center mb-5 fw-bold">How It Works</h2>
         <div class="row text-center">
             <!-- Step 1 -->
-            <div class="col-md-4 mb-4">
+            <div class="col-12 col-md-4 mb-4">
                 <div class="p-4 border rounded shadow-sm h-100">
                     <i class="bi bi-search display-4 text-primary mb-3"></i>
                     <h5 class="fw-bold">1. Discover Events</h5>
-                    <p>Browse wehhhh a variety of events including concerts, workshops, sports, and more happening near you.</p>
+                    <p>Browse a variety of events including concerts, workshops, sports, and more happening near you.</p>
                 </div>
             </div>
 
             <!-- Step 2 -->
-            <div class="col-md-4 mb-4">
+            <div class="col-12 col-md-4 mb-4">
                 <div class="p-4 border rounded shadow-sm h-100">
                     <i class="bi bi-ticket-perforated display-4 text-success mb-3"></i>
                     <h5 class="fw-bold">2. Book Your Ticket</h5>
@@ -364,7 +366,7 @@ body {
             </div>
 
             <!-- Step 3 -->
-            <div class="col-md-4 mb-4">
+            <div class="col-12 col-md-4 mb-4">
                 <div class="p-4 border rounded shadow-sm h-100">
                     <i class="bi bi-arrow-repeat display-4 text-warning mb-3"></i>
                     <h5 class="fw-bold">3. Resell If Needed</h5>
@@ -381,7 +383,7 @@ body {
         <h2 class="text-center mb-5 fw-bold">What Users Say</h2>
         <div class="row text-center">
             <!-- Testimonial 1 -->
-            <div class="col-md-4 mb-4">
+            <div class="col-12 col-md-4 mb-4">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-body">
                         <p class="card-text">"Booking tickets through EventiX was so easy! I found my event and had my ticket within minutes."</p>
@@ -392,7 +394,7 @@ body {
             </div>
 
             <!-- Testimonial 2 -->
-            <div class="col-md-4 mb-4">
+            <div class="col-12 col-md-4 mb-4">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-body">
                         <p class="card-text">"I used the resell feature and it was incredibly smooth. Got my refund and helped another user too!"</p>
@@ -403,7 +405,7 @@ body {
             </div>
 
             <!-- Testimonial 3 -->
-            <div class="col-md-4 mb-4">
+            <div class="col-12 col-md-4 mb-4">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-body">
                         <p class="card-text">"As an organizer, EventiX made it easy to manage my events, ticket sales, and seat layout."</p>
@@ -444,7 +446,7 @@ body {
                 </h2>
                 <div id="faqCollapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                     <div class="accordion-body">
-                        Yes. Go to "My Bookings", select the ticket, and click "Resell". Another user can then purchase it.
+                        Yes. Go to "My Ticket History", select the ticket, and click "Resell". Another user can then purchase it.
                     </div>
                 </div>
             </div>
@@ -651,6 +653,7 @@ body {
     .concert-actions { flex-direction: column; }
 }
 </style>
+<!-- Upcoming Events: responsive grid -->
 <div class="container py-5">
     @if(request('search'))
         <h5>Showing {{ $events->count() }} result{{ $events->count() == 1 ? '' : 's' }} for "<strong>{{ request('search') }}</strong>"</h5>
@@ -660,8 +663,8 @@ body {
 
     <div class="row mt-3">
         @forelse ($events as $event)
-            <div class="col-md-4 mb-4">
-                <div class="concert-card shadow-sm">
+            <div class="col-12 col-sm-6 col-md-4 mb-4 d-flex">
+                <div class="concert-card shadow-sm w-100 d-flex flex-column">
                     <!-- Event image -->
                     @if ($event->banner_image)
                         <img src="{{ asset('storage/' . $event->banner_image) }}" class="concert-card-img" alt="Event Banner">
@@ -999,13 +1002,13 @@ $(document).ready(function() {
 @endpush
 
 <!-- ✅ CONTACT US SECTION -->
-<section class="py-5 bg-dark text-white">
-    <div class="container text-center">
+<section class="py-5 bg-dark text-white" style="width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;">
+    <div class="text-center">
         <h2 class="fw-bold mb-3">Need Help?</h2>
         <p class="mb-4">If you have questions or need support, reach out to us anytime.</p>
         <a href="https://wa.me/601118882950" target="_blank" class="btn btn-success">
-        <i class="bi bi-whatsapp"></i> Contact Us
-    </a>
+            <i class="bi bi-whatsapp"></i> Contact Us
+        </a>
     </div>
 </section>
 

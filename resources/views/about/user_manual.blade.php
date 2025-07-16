@@ -20,8 +20,8 @@
     "2.1. Account Registration and Login\n- Visit the EventiX homepage.\n- Click 'Register' to create a new account. Fill in your details and submit.\n- If you already have an account, click 'Login' and enter your credentials.\n- Verify your email if prompted.\n\n".
     "2.2. Browsing and Searching Events\n- After logging in, browse the homepage or use the search bar to find events.\n- Filter events by category, date, or location as needed.\n- Click on an event to view details, including date, time, venue, and available seats.\n\n".
     "2.3. Booking Tickets\n- On the event page, select your desired seat(s) and ticket quantity.\n- Click 'Book Now' or 'Proceed to Checkout.'\n- Review your order and confirm payment method.\n- Complete the payment process. You will receive a confirmation and e-ticket.\n\n".
-    "2.4. Viewing and Managing Bookings\n- Go to your profile or 'My Bookings' section.\n- View all your current and past bookings.\n- Download or view your e-tickets.\n\n".
-    "2.5. Reselling Tickets\n- In 'My Bookings,' select a ticket you wish to resell.\n- Click 'Resell Ticket' and set your resell price (if allowed).\n- Submit the resell request. You will be notified when your ticket is resold or if further action is needed.\n\n".
+    "2.4. Viewing and Managing Bookings\n- Go to your profile or 'My Ticket History' section.\n- View all your current and past bookings.\n- Download or view your e-tickets.\n\n".
+    "2.5. Reselling Tickets\n- In 'My Ticket History,' select a ticket you wish to resell.\n- Click 'Resell Ticket' and set your resell price (if allowed).\n- Submit the resell request. You will be notified when your ticket is resold or if further action is needed.\n\n".
     "2.6. Managing Profile and Favorites\n- Access your profile to update personal information or change your password.\n- Add events to your favorites for quick access.\n- View your recently viewed events.\n\n".
     "2.7. Notifications\n- Check the notifications section for updates on bookings, resell status, and event reminders.\n\n".
     "3. For Organizers\n".

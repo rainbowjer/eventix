@@ -197,17 +197,63 @@
         }
         @media (max-width: 600px) {
             .split-modern-card {
-                padding: 0.2rem 0.1rem;
-                margin: 0.7rem 0 0.7rem 0;
+                padding: 0.1rem 0.05rem;
+                margin: 0.3rem 0 0.3rem 0;
+                min-height: 0;
+                max-width: 92vw;
+                border-radius: 10px;
             }
             .split-modern-left, .split-modern-right {
-                padding: 0.7rem 0.1rem;
+                padding: 0.3rem 0.05rem;
             }
             .split-modern-welcome h1 {
-                font-size: 1.1rem;
+                font-size: 0.88rem;
+                margin-bottom: 0.4rem;
+            }
+            .split-modern-welcome p {
+                font-size: 0.85rem;
             }
             .split-modern-login-card {
-                max-width: 99vw;
+                max-width: 92vw;
+                padding: 0.5rem 0.05rem;
+            }
+            .split-modern-login-title {
+                font-size: 0.89rem;
+                margin-bottom: 1rem;
+            }
+            .split-modern-welcome .logo img, .register-logo {
+                height: 48px !important;
+                max-width: 90vw !important;
+                margin-bottom: 1rem !important;
+            }
+            .split-modern-form-group {
+                margin-bottom: 0.6rem;
+            }
+            .split-modern-input, .split-modern-select {
+                font-size: 0.89rem;
+                padding: 0.6rem 0.8rem 0.6rem 2.4rem;
+            }
+            .split-modern-icon {
+                font-size: 1.1rem !important;
+                left: 0.7rem !important;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .split-modern-login-btn {
+                font-size: 0.89rem;
+                padding: 0.6rem 0;
+                margin-top: 0.08rem;
+            }
+            .split-modern-login-register-row {
+                font-size: 0.85rem;
+                margin-top: 0.5rem;
+            }
+            .account-type-btn {
+                font-size: 0.89rem !important;
+                padding: 0.5rem 0.7rem !important;
+            }
+            label, .form-label, .form-control, .btn-gradient {
+                font-size: 0.89rem !important;
             }
         }
         .account-type-btn.selected {

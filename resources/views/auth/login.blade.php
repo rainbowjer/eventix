@@ -219,17 +219,50 @@
         }
         @media (max-width: 600px) {
             .split-modern-card {
-                padding: 0.2rem 0.1rem;
-                margin: 0.7rem 0 0.7rem 0;
+                padding: 0.1rem 0.05rem;
+                margin: 0.3rem 0 0.3rem 0;
+                min-height: 0;
+                max-width: 92vw;
+                border-radius: 10px;
             }
             .split-modern-left, .split-modern-right {
-                padding: 0.7rem 0.1rem;
+                padding: 0.3rem 0.05rem;
             }
             .split-modern-welcome h1 {
-                font-size: 1.1rem;
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+            .split-modern-welcome p {
+                font-size: 0.93rem;
             }
             .split-modern-login-card {
-                max-width: 99vw;
+                max-width: 92vw;
+                padding: 0.5rem 0.05rem;
+            }
+            .split-modern-login-title {
+                font-size: 0.98rem;
+                margin-bottom: 1.2rem;
+            }
+            .login-logo, .split-modern-welcome img {
+                height: 48px !important;
+                max-width: 90vw !important;
+                margin-bottom: 1rem !important;
+            }
+            .split-modern-form-group {
+                margin-bottom: 0.7rem;
+            }
+            .split-modern-input {
+                font-size: 0.89rem;
+                padding: 0.6rem 0.8rem 0.6rem 2.4rem;
+            }
+            .split-modern-login-btn {
+                font-size: 0.98rem;
+                padding: 0.7rem 0;
+                margin-top: 0.1rem;
+            }
+            .split-modern-login-register-row {
+                font-size: 0.93rem;
+                margin-top: 0.7rem;
             }
         }
         body {
@@ -374,6 +407,23 @@
                 font-size: 1.1rem;
             }
         }
+        /* --- FORCE FULL HEIGHT AND CENTERING --- */
+        html, body {
+            height: 100% !important;
+            min-height: 100vh !important;
+        }
+        .container-fluid {
+            min-height: 100vh !important;
+            height: 100vh !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        @media (max-width: 600px) {
+            html, body {
+                overflow-y: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -395,59 +445,63 @@
   z-index: 1;
 }
 </style>
-<div class="split-modern-outer">
-    <div class="split-modern-card">
-        <div class="split-modern-left">
-            <div class="split-modern-abstract">
-                <svg width="100%" height="100%" viewBox="0 0 600 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g opacity="0.5">
-                        <ellipse cx="120" cy="120" rx="80" ry="40" fill="#fff" fill-opacity="0.08"/>
-                        <ellipse cx="400" cy="400" rx="60" ry="30" fill="#fff" fill-opacity="0.08"/>
-                        <rect x="60" y="320" width="120" height="20" rx="10" fill="#fff" fill-opacity="0.12"/>
-                        <rect x="300" y="60" width="80" height="16" rx="8" fill="#fff" fill-opacity="0.12"/>
-                        <rect x="180" y="200" width="180" height="18" rx="9" fill="#fff" fill-opacity="0.10"/>
-                        <rect x="100" y="260" width="60" height="12" rx="6" fill="#fff" fill-opacity="0.10"/>
-                    </g>
-                </svg>
-            </div>
-            <div class="split-modern-welcome">
-                <div style="display:flex;justify-content:center;align-items:center;margin-bottom:1.2rem;">
-                    <img src="{{ asset('images/eventixlogo.png') }}" alt="EventiX Logo" style="height:100px;border-radius:12px;box-shadow:0 2px 12px rgba(123,47,242,0.10);background:rgba(255, 255, 255, 0);">
-                </div>
-                <h1>Welcome to EventiX</h1>
-                <p>Book, manage, and resell your event tickets with ease. Join the EventiX community and experience seamless ticketing!</p>
-            </div>
-        </div>
-        <div class="split-modern-right">
-            <div class="split-modern-login-card">
-                <div class="split-modern-login-title">USER LOGIN</div>
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-                <form method="POST" action="{{ route('login') }}" autocomplete="off">
-        @csrf
-                    <div class="split-modern-form-group">
-                        <span class="split-modern-icon"><i class="bi bi-person"></i></span>
-                        <input id="email" class="split-modern-input" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="Username or email">
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-                    <div class="split-modern-form-group" style="position:relative;">
-                        <span class="split-modern-icon"><i class="bi bi-lock"></i></span>
-                        <input id="password" class="split-modern-input" type="password" name="password" required autocomplete="current-password" placeholder="Password">
-                        <span class="split-modern-eye" id="togglePassword"><i class="bi bi-eye"></i></span>
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-                    <div class="split-modern-login-links">
-                        <div class="form-check" style="margin-bottom:0;">
-                            <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
-                            <label for="remember_me" class="form-check-label">Remember</label>
-        </div>
-            @if (Route::has('password.request'))
-                            <a class="split-modern-login-link" href="{{ route('password.request') }}">Forgot password?</a>
-            @endif
+<div class="container-fluid px-0 min-vh-100 d-flex align-items-center justify-content-center">
+    <div class="row w-100 justify-content-center align-items-center g-0">
+        <div class="col-12 col-lg-10">
+            <div class="split-modern-card flex-column flex-md-row">
+                <div class="split-modern-left col-12 col-md-6">
+                    <div class="split-modern-abstract">
+                        <svg width="100%" height="100%" viewBox="0 0 600 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g opacity="0.5">
+                                <ellipse cx="120" cy="120" rx="80" ry="40" fill="#fff" fill-opacity="0.08"/>
+                                <ellipse cx="400" cy="400" rx="60" ry="30" fill="#fff" fill-opacity="0.08"/>
+                                <rect x="60" y="320" width="120" height="20" rx="10" fill="#fff" fill-opacity="0.12"/>
+                                <rect x="300" y="60" width="80" height="16" rx="8" fill="#fff" fill-opacity="0.12"/>
+                                <rect x="180" y="200" width="180" height="18" rx="9" fill="#fff" fill-opacity="0.10"/>
+                                <rect x="100" y="260" width="60" height="12" rx="6" fill="#fff" fill-opacity="0.10"/>
+                            </g>
+                        </svg>
                     </div>
-                    <button type="submit" class="split-modern-login-btn">LOGIN</button>
-                </form>
-                <div class="split-modern-login-register-row">
-                    Don't have an account? <a href="{{ route('register') }}">Create Account</a>
+                    <div class="split-modern-welcome">
+                        <div style="display:flex;justify-content:center;align-items:center;margin-bottom:1.2rem;">
+                            <img src="{{ asset('images/eventixlogo.png') }}" alt="EventiX Logo" style="height:80px;max-width:90vw;border-radius:12px;box-shadow:0 2px 12px rgba(123,47,242,0.10);background:rgba(255, 255, 255, 0);">
+                        </div>
+                        <h1>Welcome to EventiX</h1>
+                        <p>Book, manage, and resell your event tickets with ease. Join the EventiX community and experience seamless ticketing!</p>
+                    </div>
+                </div>
+                <div class="split-modern-right col-12 col-md-6 d-flex align-items-center justify-content-center">
+                    <div class="split-modern-login-card w-100">
+                        <div class="split-modern-login-title">USER LOGIN</div>
+                        <x-auth-session-status class="mb-4" :status="session('status')" />
+                        <form method="POST" action="{{ route('login') }}" autocomplete="off">
+                            @csrf
+                            <div class="split-modern-form-group">
+                                <span class="split-modern-icon"><i class="bi bi-person"></i></span>
+                                <input id="email" class="split-modern-input" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="Username or email">
+                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                            </div>
+                            <div class="split-modern-form-group" style="position:relative;">
+                                <span class="split-modern-icon"><i class="bi bi-lock"></i></span>
+                                <input id="password" class="split-modern-input" type="password" name="password" required autocomplete="current-password" placeholder="Password">
+                                <span class="split-modern-eye" id="togglePassword"><i class="bi bi-eye"></i></span>
+                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                            </div>
+                            <div class="split-modern-login-links">
+                                <div class="form-check" style="margin-bottom:0;">
+                                    <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
+                                    <label for="remember_me" class="form-check-label">Remember</label>
+                                </div>
+                                @if (Route::has('password.request'))
+                                    <a class="split-modern-login-link" href="{{ route('password.request') }}">Forgot password?</a>
+                                @endif
+                            </div>
+                            <button type="submit" class="split-modern-login-btn">LOGIN</button>
+                        </form>
+                        <div class="split-modern-login-register-row">
+                            Don't have an account? <a href="{{ route('register') }}">Create Account</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

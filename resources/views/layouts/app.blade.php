@@ -169,6 +169,29 @@
         }
     }
     </style>
+    <style>
+    /* Fancy Dropdown Menu Content Only (not parent button) */
+    .navbar .dropdown-menu.fancy-dropdown-menu {
+        border-radius: 1.2rem;
+        box-shadow: 0 8px 32px 0 rgba(162,89,247,0.13);
+        border: none;
+        margin-top: 0.5rem;
+        background: linear-gradient(120deg, #fff 80%, #f3f0ff 100%);
+        min-width: 210px;
+        padding: 0.5rem 0.2rem;
+    }
+    .navbar .dropdown-menu.fancy-dropdown-menu .dropdown-item {
+        border-radius: 0.8rem;
+        margin: 0.1rem 0.3rem;
+        font-weight: 500;
+        color: #7c3aed;
+        transition: background 0.15s, color 0.15s;
+    }
+    .navbar .dropdown-menu.fancy-dropdown-menu .dropdown-item:hover, .navbar .dropdown-menu.fancy-dropdown-menu .dropdown-item:focus {
+        background: linear-gradient(90deg, #a259f7 0%, #ff6a88 100%);
+        color: #fff;
+    }
+    </style>
 </head>
 
 <body>
@@ -187,7 +210,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('events.all') }}">Events</a></li>
                 @else
                     @if(Auth::user()->role === 'organizer')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('events.index') }}">Events</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('events.index') }}">My Events</a></li>
                     @else
                         <li class="nav-item"><a class="nav-link" href="{{ route('events.all') }}">Events</a></li>
                     @endif
@@ -196,6 +219,45 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
                 @else
+                    @if (Auth::user()->role === 'organizer')
+                        <li class="nav-item"><a class="nav-link" href="{{ route('organizer.dashboard') }}">Organizer Dashboard</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="myTicketsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                My Tickets
+                            </a>
+                            <ul class="dropdown-menu fancy-dropdown-menu" aria-labelledby="myTicketsDropdown">
+                                <li><a class="dropdown-item" href="{{ route('book.history') }}">My Ticket History</a></li>
+                                <li><a class="dropdown-item" href="{{ route('resell.my') }}">My Resell Tickets</a></li>
+                            </ul>
+                        </li>
+                    @elseif (Auth::user()->role === 'admin')
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
+                    @endif
+                    @if (auth()->user()->role === 'user')
+                        <li class="nav-item"><a class="nav-link" href="{{ route('user.profile') }}">My Profile</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="myTicketsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                My Tickets
+                            </a>
+                            <ul class="dropdown-menu fancy-dropdown-menu" aria-labelledby="myTicketsDropdown">
+                                <li><a class="dropdown-item" href="{{ route('book.history') }}">My Ticket History</a></li>
+                                <li><a class="dropdown-item" href="{{ route('resell.my') }}">My Resell Tickets</a></li>
+                            </ul>
+                        </li>
+                    @endif
+                    <li class="nav-item"><span class="nav-link">Welcome, {{ Auth::user()->name }}</span></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            About Us
+                        </a>
+                        <ul class="dropdown-menu fancy-dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item" href="{{ route('about.eventix') }}">About EventiX</a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.contact') }}">Contact Us</a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.fees') }}">Our Fees (No fee)</a></li>
+                            <li><a class="dropdown-item" href="{{ route('about.manual') }}">User Manual</a></li>
+                        </ul>
+                    </li>
+                    <!-- Notification bell dropdown moved here, before logout -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown">
                             <i class="bi bi-bell"></i>
@@ -241,30 +303,6 @@
                                     <button type="submit" class="dropdown-item text-end text-primary">Mark all as read</button>
                                 </form>
                             </li>
-                        </ul>
-                    </li>
-                    @if (Auth::user()->role === 'organizer')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('organizer.dashboard') }}">Organizer Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('book.history') }}">My Bookings</a></li>
-                    @elseif (Auth::user()->role === 'admin')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}">Admin Panel</a></li>
-                    @endif
-                    @if (auth()->user()->role === 'user')
-                        <li class="nav-item"><a class="nav-link" href="{{ route('user.profile') }}">My Profile</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('resell.my') }}">My Resell Tickets</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('book.history') }}">My Bookings</a></li>
-                    @endif
-                    
-                    <li class="nav-item"><span class="nav-link">Welcome, {{ Auth::user()->name }}</span></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            About Us
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
-                            <li><a class="dropdown-item" href="{{ route('about.eventix') }}">About EventiX</a></li>
-                            <li><a class="dropdown-item" href="{{ route('about.contact') }}">Contact Us</a></li>
-                            <li><a class="dropdown-item" href="{{ route('about.fees') }}">Our Fees (No fee)</a></li>
-                            <li><a class="dropdown-item" href="{{ route('about.manual') }}">User Manual</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
