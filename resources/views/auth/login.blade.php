@@ -244,15 +244,21 @@
             box-shadow: 0 8px 32px 0 rgba(162,89,247,0.18);
             background: #fff;
             border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .login-logo {
             height: 60px;
             margin-bottom: 1.2rem;
+            max-width: 80vw;
+            width: auto;
         }
         .login-card h1, .login-card h2 {
             font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 0.7rem;
+            text-align: center;
         }
         .form-control {
             border-radius: 1.5rem;
@@ -262,6 +268,8 @@
             margin-bottom: 1.1rem;
             background: #fafaff;
             box-shadow: none;
+            width: 100%;
+            min-width: 0;
         }
         .form-control:focus {
             border-color: #a259f7;
@@ -326,14 +334,14 @@
         .social-login a.google { background: #db4437; }
         .social-login a.twitter { background: #1da1f2; }
         .social-login a:hover { transform: scale(1.08); }
-        @media (max-width: 600px) {
+        @media (max-width: 991.98px) {
             .login-card {
-                padding: 1.1rem 0.5rem 1rem 0.5rem !important;
-                margin: 2vh auto;
-                border-radius: 18px;
+                max-width: 95vw;
+                padding: 1.5rem 0.7rem 1rem 0.7rem;
+                border-radius: 20px;
             }
             .login-logo {
-                height: 44px !important;
+                height: 48px !important;
             }
             .login-card h1, .login-card h2 {
                 font-size: 1.08rem !important;
@@ -341,6 +349,29 @@
             .form-control, .btn-gradient {
                 font-size: 0.98rem !important;
                 padding: 0.7rem 1rem !important;
+            }
+        }
+        @media (max-width: 600px) {
+            .login-card {
+                max-width: 99vw;
+                padding: 1.1rem 0.3rem 0.7rem 0.3rem !important;
+                margin: 2vh auto;
+                border-radius: 16px;
+            }
+            .login-logo {
+                height: 38px !important;
+            }
+            .login-card h1, .login-card h2 {
+                font-size: 0.98rem !important;
+            }
+            .form-control, .btn-gradient {
+                font-size: 0.93rem !important;
+                padding: 0.6rem 0.7rem !important;
+            }
+            .social-login a {
+                width: 32px;
+                height: 32px;
+                font-size: 1.1rem;
             }
         }
     </style>
