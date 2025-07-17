@@ -100,14 +100,42 @@ public function history(Request $request)
     $transactions = $query
     ->with([
         'seat:id,event_id,label',
-        'seat.event:id,event_name',
+        'seat.event:id,event_name,event_date,event_time',
         'ticket:id,is_resell,resell_status',
     ])
     ->select('id', 'user_id', 'seat_id', 'ticket_id', 'amount', 'created_at') // only needed columns
     ->paginate(20);
     $activeTransactions = $transactions->filter(function($txn) {
-        // Only exclude tickets that are currently approved for resell
-        return !($txn->ticket && $txn->ticket->is_resell && $txn->ticket->resell_status === 'approved');
+        $eventDate = optional(optional($txn->seat)->event)->event_date;
+        $eventTime = optional(optional($txn->seat)->event)->event_time;
+        if ($eventDate && $eventTime) {
+            $eventDateTime = \Carbon\Carbon::parse($eventDate . ' ' . $eventTime, 'Asia/Kuala_Lumpur');
+        } elseif ($eventDate) {
+            $eventDateTime = \Carbon\Carbon::parse($eventDate . ' 23:59:59', 'Asia/Kuala_Lumpur');
+        } else {
+            $eventDateTime = null;
+        }
+        $isExpired = $eventDateTime ? $eventDateTime->isPast() : false;
+        $ticket = $txn->ticket;
+        $isResellApproved = $ticket && $ticket->is_resell && $ticket->resell_status === 'approved';
+        // Only exclude tickets that are currently approved for resell or expired
+        return !$isResellApproved && !$isExpired;
+    })->values();
+    $doneTransactions = $transactions->filter(function($txn) {
+        $eventDate = optional(optional($txn->seat)->event)->event_date;
+        $eventTime = optional(optional($txn->seat)->event)->event_time;
+        if ($eventDate && $eventTime) {
+            $eventDateTime = \Carbon\Carbon::parse($eventDate . ' ' . $eventTime, 'Asia/Kuala_Lumpur');
+        } elseif ($eventDate) {
+            $eventDateTime = \Carbon\Carbon::parse($eventDate . ' 23:59:59', 'Asia/Kuala_Lumpur');
+        } else {
+            $eventDateTime = null;
+        }
+        $isExpired = $eventDateTime ? $eventDateTime->isPast() : false;
+        $ticket = $txn->ticket;
+        $isResellApproved = $ticket && $ticket->is_resell && $ticket->resell_status === 'approved';
+        // Only tickets that are not resold and are expired
+        return !$isResellApproved && $isExpired;
     })->values();
     $resoldTransactions = $transactions->filter(function($txn) {
         return ($txn->ticket && $txn->ticket->is_resell && $txn->ticket->resell_status === 'approved');
@@ -130,6 +158,7 @@ public function history(Request $request)
     return view('book.history', [
         'transactions' => $transactions,
         'activeTransactions' => $activeTransactions,
+        'doneTransactions' => $doneTransactions,
         'resoldTransactions' => $resoldTransactions,
         'totalSpent' => $totalSpent,
     ]);

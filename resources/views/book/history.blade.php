@@ -49,23 +49,44 @@
     @media (max-width: 768px) {
         .modern-card { padding: 0.5rem 0.2rem; }
         .btn-gradient, .btn, .btn-icon { width: 100%; margin-bottom: 0.5em; justify-content: center; }
-        .input-group { flex-direction: column; }
+        .searchbar-row { flex-direction: column !important; gap: 0.5rem; }
+        .searchbar-row .input-group { width: 100%; }
+        .searchbar-row .search-btn { width: 100%; margin-left: 0; }
+    }
+    .search-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.9rem;
+        font-size: 1.2rem;
+        border-radius: 12px;
+        margin-left: 0.5rem;
+        background: linear-gradient(90deg, #a259f7 0%, #6366f1 100%);
+        color: #fff;
+        border: none;
+        transition: background 0.18s, color 0.18s;
+    }
+    .search-btn:active, .search-btn:focus {
+        background: linear-gradient(90deg, #6366f1 0%, #a259f7 100%);
+        color: #fff;
+    }
+    .input-group .form-control {
+        border-radius: 0 12px 12px 0 !important;
+    }
+    .input-group .input-group-text {
+        border-radius: 12px 0 0 12px !important;
     }
 </style>
 <div class="container py-5">
     <div class="mb-4 text-center">
         <h2><i class="bi bi-journal-text"></i> My Booking History</h2>
     </div>
-    <form method="GET" action="{{ route('book.history') }}" class="mb-4 row g-2 align-items-center justify-content-center">
-        <div class="col-12 col-md-6 col-lg-4 mb-2 mb-md-0">
-            <div class="input-group">
-                <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search your bookings..." class="form-control border-start-0" style="border-radius: 0 12px 12px 0;">
-            </div>
+    <form method="GET" action="{{ route('book.history') }}" class="mb-4 d-flex searchbar-row align-items-center justify-content-center" style="gap:0.5rem;">
+        <div class="input-group" style="max-width: 400px;">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search your bookings..." class="form-control border-start-0" style="border-radius: 0 12px 12px 0;">
         </div>
-        <div class="col-12 col-md-auto">
-            <button type="submit" class="btn btn-gradient w-100">Search</button>
-        </div>
+        <button type="submit" class="search-btn" title="Search"><i class="bi bi-search"></i></button>
     </form>
     <div class="modern-card">
         <h4 class="mb-3"><i class="bi bi-ticket-perforated"></i> Active Tickets</h4>
@@ -154,7 +175,7 @@
     </div>
 {{-- Resold Tickets Table --}}
 @if($resoldTransactions->count())
-<div class="modern-card mt-5">
+<div class="modern-card">
     <h4 class="mb-3"><i class="bi bi-arrow-repeat"></i> Resold Tickets</h4>
     <div class="table-responsive">
         <table class="table modern-table align-middle mb-0">
@@ -178,32 +199,70 @@
                     <td>{{ optional($txn->seat)->label }}</td>
                     <td>RM{{ number_format($txn->amount, 2) }}</td>
                     <td>{{ $txn->created_at->timezone('Asia/Kuala_Lumpur')->format('d M Y, h:i A') }}</td>
-                    @php
-                        $eventDate = optional(optional($txn->seat)->event)->event_date;
-                        $eventTime = optional(optional($txn->seat)->event)->event_time;
-                        if ($eventDate && $eventTime) {
-                            $eventDateTime = \Carbon\Carbon::parse($eventDate . ' ' . $eventTime, 'Asia/Kuala_Lumpur');
-                        } elseif ($eventDate) {
-                            $eventDateTime = \Carbon\Carbon::parse($eventDate . ' 23:59:59', 'Asia/Kuala_Lumpur');
-                        } else {
-                            $eventDateTime = null;
-                        }
-                        $isExpired = $eventDateTime ? $eventDateTime->isPast() : false;
-                    @endphp
                     <td>
-                        @if($isExpired)
-                            Not Active
-                        @else
-                            Active
-                        @endif
+                        @php
+                            $eventDate = optional(optional($txn->seat)->event)->event_date;
+                            $eventTime = optional(optional($txn->seat)->event)->event_time;
+                            if ($eventDate && $eventTime) {
+                                $eventDateTime = \Carbon\Carbon::parse($eventDate . ' ' . $eventTime, 'Asia/Kuala_Lumpur');
+                            } elseif ($eventDate) {
+                                $eventDateTime = \Carbon\Carbon::parse($eventDate . ' 23:59:59', 'Asia/Kuala_Lumpur');
+                            } else {
+                                $eventDateTime = null;
+                            }
+                            $isExpired = $eventDateTime ? $eventDateTime->isPast() : false;
+                        @endphp
+                        {{ $isExpired ? 'Not Active' : 'Active' }}
                     </td>
                     <td class="text-center">
-                        <button class="btn btn-outline-secondary btn-sm btn-icon" disabled>
-                            <i class="bi bi-download"></i>
+                        <button class="btn btn-secondary btn-sm d-flex align-items-center gap-1 w-100 w-md-auto" disabled title="Unavailable">
+                            <i class="bi bi-eye"></i> View
                         </button>
                     </td>
                     <td>
-                        <button class="btn btn-secondary btn-sm" disabled>Resold</button>
+                        <button class="btn btn-secondary btn-sm w-100 w-md-auto" disabled>Resold</button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
+{{-- Past/Done Tickets Table --}}
+@if($doneTransactions->count())
+<div class="modern-card">
+    <h4 class="mb-3"><i class="bi bi-clock-history"></i> Past/Done Tickets</h4>
+    <div class="table-responsive">
+        <table class="table modern-table align-middle mb-0">
+            <thead>
+                <tr>
+                    <th style="width: 3%">#</th>
+                    <th style="width: 22%">Event</th>
+                    <th style="width: 10%">Seat</th>
+                    <th style="width: 13%">Price</th>
+                    <th style="width: 18%">Date Booked</th>
+                    <th style="width: 10%">Status</th>
+                    <th style="width: 12%">QR Code</th>
+                    <th style="width: 12%">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($doneTransactions as $i => $txn)
+                <tr>
+                    <td>{{ $i+1 }}</td>
+                    <td>{{ optional(optional($txn->seat)->event)->event_name }}</td>
+                    <td>{{ optional($txn->seat)->label }}</td>
+                    <td>RM{{ number_format($txn->amount, 2) }}</td>
+                    <td>{{ $txn->created_at->timezone('Asia/Kuala_Lumpur')->format('d M Y, h:i A') }}</td>
+                    <td>Done</td>
+                    <td class="text-center">
+                        <button class="btn btn-secondary btn-sm d-flex align-items-center gap-1 w-100 w-md-auto" disabled title="Unavailable">
+                            <i class="bi bi-eye"></i> View
+                        </button>
+                    </td>
+                    <td>
+                        <button class="btn btn-secondary btn-sm w-100 w-md-auto" disabled>Done</button>
                     </td>
                 </tr>
                 @endforeach

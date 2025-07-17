@@ -106,6 +106,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/resell/{transactionId}', [ResellController::class, 'show'])->name('resell.show'); // resell form
     Route::post('/resell/{transactionId}', [ResellController::class, 'post'])->name('resell.post'); // handle submission
+    Route::post('/resell/buy/{ticket}', [ResellController::class, 'buy'])->name('resell.buy'); // buy resell ticket
 });
 
 

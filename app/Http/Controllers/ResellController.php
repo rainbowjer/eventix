@@ -78,4 +78,45 @@ class ResellController extends Controller
 
         return view('resell.my', compact('tickets'));
     }
+
+    /**
+     * Handle purchase of a resell ticket by a new user
+     */
+    public function buy($ticketId)
+    {
+        $ticket = \App\Models\Ticket::where('id', $ticketId)
+            ->where('is_resell', true)
+            ->where('resell_status', 'approved')
+            ->whereNull('user_id') // Not currently owned
+            ->firstOrFail();
+
+        $user = auth()->user();
+        // Assign ticket to new user
+        $ticket->user_id = $user->id;
+        $ticket->is_resell = false;
+        $ticket->resell_status = null;
+        $ticket->resell_price = null;
+        $ticket->save();
+
+        // Mark seat as booked
+        if ($ticket->seat) {
+            $ticket->seat->is_booked = true;
+            $ticket->seat->save();
+        }
+
+        // Create transaction
+        $transaction = \App\Models\Transaction::create([
+            'user_id' => $user->id,
+            'seat_id' => $ticket->seat_id,
+            'ticket_id' => $ticket->id,
+            'amount' => $ticket->price,
+            'payment_status' => 'paid',
+            'purchase_date' => now(),
+        ]);
+
+        // Send QR code email
+        \Mail::to($user->email)->send(new \App\Mail\TicketPurchased($ticket));
+
+        return redirect()->route('book.history')->with('success', 'Resell ticket purchased! Check your email for the QR code.');
+    }
 }

@@ -125,7 +125,7 @@ class EventController extends Controller
             $image = $request->file('banner_image');
             $filename = time() . '_' . $image->getClientOriginalName();
 
-            $manager = new ImageManager('gd');
+            $manager = new ImageManager(\Intervention\Image\Drivers\Gd\Driver::class);
             $resizedImage = $manager->read($image)->cover(1920, 600)->toJpeg();
 
             Storage::disk('public')->put("event_banners/$filename", $resizedImage);
@@ -193,7 +193,7 @@ class EventController extends Controller
             $image = $request->file('banner_image');
             $filename = time() . '_' . $image->getClientOriginalName();
 
-            $manager = new ImageManager('gd');
+            $manager = new ImageManager(\Intervention\Image\Drivers\Gd\Driver::class);
             $resizedImage = $manager->read($image)->cover(1920, 600)->toJpeg();
 
             Storage::disk('public')->put("event_banners/$filename", $resizedImage);

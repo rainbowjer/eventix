@@ -7,6 +7,36 @@
     {{-- ⏳ Countdown --}}
     <div id="countdown" class="mb-3 text-danger fw-semibold"></div>
 
+    {{-- Resell Tickets Section --}}
+    @php
+        $resellTickets = \App\Models\Ticket::where('event_id', $event->id)
+            ->where('is_resell', true)
+            ->where('resell_status', 'approved')
+            ->whereNull('user_id')
+            ->with('seat')
+            ->get();
+    @endphp
+    @if($resellTickets->count())
+        <div class="alert alert-warning text-start mb-4">
+            <h5 class="fw-bold mb-2">Available Resell Tickets</h5>
+            <ul class="list-unstyled mb-2">
+                @foreach($resellTickets as $resell)
+                    <li class="mb-2 d-flex align-items-center justify-content-between flex-wrap">
+                        <span>
+                            <strong>Seat:</strong> {{ $resell->seat->label ?? '-' }}
+                            <span class="badge bg-info text-dark ms-2">Resell</span>
+                            <strong class="ms-2">Price:</strong> RM{{ number_format($resell->price, 2) }}
+                        </span>
+                        <form method="POST" action="{{ route('resell.buy', $resell->id) }}" class="d-inline ms-2">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-success">Buy Resell Ticket</button>
+                        </form>
+                    </li>
+                @endforeach
+            </ul>
+            <small class="text-muted">Resell tickets are sold by other users and are first-come, first-served.</small>
+        </div>
+    @endif
 
     {{-- ✅ Form STARTS --}}
     <form method="POST" action="{{ route('book.prepare', $event->id) }}">
