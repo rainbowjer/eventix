@@ -43,6 +43,13 @@ class ResellController extends Controller
         $ticket->resell_price = $request->resell_price;
         $ticket->save();
 
+        // Notify the event organizer
+        $event = $transaction->seat->event;
+        $organizer = $event->organizer;
+        if ($organizer) {
+            $organizer->notify(new \App\Notifications\UserRequestedResell($event, $ticket, auth()->user()));
+        }
+
         return redirect()->route('resell.my')->with('success', 'Ticket posted for resell successfully!');
     }
 
