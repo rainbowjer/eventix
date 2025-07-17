@@ -324,7 +324,7 @@ body {
             </div>
             <div class="col-12 col-md-6">
                 <h2 class="fw-bold">About EventiX</h2>
-                <p class="lead">EventiX is a powerful and user-friendly e-ticketing platform that lets you discover, book, and resell tickets for events across Malaysia. Whether you're attending concerts, workshops, sports, or community events — we make the process simple, fast, and secure.</p>
+                <p class="lead">EventiX is a powerful and user-friendly e-ticketing platform that lets you concert events across Malaysia.  We make the process simple, fast, and secure.</p>
                 <p>Event organizers can easily create, manage, and sell tickets, while users can browse upcoming events, purchase tickets, and even resell them if needed. All in one place.</p>
                 <!-- <a href="{{ route('events.index') }}" class="btn btn-outline-primary mt-3">Explore Events</a> -->
             </div>
@@ -352,7 +352,7 @@ body {
                 <div class="p-4 border rounded shadow-sm h-100">
                     <i class="bi bi-search display-4 text-primary mb-3"></i>
                     <h5 class="fw-bold">1. Discover Events</h5>
-                    <p>Browse a variety of events including concerts, workshops, sports, and more happening near you.</p>
+                    <p>Browse a variety of concerts across Malaysia.</p>
                 </div>
             </div>
 
@@ -1013,5 +1013,4 @@ $(document).ready(function() {
 </section>
 
 @endsection
-
         
