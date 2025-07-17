@@ -1,97 +1,120 @@
 EventiX User Manual
 ====================
 
+Welcome to EventiX! 🎟️
+-----------------------
+Your all-in-one platform for discovering, booking, and managing event tickets. Whether you’re a fan or an organizer, this guide will help you get the most out of EventiX.
+
 Table of Contents
 -----------------
-1. Introduction
-2. For Users
-   2.1. Account Registration and Login
-   2.2. Browsing and Searching Events
-   2.3. Booking Tickets
-   2.4. Viewing and Managing Bookings
-   2.5. Reselling Tickets
-   2.6. Managing Profile and Favorites
-   2.7. Notifications
-3. For Organizers
-   3.1. Organizer Login
-   3.2. Creating and Managing Events
-   3.3. Viewing Ticket Sales and Reports
-   3.4. Managing Resell Requests
-   3.5. Viewing Event Reviews
-4. Support
+1. Getting Started
+2. User Guide 👤
+   2.1. Register & Login
+   2.2. Explore Events
+   2.3. Book Tickets
+   2.4. Manage Your Bookings
+   2.5. Resell Tickets
+   2.6. Personalize Your Profile
+   2.7. Notifications & Reminders
+   2.8. Quick Tips
+3. Organizer Guide 🧑‍💼
+   3.1. Organizer Access
+   3.2. Create & Manage Events
+   3.3. Track Sales & Reports
+   3.4. Handle Resell Requests
+   3.5. View Event Reviews
+4. Need Help? 💬
 
 ---------------------
 
-1. Introduction
----------------
-EventiX is an event management and ticketing platform for users and organizers. This manual provides step-by-step instructions for both roles.
-
-2. For Users
--------------
-
-2.1. Account Registration and Login
-- Visit the EventiX homepage.
-- Click "Register" to create a new account. Fill in your details and submit.
-- If you already have an account, click "Login" and enter your credentials.
-- Verify your email if prompted.
-
-2.2. Browsing and Searching Events
-- After logging in, browse the homepage or use the search bar to find events.
-- Filter events by category, date, or location as needed.
-- Click on an event to view details, including date, time, venue, and available seats.
-
-2.3. Booking Tickets
-- On the event page, select your desired seat(s) and ticket quantity.
-- Click "Book Now" or "Proceed to Checkout."
-- Review your order and confirm payment method.
-- Complete the payment process. You will receive a confirmation and e-ticket.
-
-2.4. Viewing and Managing Bookings
-- Go to your profile or "My Bookings" section.
-- View all your current and past bookings.
-- Download or view your e-tickets.
-
-2.5. Reselling Tickets
-- In "My Bookings," select a ticket you wish to resell.
-- Click "Resell Ticket" and set your resell price (if allowed).
-- Submit the resell request. You will be notified when your ticket is resold or if further action is needed.
-
-2.6. Managing Profile and Favorites
-- Access your profile to update personal information or change your password.
-- Add events to your favorites for quick access.
-- View your recently viewed events.
-
-2.7. Notifications
-- Check the notifications section for updates on bookings, resell status, and event reminders.
-
-3. For Organizers
+1. Getting Started
 ------------------
+EventiX is designed for ease of use and a seamless ticketing experience. Enjoy modern features like profile picture uploads, smart notifications, and dark mode for comfortable browsing.
 
-3.1. Organizer Login
-- Organizers log in using their assigned credentials.
-- If you are an organizer and do not have an account, contact the EventiX admin.
+2. User Guide 👤
+----------------
 
-3.2. Creating and Managing Events
-- After logging in, go to the "Organizer Dashboard."
-- Click "Create Event" and fill in event details (name, date, time, venue, ticket types, etc.).
-- Save the event. You can edit or update event details anytime from the dashboard.
+2.1. Register & Login
+- Click **Register** on the homepage to create your account.
+- Already have an account? Click **Login** and enter your details.
+- Don’t forget to verify your email if prompted!
 
-3.3. Viewing Ticket Sales and Reports
-- In the dashboard, view ticket sales statistics and export reports as needed.
-- Monitor sales trends and attendee information.
+2.2. Explore Events
+- Browse the homepage or use the 🔍 **search bar** to find events.
+- Filter by category, date, or location.
+- Click any event for full details: date, time, venue, and available seats.
 
-3.4. Managing Resell Requests
-- Review resell requests from users in the "Resell Management" section.
-- Approve or reject requests and add notes if necessary.
-- Users will be notified of your decision.
+2.3. Book Tickets
+- On the event page, pick your seat(s) and ticket quantity.
+- Click **Book Now** or **Proceed to Checkout**.
+- Review your order and select a payment method.
+- Complete payment and receive your e-ticket instantly!
 
-3.5. Viewing Event Reviews
-- Access event reviews submitted by attendees.
-- Use feedback to improve future events.
+2.4. Manage Your Bookings
+- Go to **My Bookings** in your profile.
+- Bookings are organized into:
+  - 🎫 **Active Tickets**: Upcoming events you’re attending.
+  - 🔄 **Resold Tickets**: Tickets you’ve successfully resold.
+  - ✅ **Past/Done Tickets**: Events you’ve already attended.
+- Download or view your e-tickets anytime.
 
-4. Support
------------
-- For help, contact EventiX support at support@eventix.com or visit the Help section on the website.
-- For organizer-specific issues, reach out to your EventiX account manager.
+2.5. Resell Tickets
+- In **My Bookings**, select a ticket to resell.
+- Click **Resell Ticket**, set your price, and submit.
+- You’ll be notified when your ticket is resold or if action is needed.
 
-Thank you for using EventiX! 
+2.6. Personalize Your Profile
+- Update your name, email, or password from your profile page.
+- **Profile Picture:**
+  - Upload a new photo (JPG/PNG, max 2MB).
+  - Delete your current picture if you wish.
+- Add events to your **Favorites** for quick access.
+- See your **Recently Viewed** events.
+
+2.7. Notifications & Reminders
+- Tap the 🔔 **notification bell** (top right) for updates on bookings, resell status, and reminders. Unread notifications show a red badge.
+- **Event Reminders:**
+  - Get notified:
+    - 7 days before your event
+    - 1 hour before
+    - When the event starts
+  - Reminders arrive in-app and by email—never miss an event!
+- Enjoy improved dark mode for comfortable viewing at night.
+
+2.8. Quick Tips
+- ⭐ Add events to your favorites for easy access later.
+- 🌓 Switch to dark mode for a better night-time experience.
+- 🖼️ Keep your profile picture fresh for a personal touch.
+- 📧 Check your email for important updates and tickets.
+
+3. Organizer Guide 🧑‍💼
+------------------------
+
+3.1. Organizer Access
+- Log in with your organizer credentials.
+- Need access? Contact the EventiX admin.
+
+3.2. Create & Manage Events
+- Go to the **Organizer Dashboard**.
+- Click **Create Event** and fill in all details.
+- Edit or update events anytime from your dashboard.
+
+3.3. Track Sales & Reports
+- View ticket sales stats and export reports.
+- Monitor sales trends and attendee info.
+
+3.4. Handle Resell Requests
+- Review user resell requests in **Resell Management**.
+- Approve or reject requests, add notes if needed.
+- Users are notified via the bell (with red badge for new items).
+
+3.5. View Event Reviews
+- Read attendee reviews to improve future events.
+
+4. Need Help? 💬
+-----------------
+- Email: support@eventix.com
+- Visit the **Help** section on our website.
+- Organizers: Contact your EventiX account manager for dedicated support.
+
+Thank you for choosing EventiX! Enjoy the show! 🎉 
