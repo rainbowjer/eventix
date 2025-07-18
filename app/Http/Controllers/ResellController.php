@@ -14,6 +14,11 @@ class ResellController extends Controller
             abort(403);
         }
 
+        // Prevent resell if event is within 7 days
+        if (now()->diffInDays($transaction->seat->event->event_date, false) < 7) {
+            return redirect()->route('book.history')->with('error', 'You cannot resell this ticket because the event will start within 7 days.');
+        }
+
         if (now()->gt($transaction->seat->event->event_date)) {
             return redirect()->route('book.history')->with('error', 'Event has expired. You cannot resell this ticket.');
         }
@@ -31,6 +36,11 @@ class ResellController extends Controller
 
         if ($transaction->user_id !== auth()->id()) {
             abort(403);
+        }
+
+        // Prevent resell if event is within 7 days
+        if (now()->diffInDays($transaction->seat->event->event_date, false) < 7) {
+            return redirect()->route('book.history')->with('error', 'You cannot resell this ticket because the event will start within 7 days.');
         }
 
         $ticket = $transaction->ticket;

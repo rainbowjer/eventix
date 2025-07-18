@@ -450,18 +450,7 @@
         <div class="col-12 col-lg-10">
             <div class="split-modern-card flex-column flex-md-row">
                 <div class="split-modern-left col-12 col-md-6">
-                    <div class="split-modern-abstract">
-                        <svg width="100%" height="100%" viewBox="0 0 600 480" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g opacity="0.5">
-                                <ellipse cx="120" cy="120" rx="80" ry="40" fill="#fff" fill-opacity="0.08"/>
-                                <ellipse cx="400" cy="400" rx="60" ry="30" fill="#fff" fill-opacity="0.08"/>
-                                <rect x="60" y="320" width="120" height="20" rx="10" fill="#fff" fill-opacity="0.12"/>
-                                <rect x="300" y="60" width="80" height="16" rx="8" fill="#fff" fill-opacity="0.12"/>
-                                <rect x="180" y="200" width="180" height="18" rx="9" fill="#fff" fill-opacity="0.10"/>
-                                <rect x="100" y="260" width="60" height="12" rx="6" fill="#fff" fill-opacity="0.10"/>
-                            </g>
-                        </svg>
-                    </div>
+                    
                     <div class="split-modern-welcome">
                         <div style="display:flex;justify-content:center;align-items:center;margin-bottom:1.2rem;">
                             <img src="{{ asset('images/eventixlogo.png') }}" alt="EventiX Logo" style="height:80px;max-width:90vw;border-radius:12px;box-shadow:0 2px 12px rgba(123,47,242,0.10);background:rgba(255, 255, 255, 0);">

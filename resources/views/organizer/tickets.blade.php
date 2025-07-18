@@ -10,19 +10,30 @@
         background: #fff;
         border-radius: 22px;
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
-        padding: 2.5rem 2rem 2rem 2rem;
-        margin: 2rem auto 1.5rem auto;
-        max-width: 900px;
-        transition: box-shadow 0.18s, transform 0.18s, border 0.25s;
-        border: 1.5px solid #e0e7ff;
-        position: relative;
-        overflow: hidden;
+        padding: 2rem 1.5rem;
+        margin: 2rem auto;
+        max-width: 1200px;
     }
-    .modern-card:hover {
-        box-shadow: 0 16px 48px 0 #a259f744, 0 4px 0 #ff6a8844;
-        transform: translateY(-6px) scale(1.025);
-        border: 1.5px solid #a259f7;
+    .modern-table th, .modern-table td {
+        vertical-align: middle !important;
+    }
+    .modern-table thead th {
+        background: #22223b;
+        color: #fff;
+        font-weight: 700;
+        position: sticky;
+        top: 0;
         z-index: 2;
+        border: none;
+    }
+    .modern-table tbody tr {
+        transition: background 0.15s;
+    }
+    .modern-table tbody tr:nth-child(even) {
+        background: #f1f5f9;
+    }
+    .modern-table tbody tr:hover {
+        background: #e0e7ff;
     }
     .modern-header {
         font-size: 2.2rem;
@@ -102,7 +113,7 @@
     }
     @media (max-width: 900px) {
         .modern-header { font-size: 1.5rem; }
-        .modern-card { padding: 1.2rem 0.5rem; }
+        .modern-card { padding: 1rem 0.5rem; }
         .analytics-value { font-size: 1.3rem; }
     }
     @media (max-width: 768px) {
@@ -120,10 +131,76 @@
         .section-title { font-size: 0.98rem; }
         .analytics-value { font-size: 1rem; }
     }
+    .table-responsive { overflow-x: auto; }
+    @media (max-width: 767.98px) {
+        .modern-card { padding: 0.5rem 0.2rem; }
+        .row.g-4 > [class^='col-'] { margin-bottom: 1.5rem; }
+        .card .fs-1 { font-size: 2rem !important; }
+        .card-title { font-size: 1.2rem !important; }
+    }
+    .top-buyers-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #f8fafc;
+        border-radius: 1.2rem;
+        overflow: hidden;
+        box-shadow: 0 2px 12px 0 #a259f722;
+        margin-bottom: 0;
+    }
+    .top-buyers-table th {
+        background: linear-gradient(90deg, #6366f1 0%, #06b6d4 100%);
+        color: #fff;
+        font-weight: 700;
+        padding: 0.7em 1em;
+        border: none;
+        font-size: 1.08em;
+    }
+    .top-buyers-table td {
+        padding: 0.7em 1em;
+        font-size: 1.05em;
+        color: #222;
+        background: #fff;
+        border-top: 1px solid #e0e7ff;
+    }
+    .top-buyers-table tr:first-child td {
+        border-top: none;
+    }
+    .top-buyers-table tr:nth-child(even) td {
+        background: #f1f5f9;
+    }
+    .top-buyers-table tr:hover td {
+        background: #e0e7ff;
+    }
+    .top-buyer-pill {
+        display: inline-flex;
+        align-items: center;
+        background: linear-gradient(90deg, #6366f1 0%, #06b6d4 100%);
+        color: #fff;
+        border-radius: 999px;
+        font-size: 1em;
+        font-weight: 600;
+        padding: 0.4em 1.2em;
+        margin: 0.1em 0.2em;
+        box-shadow: 0 1.5px 6px #a259f722;
+        border: none;
+        letter-spacing: 0.2px;
+        gap: 0.5em;
+    }
+    .top-buyer-pill .badge-count {
+        background: #fff;
+        color: #6366f1;
+        border-radius: 999px;
+        font-size: 0.95em;
+        font-weight: 700;
+        padding: 0.2em 0.8em;
+        margin-left: 0.5em;
+        box-shadow: 0 1.5px 6px #a259f722;
+    }
 </style>
 <div class="container py-5" style="min-height: 100vh;">
     <h2 class="modern-header mb-5"><i class="bi bi-bar-chart"></i> Organizer Ticket Dashboard</h2>
-    <div class="section-title">Key Analytics</div>
+    <div class="section-title text-center">Key Analytics</div>
     <div class="row mb-4 justify-content-center">
         <div class="col-md-3 mb-2">
             <div class="card analytics-card text-center">
@@ -141,27 +218,34 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-2">
-            <div class="card analytics-card text-center">
-                <div class="card-body">
-                    <div class="analytics-label mb-1">Top Buyers</div>
-                    @if($topBuyers->count())
-                        <ul class="list-unstyled mb-0 top-buyers-list">
-                            @foreach($topBuyers as $buyer)
-                                <li>
-                                    <span class="fw-semibold">{{ $buyer['user']?->name ?? 'Unknown' }}</span>
-                                    <span class="text-muted">({{ $buyer['count'] }} tickets)</span>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @else
-                        <span class="text-muted">No buyers yet</span>
-                    @endif
-                </div>
-            </div>
+    </div>
+    <!-- Top Buyers Table Section -->
+    <div class="section-title text-center">Top Buyers</div>
+    <div class="modern-card mb-4">
+        <div class="table-responsive">
+            @if($topBuyers->count())
+                <table class="top-buyers-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Tickets Bought</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($topBuyers as $buyer)
+                            <tr>
+                                <td>{{ $buyer['user']?->name ?? 'Unknown' }}</td>
+                                <td>{{ $buyer['count'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <span class="text-muted">No buyers yet</span>
+            @endif
         </div>
     </div>
-    <div class="section-title">Ticket Sales Chart</div>
+    <div class="section-title text-center">Ticket Sales Chart</div>
     <div class="modern-card mb-4">
         <div class="modern-header mb-2"><i class="bi bi-ticket-perforated"></i> Ticket Sales Overview <span class="chart-legend">Tickets Sold</span></div>
         <p class="mb-4 text-muted">Overview of tickets sold for your events.</p>

@@ -11,16 +11,36 @@
         border-radius: 22px;
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.10);
         padding: 2rem 1.5rem;
-        margin: 2rem auto 1.5rem auto;
+        margin: 2rem auto;
         max-width: 1200px;
-        transition: box-shadow 0.18s, transform 0.18s, border 0.25s;
-        border: 1.5px solid #e0e7ff;
-        position: relative;
     }
-    .modern-card:hover {
-        box-shadow: 0 12px 40px 0 #a259f744, 0 2px 0 #ff6a8844;
-        transform: translateY(-2px) scale(1.012);
-        border: 1.5px solid #a259f7;
+    .card-header.bg-white.fw-bold {
+        background: linear-gradient(90deg, #36A2EB 0%, #FFCE56 100%) !important;
+        color: #fff !important;
+        border-radius: 18px 18px 0 0;
+        font-size: 1.15em;
+        letter-spacing: 0.5px;
+    }
+    .modern-table th, .modern-table td {
+        vertical-align: middle !important;
+    }
+    .modern-table thead th {
+        background: #22223b;
+        color: #fff;
+        font-weight: 700;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        border: none;
+    }
+    .modern-table tbody tr {
+        transition: background 0.15s;
+    }
+    .modern-table tbody tr:nth-child(even) {
+        background: #f1f5f9;
+    }
+    .modern-table tbody tr:hover {
+        background: #e0e7ff;
     }
     .dashboard-header {
         font-size: 2.2rem;
@@ -112,6 +132,13 @@
     @media (max-width: 900px) {
         .dashboard-header { font-size: 1.5rem; }
         .modern-card { padding: 1rem 0.5rem; }
+        .modern-table { font-size: 0.95rem; }
+    }
+    @media (max-width: 767.98px) {
+        .modern-card { padding: 0.5rem 0.2rem; }
+        .row.g-4 > [class^='col-'] { margin-bottom: 1.5rem; }
+        .card .fs-1 { font-size: 2rem !important; }
+        .card-title { font-size: 1.2rem !important; }
     }
     @media (max-width: 768px) {
         .dashboard-header { font-size: 1.2rem; }
@@ -126,6 +153,7 @@
         .modern-card .card-title { font-size: 1rem; }
         .btn-gradient { font-size: 0.98rem; padding: 0.48rem 1rem; }
     }
+    .table-responsive { overflow-x: auto; }
 </style>
 <script>
 // Button ripple effect
@@ -165,7 +193,12 @@ window.addEventListener('DOMContentLoaded', function() {
         <div class="col-md-6">
             <div class="modern-card">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="bi bi-ticket-perforated"></i> Ticket Sales <span class="badge">Report</span></h5>
+                    <h5 class="card-title"><i class="bi bi-ticket-perforated"></i> Ticket Sales 
+                        @php
+                            $unreadTicketNotifs = Auth::user()->notifications->where('read_at', null)->where('type', 'App\\Notifications\\TicketResellStatusNotification')->count();
+                        @endphp
+                        <span class="badge {{ $unreadTicketNotifs > 0 ? 'bg-danger' : '' }}">Report</span>
+                    </h5>
                     <p class="card-text">Track ticket sales performance.</p>
                     <a href="{{ route('organizer.tickets') }}" class="btn-gradient" style="background:linear-gradient(90deg,#a259f7 0%,#6366f1 100%)" aria-label="View Ticket Reports"><i class="bi bi-bar-chart"></i> View Ticket Reports</a>
                 </div>

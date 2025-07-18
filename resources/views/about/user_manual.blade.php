@@ -85,6 +85,7 @@
                     <ul>
                         <li>In <b>My Bookings</b>, select a ticket to resell.</li>
                         <li>Click <b>Resell Ticket</b>, set your price, and submit.</li>
+                        <li><b>Note:</b> You cannot resell a ticket if the event will start within 7 days. The system will alert you if you try.</li>
                         <li>You’ll be notified when your ticket is resold or if action is needed.</li>
                     </ul>
 
@@ -152,6 +153,7 @@
                     <ul>
                         <li>Review user resell requests in <b>Resell Management</b>.</li>
                         <li>Approve or reject requests, add notes if needed.</li>
+                        <li><b>Note:</b> Users cannot submit resell requests for tickets if the event is less than 7 days away.</li>
                         <li>Users are notified via the bell (with red badge for new items).</li>
                     </ul>
 

@@ -111,6 +111,18 @@ body {
     filter: drop-shadow(0 0 8px #a259f7cc);
 }
 @media (max-width: 768px) {
+    .top-slider-container, .top-slider {
+        background: #f8f9fa !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .top-slider .carousel-item img {
+        height: auto;
+        min-height: unset;
+        max-height: 40vw;
+        object-fit: contain !important;
+        background: #f8f9fa;
+    }
     .top-slider .carousel-caption {
         padding: 1.2rem 1rem 1rem 1rem;
         max-width: 95vw;
@@ -118,7 +130,7 @@ body {
     .top-slider .carousel-caption h5 { font-size: 1.2rem; }
     .top-slider .carousel-caption p { font-size: 0.98rem; }
     .top-slider .carousel-caption .slider-btn { font-size: 0.98rem; padding: 0.6rem 1.2rem; }
-    .top-slider .carousel-item img { height: 32vh; }
+    .top-slider .carousel-item img { height: 32vh; object-fit: contain !important; }
     .hero-bg { min-height: 70vh; padding: 1.5rem 0; }
     .hero-content { padding: 2.2rem 0.2rem 1.5rem 0.2rem; }
     .hero-title { font-size: 1.3rem; }
@@ -143,6 +155,7 @@ body {
 }
 </style>
 <!-- Add container-fluid to main sections for better responsiveness -->
+<div class="slider-gap d-md-none"></div>
 <div class="container-fluid px-0">
     <div class="top-slider-container">
         <div id="homepageCarousel" class="carousel slide carousel-fade top-slider" data-bs-ride="carousel" data-bs-interval="4000" data-bs-pause="hover">
@@ -173,6 +186,7 @@ body {
         </div>
     </div>
 </div>
+<div class="slider-gap d-md-none"></div>
 
 <!-- 🎉 MODERN HERO SECTION (now just below slider) -->
 <style>
