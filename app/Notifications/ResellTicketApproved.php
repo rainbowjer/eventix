@@ -28,6 +28,7 @@ class ResellTicketApproved extends Notification
         return [
             'message' => 'Your ticket for "' . $this->ticket->event->event_name . '" has been approved for resell.',
             'ticket_id' => $this->ticket->id,
+            'url' => url(route('resell.show', $this->ticket->id)),
         ];
     }
 }

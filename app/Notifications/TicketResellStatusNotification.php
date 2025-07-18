@@ -37,12 +37,13 @@ class TicketResellStatusNotification extends Notification
             ->line('Thank you for using EventiX!');
     }
     public function toDatabase($notifiable)
-{
-    return [
-        'ticket_id' => $this->ticket->id,
-        'event_name' => $this->ticket->event->event_name,
-        'status' => $this->status, // approved or rejected
-        'message' => "Your ticket resell request for '{$this->ticket->event->event_name}' has been {$this->status}.",
-    ];
-}
+    {
+        return [
+            'ticket_id' => $this->ticket->id,
+            'event_name' => $this->ticket->event->event_name,
+            'status' => $this->status, // approved or rejected
+            'message' => "Your ticket resell request for '{$this->ticket->event->event_name}' has been {$this->status}.",
+            'url' => url(route('resell.show', $this->ticket->id)),
+        ];
+    }
 }

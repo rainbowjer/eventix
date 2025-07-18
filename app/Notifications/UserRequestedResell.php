@@ -76,6 +76,7 @@ class UserRequestedResell extends Notification
             'user_id' => $this->user->id,
             'user_name' => $this->user->name,
             'resell_price' => $this->ticket->resell_price,
+            'url' => url('/organizer/resell'),
         ];
     }
 }
