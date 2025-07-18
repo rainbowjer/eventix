@@ -91,7 +91,7 @@
 
                     <h5 class="mt-3">2.6. Personalize Your Profile</h5>
                     <ul>
-                        <li>Update your name, email, or password from your profile page.</li>
+                        <li>Update your name, email, or <b>phone number</b> from your profile page.</li>
                         <li><b>Profile Picture:</b>
                             <ul>
                                 <li>Upload a new photo (JPG/PNG, max 2MB).</li>

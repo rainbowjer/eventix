@@ -65,7 +65,7 @@ EventiX is designed for ease of use and a seamless ticketing experience. Enjoy m
 - You’ll be notified when your ticket is resold or if action is needed.
 
 2.6. Personalize Your Profile
-- Update your name, email, or password from your profile page.
+- Update your name, email, or phone number from your profile page.
 - **Profile Picture:**
   - Upload a new photo (JPG/PNG, max 2MB).
   - Delete your current picture if you wish.

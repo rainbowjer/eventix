@@ -59,16 +59,12 @@ class ProfileController extends Controller
     }
 
     public function userProfile(Request $request)
-{
-    $user = $request->user();
+    {
+        $user = $request->user();
 
-    // Optionally check role
-    if ($user->role !== 'user') {
-        abort(403, 'Unauthorized');
+        // Removed role check so all authenticated users can access
+        return view('profile.user', compact('user'));
     }
-
-    return view('profile.user', compact('user'));
-}
 public function uploadPicture(Request $request)
 {
     $request->validate([
@@ -109,10 +105,11 @@ public function updateProfile(Request $request)
     $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|max:255|unique:users,email,' . auth()->id(),
+        'phone_number' => 'required|string|max:20',
     ]);
 
     $user = auth()->user();
-    $user->update($request->only('name', 'email'));
+    $user->update($request->only('name', 'email', 'phone_number'));
 
     return back()->with('success', 'Profile updated successfully.');
 }
