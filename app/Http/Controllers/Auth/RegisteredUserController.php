@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\TwoFactorCode;
+use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -28,32 +30,39 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-{
-    $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-        'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        'role' => ['required', 'in:user,organizer'],
-    ]);
-
-         
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|confirmed|min:8',
+            'phone_number' => 'required|string|max:20',
+        ]);
 
         $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => $request->password,
-        'role' => $request->role, // ✅ Must be here
-    ]);
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone_number' => $request->phone_number,
+        ]);
 
-    event(new Registered($user));
+        event(new Registered($user));
 
-    Auth::login($user);
+        // --- 2FA logic ---
+        $code = rand(100000, 999999);
+        TwoFactorCode::updateOrCreate(
+            ['user_id' => $user->id],
+            ['code' => $code, 'expires_at' => now()->addMinutes(5)]
+        );
 
-    // ✅ Redirect after login based on role
-    return match ($user->role) {
-        'organizer' => redirect('/organizer/dashboard'),
-        'admin' => redirect('/admin/dashboard'),
-        default => redirect('/'),
-    };
-}
+        // Send code via email
+        Mail::raw("Your EventiX registration verification code is: $code", function ($message) use ($user) {
+            $message->to($user->email)
+                    ->subject('Your EventiX Registration Verification Code');
+        });
+
+        // Log out user and redirect to 2FA page
+        Auth::logout();
+        session(['2fa:user:id' => $user->id]);
+        return redirect()->route('2fa.verify');
+    }
 }

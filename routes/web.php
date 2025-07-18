@@ -214,3 +214,6 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth'])->group(function () {
     Route::get('/notifications', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.index');
 });
+
+Route::get('/2fa/verify', [App\Http\Controllers\Auth\TwoFactorController::class, 'showVerifyForm'])->name('2fa.verify');
+Route::post('/2fa/verify', [App\Http\Controllers\Auth\TwoFactorController::class, 'verify']);

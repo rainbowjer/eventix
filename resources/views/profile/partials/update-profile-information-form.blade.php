@@ -47,6 +47,14 @@
             @endif
         </div>
 
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">Phone Number</label>
+            <input id="phone_number" type="text" class="form-control" name="phone_number" value="{{ old('phone_number', auth()->user()->phone_number) }}" required placeholder="+60123456789">
+            @error('phone_number')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
         <div class="flex items-center gap-4 flex-wrap sm:flex-nowrap">
             <x-primary-button class="w-full sm:w-auto">{{ __('Save') }}</x-primary-button>
             @if (session('status') === 'profile-updated')

@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\TwoFactorCode;
+use Illuminate\Support\Facades\Mail;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -34,6 +36,7 @@ class AuthenticatedSessionController extends Controller
     $user->increment('login_count');
     $user->update(['last_login_at' => now()]);
 
+    // Redirect after login based on role
     if ($user->role === 'organizer') {
         return redirect()->intended('/organizer/dashboard');
     } elseif ($user->role === 'admin') {

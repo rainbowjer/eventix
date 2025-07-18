@@ -409,6 +409,11 @@
                         <input id="email" class="split-modern-input" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="Email">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
+                    <div class="split-modern-form-group">
+                        <span class="split-modern-icon"><i class="bi bi-phone"></i></span>
+                        <input id="phone_number" class="split-modern-input" type="text" name="phone_number" :value="old('phone_number')" required autocomplete="phone" placeholder="+60123456789">
+                        <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
+                    </div>
                     <div class="split-modern-form-group" style="position:relative;">
                         <span class="split-modern-icon"><i class="bi bi-lock"></i></span>
                         <input id="password" class="split-modern-input" type="password" name="password" required autocomplete="new-password" placeholder="Password">

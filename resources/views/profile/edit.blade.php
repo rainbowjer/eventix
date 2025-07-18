@@ -340,6 +340,10 @@ window.addEventListener('DOMContentLoaded', function() {
                                 <label for="email">Email</label>
                                 <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required aria-label="Edit Email">
                             </div>
+                            <div class="mb-3">
+                                <label for="phone_number">Phone Number</label>
+                                <input type="text" name="phone_number" class="form-control" value="{{ old('phone_number', $user->phone_number) }}" required aria-label="Edit Phone Number" placeholder="+60123456789">
+                            </div>
                             <button type="submit" class="btn" aria-label="Update Info"><i class="bi bi-key"></i> Update Info</button>
                         </form>
                     </div>

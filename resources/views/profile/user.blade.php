@@ -280,6 +280,7 @@ window.addEventListener('DOMContentLoaded', function() {
                         <h3 class="fw-bold mb-2">{{ $user->name }}</h3>
                         <ul class="list-unstyled profile-info-list mb-3">
                             <li><i class="bi bi-envelope"></i> <strong>Email:</strong> {{ $user->email }}</li>
+                            <li><i class="bi bi-telephone"></i> <strong>Phone:</strong> {{ $user->phone_number }}</li>
                             <li><i class="bi bi-calendar-check"></i> <strong>Registered:</strong> {{ $user->created_at->format('d M Y') }}</li>
                             @if($user->last_login_at)
                                 <li><i class="bi bi-clock-history"></i> <strong>Last Login:</strong> {{ \Carbon\Carbon::parse($user->last_login_at)->format('d M Y, h:i A') }}</li>
