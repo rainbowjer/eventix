@@ -195,7 +195,11 @@ window.addEventListener('DOMContentLoaded', function() {
                 <div class="card-body">
                     <h5 class="card-title"><i class="bi bi-ticket-perforated"></i> Ticket Sales 
                         @php
-                            $unreadTicketNotifs = Auth::user()->notifications->where('read_at', null)->where('type', 'App\\Notifications\\TicketResellStatusNotification')->count();
+                            $unreadTicketNotifs = Auth::user()
+                                ->notifications()
+                                ->whereNull('read_at')
+                                ->where('type', 'App\\Notifications\\TicketResellStatusNotification')
+                                ->count();
                         @endphp
                         <span class="badge {{ $unreadTicketNotifs > 0 ? 'bg-danger' : '' }}">Report</span>
                     </h5>
